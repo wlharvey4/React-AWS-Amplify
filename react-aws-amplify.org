@@ -1,0 +1,121 @@
+# -*- mode:org; fill-column:79; -*-
+
+#+TITLE:Building Serverless Web Applications with React & AWS Amplify
+#+AUTHOR:Nader Dabit
+#+DATE:2019-02-06
+
+#+TEXINFO:@insertcopying
+
+* Introduction
+
+  #+CINDEX:course description
+  React makes it intuitive to build real-world web application. But in
+  reality, you need to use a host of other services to get the app in
+  front of real users.  This course walks you through setup and
+  implementation to get your cloud-based application up and running.
+  You’ll learn to set up:
+
+  - a new project in AWS Amplify configured to your React app
+  - user authentication with Amazon Cognito
+  - managed GraphQL with AWS AppSync
+  - image storage and retrieval with Amazon S3
+  - text translation via Lambda functions
+  - and finally, deployment of your application on AWS using Amazon S3
+
+
+  You’ll finish the course ready to quickly and easily deploy your
+  serverless React application, so users can start using and enjoying
+  it right away.
+
+* Install & Configure the AWS Amplify CLI
+
+* Create & Configure an AWS Amplify Project with a React Application
+
+* Use the AWS Amplify withAuthenticator HOC to Implement a React User Authorization Flow
+
+* Manually Sign Up New Users in React with AWS Amplify Auth Class
+
+* Create & Interact with an AWS AppSync GraphQL API with AWS Amplify
+
+* Create & Interact with a Serverless REST API with AWS Lambda from React
+
+* Store Data in Amazon S3 with React
+
+* Deploy Your React Application to AWS Using the Amplify CLI
+
+* Index
+  :PROPERTIES:
+  :INDEX:    cp
+  :END:
+
+* Copying
+  :PROPERTIES:
+  :COPYING:  t
+  :END:
+
+  *{{{title}}}* by {{{author}}}
+
+  \copy 2019
+
+  Outline {{{VERSION}}} by WLHarvey4
+
+* README                                                           :noexport:
+
+  #+BEGIN_SRC markdown :tangle README.md
+
+  # Building Serverless Web Applications with React & AWS Amplify
+
+  ## Author
+
+  Nader Dabit
+
+  ## Date
+
+  February 6, 2019
+
+  ## Source
+
+  [Egghead.io](https://egghead.io/courses/building-serverless-web-applications-with-react-aws-amplify)
+
+  ## Synopsis
+
+  This course walks you through setup and implementation to get your
+  cloud-based application up and running.
+
+  * a new project in AWS Amplify configured to your React app
+  * user authentication with Amazon Cognito
+  * managed GraphQL with AWS AppSync
+  * mage storage and retrieval with Amazon S3
+  * text translation via Lambda functions
+  * and finally, deployment of your application on AWS using Amazon S3
+
+  You’ll finish the course ready to quickly and easily deploy your
+  serverless React application, so users can start using and enjoying
+  it right away.
+
+  #+END_SRC
+
+* MACRO DEFINITIONS                                                :noexport:
+#+MACRO:VERSION Version 0.0.1 <2019-02-07 Thu 07:36>
+#+MACRO:OUTLINE Outline by WLHarvey4
+#+MACRO:heading @@texinfo:@heading @@$1
+#+MACRO:subheading @@texinfo:@subheading @@$1
+* EXPORT SETUP                                                     :noexport:
+#+TEXINFO_FILENAME:react-aws-amplify.info
+#+TEXINFO_CLASS: info
+#+TEXINFO_HEADER:
+#+TEXINFO_POST_HEADER:
+#+SUBTITLE:
+#+SUBAUTHOR:
+#+TEXINFO_DIR_CATEGORY:React
+#+TEXINFO_DIR_TITLE:React AWS Amplify
+#+TEXINFO_DIR_DESC:Building serverless web applications
+#+OPTIONS: ':nil *:t -:t ::t <:t H:4 \n:nil ^:t arch:headline
+#+OPTIONS: author:t broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:t todo:t |:t
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 26.1 (Org mode 9.1.14)
