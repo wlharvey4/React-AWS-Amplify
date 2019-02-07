@@ -29,19 +29,738 @@
 
 * Install & Configure the AWS Amplify CLI
 
+  #+CINDEX:AWS Amplify
+  #+CINDEX:Amplify CLI
+  #+CINDEX:Amplify, configure project
+  #+CINDEX:configure Amplify
+  #+CINDEX:IAM user
+  #+CINDEX:new project, Amplify
+  #+CINDEX:Amplify project, new
+  In this lesson we’ll show how to install the AWS Amplify CLI & then
+  configure it with an IAM user so we can begin creating new Amplify
+  projects.
+
+** Install CLI
+   #+CINDEX:CLI, install
+   #+CINDEX:install CLI
+   #+CINDEX:@command{npm install}
+   #+CINDEX:configure Amplify
+   #+CINDEX:Amplify, configure
+   #+CINDEX:AWS console
+   #+CINDEX:console, AWS
+   #+CINDEX:AWS account
+   #+CINDEX:account, AWS
+   #+CINDEX:log in, AWS console
+   [00:01] To get started, we'll install the CLI by running
+   : npm install -g @aws-amplify/cli
+   Now that the CLI has been installed, we'll run
+   : amplify-configure
+   to configure the CLI with the user from our AWS account.  This
+   should open up the AWS console.  Once you're logged into the
+   console, jump back to the command-line.
+
+** Setup and Configure AWS
+
+   #+CINDEX:AWS region
+   #+CINDEX:region, AWS
+   #+CINDEX:us-east-1, AWS region
+   #+CINDEX:username
+   #+CINDEX:new user, create
+   #+CINDEX:IAM dashboard
+   #+CINDEX:dashboard, IAM
+   #+CINDEX:AWS account
+   #+CINDEX:accountm, AWS
+   [00:33] We're next prompted to specify an AWS region.  For me,
+   that's us-east-1.  Now we can give a username for the new user that
+   we're about to create.  I'll give mine the username of
+   =amplify-egghead-cli-user=. This should open up the IAM dashboard
+   in our AWS account.
+
+   #+CINDEX:IAM user
+   #+CINDEX:settings, preconfigured
+   #+CINDEX:access key ID
+   #+CINDEX:secret access key
+   #+CINDEX:keys, access and secret access
+   [00:53] This IAM user has some preconfigured settings that we can
+   accept by clicking Next Permissions, Next Review, and Create
+   User. Once the user's been created, we're given an access key ID
+   and a secret access key.
+
+** Setup Access Keys
+
+   #+CINDEX:access key ID
+   #+CINDEX:secret access key
+   [01:16] Copy the access key ID to your clipboard, jump back to the
+   command-line and paste it into the prompt.  Do the same with the
+   secret access key.
+
+   #+CINDEX:profile name, set
+   #+CINDEX:CLI, confifgure
+   [01:29] Here we can set a profile name. I'll give the profile name
+   a name of =amplify-egghead-cli-user=.  Now the CLI has been
+   configured and we're ready to begin initializing new AWS Amplify
+   projects.
+
 * Create & Configure an AWS Amplify Project with a React Application
 
-* Use the AWS Amplify withAuthenticator HOC to Implement a React User Authorization Flow
+  #+CINDEX:React application, create new
+  #+CINDEX:AWS Amplify project, create new
+  #+CINDEX:React application, configure
+  #+CINDEX:configure, React application
+  #+CINDEX:AWS services
+  In this lesson we’ll create a new React application, create a new
+  AWS Amplify project, & configure the React application to begin
+  working with Amplify & AWS services.
+
+** Create React App
+
+    [00:01] Now that we've installed and configured the CLI, let's
+    create a new React application, and then initialize a new Amplify
+    project within the React application.
+
+    #+CINDEX:@command{create-react-app}
+    #+CINDEX:React application, create new
+    [00:14] To do so, we'll use ~create-react-app~ to create a new
+    React application called ~MyAmplify.app~.  Once the new React
+    application has been created, let's change into the new directory.
+
+** Initialize Amplify
+
+   #+CINDEX:@code{amplify init}
+   #+CINDEX:Amplify project, initialize
+   #+CINDEX:initialize, Amplify project
+   #+CINDEX:options, Amplify project
+   #+CINDEX:editor, default
+   #+CINDEX:JavaScript, app type
+   #+CINDEX:app, JavaScript
+   #+CINDEX:React, framework type
+   #+CINDEX:framework, React
+    [00:31] From within the new directory, we'll run ~amplify.init~ to
+    initialize a new Amplify project.  We'll then be prompted for a few
+    options.  For the default editor, I'll choose Visual Studio
+    code.  For the type of app we're building, we can choose
+    JavaScript.  For the framework we're using, we can choose React.
+
+    #+CINDEX:directories, source, distribution
+    #+CINDEX:build command
+    #+CINDEX:start command
+    #+CINDEX:commands, build, start
+    [00:49] The source directory can be left as ~source~.  The
+    distribution directory, ~build~.  The build command can be left as
+    ~build~.  The start command can be left as ~start~.
+
+    #+CINDEX:AWS profile, choose
+    [01:04] Next, we're given the option to choose an AWS
+    profile.  Here, we can choose the profile that we created when we
+    configured this CLI.
+
+    #+CINDEX:Amplify project, initialized
+    #+CINDEX:rc file, Amplify
+    #+CINDEX:@file{.amplify} rc file
+    #+CINDEX:Amplify folder
+    #+CINDEX:folder, Amplify
+    #+CINDEX:root directory
+    [01:18] Now, our Amplify project has been initialized.  We should
+    now see a ~.amplify~ rc file, as well as an Amplify folder, in our
+    root directory.
+
+** Install Client Libraries
+
+   #+CINDEX:client libraries, install
+   #+CINDEX:install client libraries
+   [01:29] The last thing we need to do is install the AWS Amplify and
+   AWS Amplify React Client Libraries into our React application.
+
+   #+CINDEX:@command{npm}
+   #+CINDEX:@command{yarn}
+   #+CINDEX:@code{AWS-Amplify} client library
+   #+CINDEX:@code{AWS-Amplify-React} client library
+   [01:39] To do so, we can either use ~npm~ or ~yarn~ to add AWS Amplify
+   and AWS Amplify React.
+
+   [01:53] Now, the React app has been configured, the Amplify project
+   has been created, and we're ready to begin adding new features.
+
+* Use the AWS Amplify ~withAuthenticator~ HOC to Implement a React User Authorization Flow
+
+  #+CINDEX:user authentication, enable
+  #+CINDEX:Amazon Cognito
+  #+CINDEX:@code{withAuthenticator} HOC
+  #+CINDEX:sign-up flow, create
+  #+CINDEX:sign-in flow, create
+  In this lesson we’ll enable user authentication (Amazon Cognito) in
+  the existing AWS Amplify project, then use the ~withAuthenticator~
+  higher order component from AWS Amplify to quickly add a
+  preconfigured sign up and sign in flow.
+
+** Add Authentication
+
+   #+CINDEX:authentication, add service
+   #+CINDEX:add new service, using Amplify
+   #+CINDEX:Amplify add new service using
+   #+CINDEX:@command{amplify add}
+   #+CINDEX:service, @code{auth}
+   #+CINDEX:@code{auth} service
+    [00:02] The first service that we're going to add is
+    authentication.  To add a new service using Amplify, we can run
+    ~amplify add~ with the name of the service.  The service name that
+    we're going to be adding is ~auth~, so we can run ~amplify add
+    auth~.
+
+    #+CINDEX:default authentication and security configuration
+    #+CINDEX:configuration, default authentication and security
+    #+CINDEX:authentication
+    #+CINDEX:security
+    #+CINDEX:@command{amplify push}
+    #+CINDEX:push configuration into account
+    #+CINDEX:provision new resources
+    #+CINDEX:resources, provision new
+    #+CINDEX:resources, create
+    [00:16] Here, we'll be asked if we would like to use the default
+    authentication and security configuration.  We'll choose =yes=.
+    Now the new configuration has been created in our project.  We'll
+    run ~amplify push~ to push the new configuration into our account
+    and create and provision the new resources.
+
+    #+CINDEX:create new authentication service
+    #+CINDEX:authentication service, create new
+    [00:36] Next, we'll be prompted and asked if we would like to
+    continue. If you look at the operation, you can see that it is set
+    to =create=.  This means it will create a new authentication service
+    in our account.  This may take a couple of minutes to complete.
+
+    #+CINDEX:@file{AWS-exports.js}
+    [00:52] Now that the authentication service has been created, we
+    should be able to look in our source directory and see a new file
+    that was created for us called ~AWS-exports.js~.  This file is
+    created and updated by the CLI, so there's no reason for us to
+    change it.
+
+** Configure React App with AWS Resources
+
+    #+CINDEX:React application, configure with AWS resource
+    #+CINDEX:AWS resources, configure React app
+    #+CINDEX:@file{source/index.js}
+    #+CINDEX:@file{index.js}
+    #+CINDEX:Amplify, import from AWS Amplify library
+    #+CINDEX:library, AWS Amplify, import
+    #+CINDEX:import AWS Amplify library
+    #+CINDEX:@code{amplify.configure}
+    [01:07] We will, though, be using it in the next step to configure
+    our React application with the AWS resources.  To configure our
+    React app with the AWS resources, we can open up
+    ~source/index.js~.  Here, we'll import Amplify from the AWS
+    Amplify library.  The configuration from AWS exports, and we'll
+    call ~amplify.configure~, passing in the config.
+
+** Install Higher Order Component
+
+    #+CINDEX:@code{withAuthenticator} higher order component
+    #+CINDEX:higher order component, @code{withAuthenticator}
+    #+CINDEX:HOC @code{withAuthenticator}
+    #+CINDEX:@file{source/app.js}
+    #+CINDEX:import @file{withAuthenticator} HOC
+    #+CINDEX:wrap app component with HOC @file{withAuthenticator}
+    [01:47] Next, we'll open ~source/app.js~.  Here we'll first import
+    the ~withAuthenticator~ higher order component from the AWS
+    Amplify React library.  Instead of exporting the app component as
+    a default export, we'll instead wrap the app component with the
+    ~withAuthenticator~ higher order component.
+
+** Test Application
+
+   #+CINDEX:test application
+   #+CINDEX:@command{run npm start}
+   #+CINDEX:application, run
+   #+CINDEX:user authentication flow, app protected by
+   #+CINDEX:new account, create
+   [02:24] Now we're ready to test it out.  To run the app,
+   : run npm start
+   Our app should now be protected by user authentication flow.  The
+   first thing we'll do is click =create account= and create a new
+   account.
+
+   #+CINDEX:authentication code, in email
+   #+CINDEX:confirm new account
+   #+CINDEX:new account, confirm
+   #+CINDEX:account, sign in
+   #+CINDEX:sign in, account
+   [02:57] After the account has been created, you should receive an
+   authentication code in your email.  To confirm the sign up, paste in
+   the authentication code from your email.  After you've confirmed
+   your account, sign into your account.
+
+   #+CINDEX:sign in
+   #+CINDEX:redirected to main app
+   #+CINDEX:main app, redirected to
+   #+CINDEX:user session, in local storage
+   #+CINDEX:local storage, user session
+   [03:16] After we've signed in, we should be redirected to the main
+   app. You'll notice that if you refresh the page, the user remains
+   signed in. This is because the user session is stored in local
+   storage.
+
+** Create Sign-Out
+
+   #+CINDEX:sign-out button, create
+   #+CINDEX:@file{App.js}
+   #+CINDEX:@file{withAuthenticator}
+   #+CINDEX:@code{include-greetings} key
+   #+CINDEX:key, @code{include-greetings}
+   [03:28] Next, let's add a sign out button.  To do so we'll go back
+   into ~App.js~ and pass in a second argument to ~withAuthenticator~.
+   Here, we'll pass in an object with an ~include-greetings~ key set
+   to true.
+
+   #+CINDEX:sign-out button
+   #+CINDEX:Amplify services, view enabled
+   #+CINDEX:enabled Amplify services, view
+   #+CINDEX:@command{amplify status}
+   #+CINDEX:resource name
+   [03:58] Now when we refresh, we should see a sign out button at the
+   top right corner of the page.  To view enabled Amplify services at
+   any time, we can run ~Amplify status~.  Here, we're given the
+   resource name for the authentication that we just created.
+
+** Cognito Authentication Service
+   #+CINDEX:Cognito authentication service, view
+   #+CINDEX:AWS account, Cognito authentication service
+   #+CINDEX:Cognito dashboard
+   #+CINDEX:Amazon Cognito user pool
+   #+CINDEX:dashboard, Cognito
+   #+CINDEX:@command{manage user pools}
+   #+CINDEX:user pool
+   [04:16] To view the Cognito authentication service in your AWS
+   account, open the AWS console and search for Cognito.  In the
+   Cognito dashboard, click on =manage user pools= and then click on
+   the user pool for the application that we just created.
+
+   #+CINDEX:users, view
+   #+CINDEX:signed-up users, view
+   [04:32] Here, we can view the settings for the Amazon Cognito user
+   pool that we've created and also view any of the users that have
+   signed up.
 
 * Manually Sign Up New Users in React with AWS Amplify Auth Class
 
+  #+CINDEX:@code{Auth} class
+  #+CINDEX:create custom user sign-in, sign-up flow
+  In this lesson we’ll look at how we can use the ~Auth~ class [to]
+  directly create a custom user sign in and sign up flow.
+
+  #+CINDEX:@command{import auth}
+  #+CINDEX:@code{auth}, import
+  #+CINDEX:AWS Amplify library
+  #+CINDEX:library, Amplify
+  #+CINDEX:initial state, create
+  #+CINDEX:state, create initial
+  #+CINDEX:user, signup
+  #+CINDEX:user information, add
+  [00:02] The first thing we'll do is we'll ~import auth~ from the AWS
+  Amplify library.  Next, we'll create some initial state.  We'll need
+  to keep up with the username, password, email, phone number, and
+  authentication code for the user that is being signed up.
+
+  #+CINDEX:@code{onChange} handler
+  #+CINDEX:handler, @code{onChange}
+  #+CINDEX:text input, handle
+  #+CINDEX:@code{setState}
+  #+CINDEX:@code{event.target.name}, set
+  #+CINDEX:@code{event.target.value}, set
+  [00:30] Next, we'll need an ~onChange~ handler to handle the user's
+  text input.  This function will call ~this.setState~, setting the
+  ~event.target.name~ and the ~event.target.value~.
+
+  #+CINDEX:sign-up, create class method
+  #+CINDEX:confirm sign-up, create class method
+  #+CINDEX:class method, sign-up
+  #+CINDEX:async, sign-up method
+  #+CINDEX:@code{try-catch} block
+  #+CINDEX:destructure user info
+  #+CINDEX:@code{auth.signUp}, call
+  #+CINDEX:call @code{auth.signUp}
+  #+CINDEX:attributes object
+  #+CINDEX:successful sign-up
+  [00:49] We'll next create a sign up and confirm sign up class
+  method.  Sign up will be async, so we'll create a ~try-catch~ block.
+  We'll first destructure the username, password, email, and phone
+  number from the state.  We'll then call ~auth.signUp~, passing in
+  the username and password as well as an ~attributes~ object
+  containing the email and the phone number.  If the sign up is
+  successful, we'll ~console.log~ ``Successfully signed up.''
+
+  #+CINDEX:@code{confirm sign up}
+  #+CINDEX:multi-factor authentication
+  #+CINDEX:authentication, multi-factor
+  #+CINDEX:destructure user info
+  #+CINDEX:@code{try-catch} block
+  #+CINDEX:@code{auth.confirmSignup}, call
+  #+CINDEX:call @code{auth.confirmSignup}
+  #+CINDEX:user, successful sign-up
+  [01:57] ~Confirm sign up~ will handle the multi-factor
+  authentication, so we'll destructure both the username and the
+  authentication code from the state.  Here we'll also set up a
+  ~try-catch~ block.  We'll call ~auth.confirmSignup~, passing in the
+  username and the authentication code.  If this is successful, we'll
+  ~console.log~ ``User successfully signed up.''
+
+** Two Sign-up Forms
+
+   #+CINDEX:forms, for signing up
+   #+CINDEX:variable @code{step}
+   #+CINDEX:@code{step} variable
+   #+CINDEX:toggle forms
+   [02:41] This component will contain two forms, one for signing up
+   and one for confirming the sign up.  We'll create a variable called
+   ~step~ that we'll use to toggle these two forms.
+
+   #+CINDEX:@code{render} method
+   #+CINDEX:@code{state.step}
+   #+CINDEX:form, sign-up, show
+   #+CINDEX:sign-up form, show
+   #+CINDEX:@code{onChange} method, sign-up form
+   #+CINDEX:properties, name and style
+   [03:04] In our ~render~ method we'll check to see if
+   ~this.state.step~ is equal to zero.  If it is, we'll show the sign in
+   form.  The sign up form will contain four inputs, each with an
+   ~onChange~ method, a name property, and a style property.
+
+   #+CINDEX:placeholder @code{attributes}
+   #+CINDEX:@code{attributes} placeholder
+   #+CINDEX:sign-up button, create
+   #+CINDEX:button, create sign-up
+   #+CINDEX:confirm sign-up button, create
+   #+CINDEX:sign-up button, confirm, create
+   [03:43] We'll also add a placeholder ~attributes~.  Finally, we'll
+   create a sign-up button that will call ~this.signup~ when clicked.
+   To create the =confirm sign-up= form, we can just copy and paste
+   the sign-up form to get started.
+
+   #+CINDEX:confirm sign-up button
+   #+CINDEX:@code{confirmSignup}, call
+   #+CINDEX:call @code{confirmSignup}
+   [04:31] This form will only need two inputs, one for the username
+   and one for the authentication code.  The button for this form will
+   call ~this.confirmSignup~.
+
+   #+CINDEX:@code{setState}, call
+   #+CINDEX:call @code{setState}
+   #+CINDEX:sign-up, successful, set @code{step}
+   #+CINDEX:@code{styles} variable
+   #+CINDEX:variable @code{styles}
+   #+CINDEX:input components
+   #+CINDEX:components, input
+   [04:52] Finally, in sign up we'll call ~this.setState~, setting the
+   ~step~ to one if the sign up is successful.  Next, we'll scroll to
+   the bottom of the component and we'll add a ~styles~ variable,
+   setting the styles for the input components.
+
+** Test Sign Up and Confirm Sign Up
+
+   #+CINDEX:@command{npm start}, run
+   #+CINDEX:run @command{npm start}
+   #+CINDEX:new user sign-up
+   #+CINDEX:sign-up, new user
+   #+CINDEX:form, @samp{confirm sign up}
+   #+CINDEX:@samp{confirm sign up} form
+   [05:21] To test this out, let's run ~npm start~.  When we sign up a
+   new user, we should see "Successfully signed up" logged out to the
+   console.  We should also see the =confirm sign up= form appear on our
+   screen.
+
+   #+CINDEX:confirm sign-up
+   #+CINDEX:sign-up, confirm
+   [05:52] To confirm sign up, use the username you just created as
+   well as the authentication code you received in your email and
+   click =confirm sign up=.  If the sign up is successful, you should
+   see "User successfully signed up" logged out to the console.
+
+** Make Sure New User Exists in AWS Dashboard
+
+   #+CINDEX:user exists, confirm
+   #+CINDEX:dashboard, AWS
+   #+CINDEX:AWS dashboard
+   #+CINDEX:Cognito console
+   #+CINDEX:console, Cognito
+   #+CINDEX:new user, look at in console
+   #+CINDEX:user pools, manage
+   #+CINDEX:manage user pools
+   [06:06] To make sure that this user exists, let's jump into the AWS
+   dashboard and go to the cognito console to look at the new user. In
+   the cognito dashboard we'll click on manage user pools and then
+   we'll click on the name of the user pool for our app.  When we click
+   on users and groups, we should now see the new user appear.
+
 * Create & Interact with an AWS AppSync GraphQL API with AWS Amplify
+
+  #+CINDEX:GraphQL API, create new
+  #+CINDEX:create new GraphQL API
+  #+CINDEX:Amplify  CLI
+  #+CINDEX:Amplify GraphQL API
+  #+CINDEX:query data
+  #+CINDEX:data query
+  #+CINDEX:render data in app
+  #+CINDEX:mutations, perform for client
+  In this lesson we’ll create a new GraphQL API using the Amplify CLI
+  and use the Amplify GraphQL API to query data from the new API &
+  render it in our app.  We’ll also look at how to perform mutations
+  from the client.
+
+  [00:01] To create an AWS AppSync API, we can run the command amplify
+  add api. For the type of service, choose GraphQL. Next, we're
+  prompted to give the API a name. I'll give mine a name of
+  amplifyTodoApp.  00:18 For the authorization type, we'll choose API
+  key. When we're asked if we have an annotated GraphQL schema, we'll
+  choose No. If we'd like to have a guided schema creation, we'll
+  choose Yes.
+
+  [00:32] For what best describes our project, we're going to choose a
+  single object with fields. Next, we're given an option to go ahead
+  and edit the schema. Choose Yes. We're given an example todo GraphQL
+  schema. We'll take the existing schema and add a new property of
+  completed and then save the file.
+
+  [00:53] Once the file's been saved, jump back to the command line
+  and press Enter. Now the resources have been saved locally and we
+  can run amplify push to create the resource in our account.
+
+  [01:13] Once amplify push has successfully completed, open the AWS
+  console. From the AWS console, search for "AWS AppSync" so we can go
+  ahead and take a look at the new API that we just created.
+
+  [01:34] In the API dashboard, you can click on Schema to take a look
+  at the schema that's been auto-generated for us.
+
+  [01:48] Next, click on Query so we can begin executing queries and
+  mutations against the API. The first thing we'd like to do is create
+  a new todo. We'll create a mutation called create. To view the API
+  documentation, you can click on the Docs link on the right side of
+  the screen.
+
+  [02:03] When we click on Mutations, we see that we have three
+  different types of mutations, createTodo, updateTodo, and
+  deleteTodo. createTodo takes an input with a name, description and
+  completed properties.
+
+  [02:34] To execute the mutation, we can click on the orange Play
+  button.
+
+  [02:49] Now that we've created a couple of items, let's perform a
+  query. We'll perform the listTodos query that returns an items
+  array. We'll then return the ID, the name, the description, and the
+  completed values for each todo in the array.
+
+  [03:27] Now that we've populated our API with a little bit of data,
+  let's query for the data from our React app. The first thing we'll
+  do is that we'll import API and graphqlOperation from AWS
+  Amplify. Next, we'll define our listTodos query to return the ID,
+  the name, the description, and the completed properties for every
+  item in the todos array.
+
+  [04:03] In the class, we'll create some initial state to hold the
+  todos array and set it as an empty array. We'll create a
+  componentDidMount life cycle method where we'll call API.graphql,
+  passing in the listTodos graphqlOperation.
+
+  [04:37] Once the data's returned from our API, we'll call
+  this.setState, updating the todos array with the data returned from
+  the API. In the render method, we'll map over the todos array,
+  showing the todo name and the todo description.
+
+  [05:14] Now we're ready to run the app. I'll go ahead and open the
+  terminal and run npm start. If everything is working correctly, we
+  should see the todos on our screen.
 
 * Create & Interact with a Serverless REST API with AWS Lambda from React
 
+  In this lesson we’ll learn how to create a Lambda function and use
+  AWS Amplify to interact with the Lambda function from a React
+  app. Lambda functions allow us to easily create one off
+  functionality or interact with microservices. We’ll use the Lambda
+  function to translate text from english to spanish.
+
+  [00:02] To add a REST API using a AWS Lambda function, we can run the
+  amplify add API command. For the type of service, we'll choose
+  rest. The API that we'll be creating will be fetching a list of
+  people. We'll call the API PeopleAPI. For the path, we'll give it a
+  path of /people.
+
+  [00:26] For the Lambda function data source, we'll create a new Lambda
+  function. Next, we're asked for a label for the Lambda function. We'll
+  call this peoplefunction. For the name of the Lambda function, we'll
+  also call it peoplefunction. For the function template that we'd like
+  to use, we'll use a Serverless Express function.
+
+  [00:47] Next, we'll be asked if we'd like to edit the local function
+  now. We'll choose yes. This should open up
+  amplify/backend/function/peoplefunction/source/app.js in our text
+  editor.
+
+  [01:01] In App.js, we'll see the code for our Lambda function. We'll
+  scroll down until we see app.get/people. Right now, /people is
+  returning an object with the success property and a URL. We'll go
+  ahead and create a new array called people and hard-code some data.
+
+  [01:35] Next, we'll update the response to return the array of
+  people. Save this file and drop back to the command line. We're next
+  asked if we'd like to restrict API access. Since we have
+  authentication enabled, we'll choose yes. For access, we'll give
+  authenticated users only access. For the type of access, we'll choose
+  read.
+
+  [02:02] With the local configuration created, we can run amplify push
+  to push the new configuration to our account and create the
+  resources. Once the resources have been created, open up App.js. Here,
+  we'll first import API from AWS Amplify.
+
+  [02:29] In our class definition, we'll define an initial state of
+  people and set it to an empty array. We'll create a componentDidMount
+  lifecycle method that we'll call API.get. Here we'll pass in the name
+  of the API as well as the path that we would like to fetch.
+
+  [02:54] The data returned from the API will be an object with an array
+  of people. When the data is returned from the API, we'll call
+  this.setstate, setting the value of people to data.people.
+
+  [03:16] In our render method, we'll map over the people array, showing
+  the person's name as well as the hair color for every item in the
+  array.
+
+  [03:31] Now we'll save the file, and we'll run npm start to launch the
+  app.
+
+  [03:39] If everything is working properly, we should see the data
+  rendered to our screen. Right now, our API is only returning
+  hard-coded data. Let's update the API to fetch data from a third-party
+  API. To do so, we're going to need to install the Axios package to
+  send HTTP requests. Change into
+  amplify/backend/function/peoplefunction/source.
+
+  [04:06] From within this directory, we'll go ahead and install the
+  Axios package. We'll next open App.js from the
+  backend/function/peoplefunction/source folder. Here, we'll first
+  require Axios from the Axios package.
+
+  [04:38] We'll then call Axios.get, passing in the URL for the open
+  source Star Wars API. Axios will return a promise. We'll set a .then
+  and a .catch function. If there's an error, we'll return a JSON object
+  containing an error property and setting people to null.
+
+  [05:10] If it's successful, we'll go ahead and create a new variable
+  called people, setting it to response.data.results. We'll then return
+  a JSON object with an error property set to null along with the people
+  array.
+
+  [05:32] Since we've made changes to our Lambda function, we're going
+  to need to run amplify push again.
+
+  [05:43] Once the resources have been updated in your account, we'll
+  run npm start to restart the React app. When the app loads, we should
+  now see the data being returned from the Star Wars API.
+
 * Store Data in Amazon S3 with React
 
+  Amazon S3 offers a way to store & retrieve items in the cloud. In
+  this lesson we’ll see how we can easily store images in an S3 bucket
+  using the AWS Amplify Storage API. S3 is object storage built to
+  store and retrieve any amount of data from anywhere on the Internet.
+
+  [00:02] To add storage using Amazon S3, we'll run the Amplify add
+  storage command. For the type of storage, we'll choose content. For
+  the project name, you can either use the default or provide a name of
+  your own.
+
+  [00:19] Next, we're prompted for a bucket name. If you do use a custom
+  bucket name, please be aware that the bucket name needs to be unique.
+
+  [00:30] For access, we only want to give authorized users access. For
+  the type of access, we'll choose read and write. Now that the
+  resources have been created locally, we'll run amplify push to create
+  the service in our account.
+
+  [00:49] Once the resource has been successfully created in your
+  account, go ahead and open up App.js in your text editor. The first
+  thing we'll do is we'll import the storage API from AWS Amplify. In
+  the class definition, we'll create some initial state containing a
+  file URL, a file, and a filename.
+
+  [01:18] We'll create a handle change method that will handle the file
+  input. We'll save the file data in a variable we'll call File. Then
+  we'll call this.setstate, setting the file URL, the file, as well as
+  the filename.
+
+  [02:01] We'll next create a function called SaveFile that will save
+  the file in our S3 bucket. SaveFile will call storage.put, passing in
+  the filename as well as the file data.
+
+  [02:20] If this is successful, we'll console.log successfully saved
+  file and then call this.setstate, resetting the file URL, the file,
+  and the filename. If there's an error, we'll log out the error.
+
+  [02:51] In our render method, we'll first create a file input and set
+  the onchange handler to this.handlechange. We'll then create an image
+  with the source set to this.state.fileURL. Finally, we'll create a
+  button with an onclick handler set to this.SaveFile.
+
+  [03:24] Now we can test it out. Open the Terminal and run npm
+  start. Here, we should be able to upload and save files. If the save
+  is successful, we should see successfully saved file logged out to the
+  console.
+
+  [03:49] Let's take a look at the bucket. To view your S3 buckets, open
+  the AWS console and search for S3 in the AWS Services search bar.
+
+  [04:02] In the S3 dashboard, we can now search for the name of the
+  bucket we just created. In the public folder, we should now see any
+  images that we uploaded.
+
+  [04:18] Next, let's look at how to get images from our S3 bucket. To
+  do so, click on an image that we've uploaded already and save the name
+  of the file to your clipboard.
+
+  [04:28] Next, we'll go back to App.js and make some updates. The first
+  thing we'll do is we'll remove all of the state with the exception of
+  the file URL. We'll remove the two existing class methods and replace
+  them with a componentDidMount lifecycle method. ComponentDidMount will
+  call storage.get, passing in the name of the image, and then calling
+  this.setstate, resetting the value of file URL.
+
+  [05:08] In our render method, we can go ahead and delete the input as
+  well as the button components. To test it out, open the Terminal and
+  run npm start. When the app loads, we should see the image render to
+  our screen.
+
+  [05:24] Storage also has a storage.list method that will list out all
+  of the images available in the S3 bucket. To learn more, check out the
+  docs at aws-amplify.github.io.
+
 * Deploy Your React Application to AWS Using the Amplify CLI
+
+  In this lesson we learn how to deploy your React application to AWS
+  using the Amplify CLI & Amazon S3.
+
+  [00:02] To add hosting, we can run amplify add hosting. For the
+  environment setup, we can either choose dev for S3 with HTTP or prod
+  for S3 with HTTPS with CloudFront distribution. I'll choose dev.
+
+  [00:16] Next, we're prompted for the bucket name. Give the bucket a
+  unique name. For the index doc and the error doc, we can choose
+  index.html.
+
+  [00:31] To deploy our new setup, we can run amplify publish. Once the
+  deployment is complete, our app should launch in a new window. If we
+  open the URL, we see that the app is indeed running from our S3
+  bucket.
+
+* Amplify Console
+  :PROPERTIES:
+  :APPENDIX: t
+  :END:
+
+  We've [Amazon] recently launched the Amplify Console, which is now
+  the preferred way of deploying Amplify applications & has built-in
+  CI / CD & atomic deployments. For more info, check out the
+  documentation at https://aws.amazon.com/amplify/console/.
 
 * Index
   :PROPERTIES:
@@ -96,7 +815,7 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.0.1 <2019-02-07 Thu 07:36>
+#+MACRO:VERSION Version 0.0.2 <2019-02-07 Thu 11:05>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
