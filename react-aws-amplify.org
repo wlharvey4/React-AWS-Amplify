@@ -345,9 +345,10 @@
 
   #+CINDEX:@code{Auth} class
   #+CINDEX:create custom user sign-in, sign-up flow
-  In this lesson we’ll look at how we can use the ~Auth~ class [to]
-  directly create a custom user sign in and sign up flow.
+  In this lesson we’ll look at how we can use the ~Auth~ class [to] directly
+  create a custom user sign in and sign up flow.
 
+** Import Authentication Functionality For Sign-Up
   #+CINDEX:@command{import auth}
   #+CINDEX:@code{auth}, import
   #+CINDEX:AWS Amplify library
@@ -361,6 +362,7 @@
   to keep up with the username, password, email, phone number, and
   authentication code for the user that is being signed up.
 
+** Code Authentication for Sign-Up Functionality
   #+CINDEX:@code{onChange} handler
   #+CINDEX:handler, @code{onChange}
   #+CINDEX:text input, handle
@@ -406,6 +408,9 @@
 
 ** Two Sign-up Forms
 
+   1. Sign-up form
+   2. Confirnm sign-up form
+
    #+CINDEX:forms, for signing up
    #+CINDEX:variable @code{step}
    #+CINDEX:@code{step} variable
@@ -420,10 +425,10 @@
    #+CINDEX:sign-up form, show
    #+CINDEX:@code{onChange} method, sign-up form
    #+CINDEX:properties, name and style
-   [03:04] In our ~render~ method we'll check to see if
-   ~this.state.step~ is equal to zero.  If it is, we'll show the sign in
-   form.  The sign up form will contain four inputs, each with an
-   ~onChange~ method, a name property, and a style property.
+   [03:04] In our ~render~ method we'll check to see if ~this.state.step~ is
+   equal to zero.  If it is, we'll show the =sign-in= form.  The sign up form
+   will contain four inputs, each with an ~onChange~ method, a =name= property,
+   and a =style= property.
 
    #+CINDEX:placeholder @code{attributes}
    #+CINDEX:@code{attributes} placeholder
@@ -431,10 +436,10 @@
    #+CINDEX:button, create sign-up
    #+CINDEX:confirm sign-up button, create
    #+CINDEX:sign-up button, confirm, create
-   [03:43] We'll also add a placeholder ~attributes~.  Finally, we'll
-   create a sign-up button that will call ~this.signup~ when clicked.
-   To create the =confirm sign-up= form, we can just copy and paste
-   the sign-up form to get started.
+   [03:43] We'll also add a placeholder ~attributes~.  Finally, we'll create a
+   sign-up button that will call ~this.signup~ when clicked.  To create the
+   =confirm sign-up= form, we can just copy and paste the sign-up form to get
+   started.
 
    #+CINDEX:confirm sign-up button
    #+CINDEX:@code{confirmSignup}, call
@@ -486,12 +491,17 @@
    #+CINDEX:user pools, manage
    #+CINDEX:manage user pools
    [06:06] To make sure that this user exists, let's jump into the AWS
-   dashboard and go to the cognito console to look at the new user. In
-   the cognito dashboard we'll click on manage user pools and then
-   we'll click on the name of the user pool for our app.  When we click
-   on users and groups, we should now see the new user appear.
+   dashboard and go to the Cognito console to look at the new user. In the
+   Cognito dashboard we'll click on =manage user pools= and then we'll click on
+   the name of the user pool for our app.  When we click on users and groups,
+   we should now see the new user appear.
 
 * Create & Interact with an AWS AppSync GraphQL API with AWS Amplify
+
+  - Create GraphQL API
+  - Using Amplify CLI
+  - To query data from API
+  - And perform mutations
 
   #+CINDEX:GraphQL API, create new
   #+CINDEX:create new GraphQL API
@@ -501,15 +511,15 @@
   #+CINDEX:data query
   #+CINDEX:render data in app
   #+CINDEX:mutations, perform for client
-  In this lesson we’ll create a new GraphQL API using the Amplify CLI
-  and use the Amplify GraphQL API to query data from the new API &
-  render it in our app.  We’ll also look at how to perform mutations
-  from the client.
+  In this lesson we’ll create a new GraphQL API using the Amplify CLI and use
+  the Amplify GraphQL API to query data from the new API and render it in our
+  app.  We’ll also look at how to perform mutations from the client.
 
 ** Create AWS AppSync API
   #+CINDEX:AppSync API
   #+CINDEX:@command{amplify add api}
   #+CINDEX:GraphQL service
+  #+CINDEX:@code{amplifyTodoApp}
   [00:01] To create an AWS AppSync API, we can run the command ~amplify add
   api~. For the type of service, choose GraphQL. Next, we're prompted to give
   the API a name. I'll give mine a name of =amplifyTodoApp=.
@@ -532,7 +542,7 @@
 
   #+CINDEX:@command{amplify push}
   [00:53] Once the file's been saved, jump back to the command line and press
-  @texinfo:@key{@@Enter@@texinfo:}@@. Now the resources have been saved locally
+  @@texinfo:@key{@@Enter@@texinfo:}@@. Now the resources have been saved locally
   and we can run ~amplify push~ to create the resource in our account.
 
   #+CINDEX:AWS AppSync
@@ -610,10 +620,12 @@
 
   #+CINDEX:@code{setState}, call
   #+CINDEX:render method
-  [04:37] Once the data's returned from our API, we'll call ~this.setState~,
-  updating the ~todos~ array with the data returned from the API. In the render
-  method, we'll map over the ~todos~ array, showing the todo name and the todo
-  description.
+  #+CINDEX:map, over array
+  #+CINDEX:array, map over
+  [04:37] Once the data's returned from our API, we'll call
+  ~this.setState~, updating the ~todos~ array with the data returned
+  from the API. In the render method, we'll map over the ~todos~
+  array, showing the ~todo~ name and the ~todo~ description.
 
 ** Run the Application
   #+CINDEX:app, run
@@ -625,14 +637,19 @@
 
 * Create & Interact with a Serverless REST API with AWS Lambda from React
 
+  - Create a Lambda function
+  - Use AWS Amplify
+  - To interact with the Lambda function
+  - From a React application
+
   #+CINDEX:Lambda function, create
   #+CINDEX:Amplify, interact with Lambda function
   #+CINDEX:microservices
   In this lesson we’ll learn how to create a Lambda function and use AWS
-  Amplify to interact with the Lambda function from a React app. Lambda
-  functions allow us to easily create one-off functionality or interact with
-  microservices. We’ll use the Lambda function to translate text from English
-  to Spanish.
+  Amplify to interact with the Lambda function from a React app.  {{{dfn(Lambda
+  functions)}}} allow us to easily create one-off functionality or interact
+  with microservices. We’ll use the Lambda function to translate text from
+  English to Spanish.
 
 ** Add a REST API Using a Lambda Function
 
@@ -647,182 +664,341 @@
    API that we'll be creating will be fetching a list of people. We'll call the
    API =PeopleAPI=. For the path, we'll give it a path of ~/people~.
 
+   #+CINDEX:data source, Lambda function
+   #+CINDEX:Lambda function, create new
+   #+CINDEX:@code{peoplefunction}
+   #+CINDEX:Lambda function, name
+   #+CINDEX:function template
+   #+CINDEX:Serverless Express function
    [00:26] For the Lambda function data source, we'll create a new Lambda
    function. Next, we're asked for a label for the Lambda function. We'll call
-   this peoplefunction. For the name of the Lambda function, we'll also call it
-   peoplefunction. For the function template that we'd like to use, we'll use a
-   Serverless Express function.
+   this =peoplefunction=. For the name of the Lambda function, we'll also call
+   it =peoplefunction=. For the function template that we'd like to use, we'll
+   use a Serverless Express function.
 
-  [00:47] Next, we'll be asked if we'd like to edit the local function
-  now. We'll choose yes. This should open up
-  amplify/backend/function/peoplefunction/source/app.js in our text
-  editor.
+   #+CINDEX:@file{app.js}, open for editing
+   [00:47] Next, we'll be asked if we'd like to edit the local function
+   now. We'll choose yes. This should open up
+   {{{file(amplify/backend/function/peoplefunction/source/app.js)}}} in our
+   text editor.
 
-  [01:01] In App.js, we'll see the code for our Lambda function. We'll
-  scroll down until we see app.get/people. Right now, /people is
-  returning an object with the success property and a URL. We'll go
-  ahead and create a new array called people and hard-code some data.
+   #+CINDEX:@code{app.get/people}
+   #+CINDEX:@code{/people} route
+   #+CINDEX:@code{people} array, create
+   #+CINDEX:array, create as @code{people}
+   #+CINDEX:data, hard-code
+   [01:01] In ~App.js~, we'll see the code for our Lambda function. We'll
+   scroll down until we see ~app.get/people~. Right now, ~/people~ is returning
+   an object with the ~success~ property and a URL. We'll go ahead and create a
+   new array called ~people~ and hard-code some data.
 
-  [01:35] Next, we'll update the response to return the array of
-  people. Save this file and drop back to the command line. We're next
-  asked if we'd like to restrict API access. Since we have
-  authentication enabled, we'll choose yes. For access, we'll give
-  authenticated users only access. For the type of access, we'll choose
-  read.
+   #+CINDEX:response, update to return @code{people} array
+   #+CINDEX:API access, restrict
+   #+CINDEX:authentication enabled
+   #+CINDEX:authenticated users read access
+   #+CINDEX:access, authenticated users
+   #+CINDEX:read access, authenticated users
+   [01:35] Next, we'll update the response to return the array of
+   ~people~. Save this file and drop back to the command line. We're next asked
+   if we'd like to restrict API access. Since we have authentication enabled,
+   we'll choose =yes=. For access, we'll give authenticated users only
+   access. For the type of access, we'll choose ~read~.
 
-  [02:02] With the local configuration created, we can run amplify push
-  to push the new configuration to our account and create the
-  resources. Once the resources have been created, open up App.js. Here,
-  we'll first import API from AWS Amplify.
+   #+CINDEX:configuration, local, created
+   #+CINDEX:@command{amplify push}
+   #+CINDEX:resources, create
+   #+CINDEX:@file{App.js}
+   #+CINDEX:Amplify, import API from
+   #+CINDEX:import API from Amplify
+   [02:02] With the local configuration created, we can run ~amplify push~ to
+   push the new configuration to our account and create the resources. Once the
+   resources have been created, open up ~App.js~. Here, we'll first import API
+   from AWS Amplify.
 
-  [02:29] In our class definition, we'll define an initial state of
-  people and set it to an empty array. We'll create a componentDidMount
-  lifecycle method that we'll call API.get. Here we'll pass in the name
-  of the API as well as the path that we would like to fetch.
+** Code the Lambda Function
 
-  [02:54] The data returned from the API will be an object with an array
-  of people. When the data is returned from the API, we'll call
-  this.setstate, setting the value of people to data.people.
+   #+CINDEX:initial state, people array
+   #+CINDEX:@code{componentDidMount} lifecycle method
+   #+CINDEX:@code{api.get}, call
+   #+CINDEX:call @code{api.get}
+   [02:29] In our class definition, we'll define an initial state of people and
+   set it to an empty array. We'll create a ~componentDidMount~ lifecycle
+   method that we'll call ~API.get~. Here we'll pass in the name of the API as
+   well as the path that we would like to fetch.
 
-  [03:16] In our render method, we'll map over the people array, showing
-  the person's name as well as the hair color for every item in the
-  array.
+   #+CINDEX:data, returned as array of @code{people}
+   #+CINDEX:@code{setstate}, call
+   #+CINDEX:call @code{setstate}
+   [02:54] The data returned from the API will be an object with an array of
+   ~people~. When the data is returned from the API, we'll call
+   ~this.setstate~, setting the value of people to ~data.people~.
 
-  [03:31] Now we'll save the file, and we'll run npm start to launch the
-  app.
+   #+CINDEX:render method
+   #+CINDEX:@code{people} array, map over
+   #+CINDEX:map over @code{people} array
+   [03:16] In our ~render~ method, we'll map over the ~people~ array, showing
+   the person's name as well as the hair color for every item in the array.
 
-  [03:39] If everything is working properly, we should see the data
-  rendered to our screen. Right now, our API is only returning
-  hard-coded data. Let's update the API to fetch data from a third-party
-  API. To do so, we're going to need to install the Axios package to
-  send HTTP requests. Change into
-  amplify/backend/function/peoplefunction/source.
+   #+CINDEX:@command{npm start}, launch app
+   #+CINDEX:launch app with @command{npm start}
+   [03:31] Now we'll save the file, and we'll run ~npm start~ to launch the
+   app.
 
-  [04:06] From within this directory, we'll go ahead and install the
-  Axios package. We'll next open App.js from the
-  backend/function/peoplefunction/source folder. Here, we'll first
-  require Axios from the Axios package.
+** Fetch Data From Third Party API
 
-  [04:38] We'll then call Axios.get, passing in the URL for the open
-  source Star Wars API. Axios will return a promise. We'll set a .then
-  and a .catch function. If there's an error, we'll return a JSON object
-  containing an error property and setting people to null.
+   #+CINDEX:data, rendered to screen on launch
+   #+CINDEX:data, fetch from 3rd party API
+   #+CINDEX:Axios package, install
+   #+CINDEX:HTTP requests, Axios package
+   #+CINDEX:@file{source}
+   [03:39] If everything is working properly, we should see the data rendered
+   to our screen. Right now, our API is only returning hard-coded data. Let's
+   update the API to fetch data from a third-party API. To do so, we're going
+   to need to install the Axios package to send HTTP requests. Change into
+   ~amplify/backend/function/peoplefunction/source~.
 
-  [05:10] If it's successful, we'll go ahead and create a new variable
-  called people, setting it to response.data.results. We'll then return
-  a JSON object with an error property set to null along with the people
-  array.
+   #+CINDEX:Axios package, install
+   #+CINDEX:@code{require axios}
+   [04:06] From within this directory, we'll go ahead and install the Axios
+   package. We'll next open ~App.js~ from the
+   ~backend/function/peoplefunction/source~ folder. Here, we'll first ~require
+   Axios~ from the Axios package.
 
-  [05:32] Since we've made changes to our Lambda function, we're going
-  to need to run amplify push again.
+   #+CINDEX:@code{axios.get}
+   #+CINDEX:Star Wars API
+   #+CINDEX:promise, from Axios
+   #+CINDEX:JSON object, with error from Axios
+   [04:38] We'll then call Axios.get, passing in the URL for the open source
+   Star Wars API. Axios will return a promise. We'll set a ~.then~ and a
+   ~.catch~ function. If there's an error, we'll return a JSON object
+   containing an error property and setting people to null.
 
+  #+CINDEX:@code{people} variable
+  #+CINDEX:variable @code{people}
+  #+CINDEX:JSON object
+  #+CINDEX:@code{people} array
+  [05:10] If it's successful, we'll go ahead and create a new variable called
+  ~people~, setting it to ~response.data.results~. We'll then return a JSON
+  object with an error property set to null along with the ~people~ array.
+
+  #+CINDEX:@command{amplify push}, changes to Lambda function
+  [05:32] Since we've made changes to our Lambda function, we're going to need
+  to run ~amplify push~ again.
+
+  #+CINDEX:@command{npm start}, restart React app
+  #+CINDEX:data returned from Star Wars API
+  #+CINDEX:Star Wars API, data returned from
   [05:43] Once the resources have been updated in your account, we'll
-  run npm start to restart the React app. When the app loads, we should
+  run ~npm start~ to restart the React app. When the app loads, we should
   now see the data being returned from the Star Wars API.
 
 * Store Data in Amazon S3 with React
 
-  Amazon S3 offers a way to store & retrieve items in the cloud. In
-  this lesson we’ll see how we can easily store images in an S3 bucket
-  using the AWS Amplify Storage API. S3 is object storage built to
-  store and retrieve any amount of data from anywhere on the Internet.
+  - Amazon S3
+  - Store and retrieve items in the cloud
+  - Store images in an S3 bucket
+  - Using AWS Amplify Storage API
 
-  [00:02] To add storage using Amazon S3, we'll run the Amplify add
-  storage command. For the type of storage, we'll choose content. For
-  the project name, you can either use the default or provide a name of
-  your own.
+  #+CINDEX:Amazon S3
+  #+CINDEX:cloud, store and retrieve items in
+  #+CINDEX:images, store
+  #+CINDEX:store images
+  #+CINDEX:S3 bucket
+  #+CINDEX:Amplify Storage API
+  #+CINDEX:S3, object storage service
+  Amazon S3 offers a way to store and retrieve items in the cloud. In this
+  lesson we’ll see how we can easily store images in an S3 bucket using the AWS
+  Amplify Storage API. {{{dfn(S3)}}} is object storage built to store and
+  retrieve any amount of data from anywhere on the Internet.
 
-  [00:19] Next, we're prompted for a bucket name. If you do use a custom
-  bucket name, please be aware that the bucket name needs to be unique.
+** Add Storage Using S3
 
-  [00:30] For access, we only want to give authorized users access. For
-  the type of access, we'll choose read and write. Now that the
-  resources have been created locally, we'll run amplify push to create
-  the service in our account.
+   #+CINDEX:S3, add storage using
+   #+CINDEX:add storage using S3
+   #+CINDEX:Amplify @command{add storage} command
+   #+CINDEX:@samp{content} storage type
+   #+CINDEX:storage type, @samp{content}
+   [00:02] To add storage using Amazon S3, we'll run the Amplify ~add storage~
+   command. For the type of storage, we'll choose =content=. For the project
+   name, you can either use the default or provide a name of your own.
 
-  [00:49] Once the resource has been successfully created in your
-  account, go ahead and open up App.js in your text editor. The first
-  thing we'll do is we'll import the storage API from AWS Amplify. In
-  the class definition, we'll create some initial state containing a
-  file URL, a file, and a filename.
+   #+CINDEX:bucket name
+   [00:19] Next, we're prompted for a bucket name. If you do use a custom
+   bucket name, please be aware that the bucket name needs to be unique.
 
-  [01:18] We'll create a handle change method that will handle the file
-  input. We'll save the file data in a variable we'll call File. Then
-  we'll call this.setstate, setting the file URL, the file, as well as
-  the filename.
+   #+CINDEX:access to S3 data
+   #+CINDEX:access type, @samp{read and write}
+   #+CINDEX:@command{amplify push} create S3 resources
+   [00:30] For access, we only want to give authorized users access. For the
+   type of access, we'll choose =read and write=. Now that the resources have
+   been created locally, we'll run ~amplify push~ to create the service in our
+   account.
 
-  [02:01] We'll next create a function called SaveFile that will save
-  the file in our S3 bucket. SaveFile will call storage.put, passing in
-  the filename as well as the file data.
+** Code S3 Storage
 
-  [02:20] If this is successful, we'll console.log successfully saved
-  file and then call this.setstate, resetting the file URL, the file,
-  and the filename. If there's an error, we'll log out the error.
+   #+CINDEX:@file{app.js}, import storage API from Amplify
+   #+CINDEX:storage API, Amplify
+   #+CINDEX:initial state, create
+   [00:49] Once the resource has been successfully created in your account, go
+   ahead and open up ~App.js~ in your text editor. The first thing we'll do is
+   we'll import the storage API from AWS Amplify. In the class definition,
+   we'll create some initial state containing a file URL, a file, and a
+   filename.
 
-  [02:51] In our render method, we'll first create a file input and set
-  the onchange handler to this.handlechange. We'll then create an image
-  with the source set to this.state.fileURL. Finally, we'll create a
-  button with an onclick handler set to this.SaveFile.
+   #+CINDEX:@code{handleChange} method, file input
+   #+CINDEX:@code{file} variable
+   #+CINDEX:@code{setstate}, call
+   #+CINDEX:call @code{setstate}
+   [01:18] We'll create a ~handleChange~ method that will handle the file
+   input. We'll save the file data in a variable we'll call ~File~. Then we'll
+   call ~this.setstate~, setting the file URL, the file, as well as the
+   filename.
 
-  [03:24] Now we can test it out. Open the Terminal and run npm
-  start. Here, we should be able to upload and save files. If the save
-  is successful, we should see successfully saved file logged out to the
-  console.
+   #+CINDEX:@code{saveFile} function, create
+   #+CINDEX:save file in S3 bucket
+   #+CINDEX:file, save in S3 bucket
+   #+CINDEX:@code{storage.put}
+   [02:01] We'll next create a function called ~SaveFile~ that will save the
+   file in our S3 bucket. ~SaveFile~ will call ~storage.put~, passing in the
+   filename as well as the file data.
 
-  [03:49] Let's take a look at the bucket. To view your S3 buckets, open
-  the AWS console and search for S3 in the AWS Services search bar.
+   #+CINDEX:@command{console.log} file success
+   #+CINDEX:@code{setstate}
+   [02:20] If this is successful, we'll console.log successfully saved file and
+   then call ~this.setstate~, resetting the file URL, the file, and the
+   filename. If there's an error, we'll log out the error.
 
-  [04:02] In the S3 dashboard, we can now search for the name of the
-  bucket we just created. In the public folder, we should now see any
-  images that we uploaded.
+   #+CINDEX:render method
+   #+CINDEX:file input, create
+   #+CINDEX:@code{onChange} handler
+   #+CINDEX:@code{handlechange} handler
+   #+CINDEX:@code{onclick} handler
+   #+CINDEX:@code{saveFile} handler
+   #+CINDEX:handlers, @code{onClick}, @code{onSave}
+   [02:51] In our ~render~ method, we'll first create a file input and set the
+   ~onchange~ handler to ~this.handlechange~. We'll then create an image with
+   the source set to ~this.state.fileURL~. Finally, we'll create a button with
+   an ~onclick~ handler set to ~this.SaveFile~.
 
-  [04:18] Next, let's look at how to get images from our S3 bucket. To
-  do so, click on an image that we've uploaded already and save the name
-  of the file to your clipboard.
+** Test File Save in S3 Bucket
 
-  [04:28] Next, we'll go back to App.js and make some updates. The first
-  thing we'll do is we'll remove all of the state with the exception of
-  the file URL. We'll remove the two existing class methods and replace
-  them with a componentDidMount lifecycle method. ComponentDidMount will
-  call storage.get, passing in the name of the image, and then calling
-  this.setstate, resetting the value of file URL.
+   #+CINDEX:test file save
+   #+CINDEX:@command{npm start}
+   #+CINDEX:file upload
+   #+CINDEX:file save
+   [03:24] Now we can test it out. Open the Terminal and run ~npm start~. Here,
+   we should be able to upload and save files. If the save is successful, we
+   should see successfully saved file logged out to the console.
 
-  [05:08] In our render method, we can go ahead and delete the input as
-  well as the button components. To test it out, open the Terminal and
-  run npm start. When the app loads, we should see the image render to
-  our screen.
+** Look at S3 Bucket
 
-  [05:24] Storage also has a storage.list method that will list out all
-  of the images available in the S3 bucket. To learn more, check out the
-  docs at aws-amplify.github.io.
+   #+CINDEX:bucket, look at
+   #+CINDEX:S3 bucket, look at
+   #+CINDEX:AWS console
+   #+CINDEX:AWS Services, search
+   [03:49] Let's take a look at the bucket. To view your S3 buckets, open the
+   AWS console and search for S3 in the AWS Services search bar.
+
+   #+CINDEX:bucket, search for
+   #+CINDEX:S3 dashboard
+   [04:02] In the S3 dashboard, we can now search for the name of the bucket we
+   just created. In the public folder, we should now see any images that we
+   uploaded.
+
+** Images from S3 Buckets
+
+   #+CINDEX:images, from S3 bucket
+   #+CINDEX:S3 bucket, images from
+   [04:18] Next, let's look at how to get images from our S3 bucket. To do so,
+   click on an image that we've uploaded already and save the name of the file
+   to your clipboard.
+
+   #+CINDEX:@file{app.js}
+   #+CINDEX:state, remove
+   #+CINDEX:@code{componentDidMount} lifecycle method
+   #+CINDEX:lifecycle method, @code{componentDidMount}
+   #+CINDEX:@code{storage.get}
+   #+CINDEX:@code{setstate}
+   [04:28] Next, we'll go back to ~App.js~ and make some updates. The first
+   thing we'll do is we'll remove all of the state with the exception of the
+   file URL. We'll remove the two existing class methods and replace them with
+   a ~componentDidMount~ lifecycle method. ~ComponentDidMount~ will call
+   ~storage.get~, passing in the name of the image, and then calling
+   ~this.setstate~, resetting the value of file URL.
+
+   #+CINDEX:@code{render} method
+   #+CINDEX:@command{npm start}
+   #+CINDEX:image, render to screen
+   [05:08] In our ~render~ method, we can go ahead and delete the input as well
+   as the button components. To test it out, open the Terminal and run ~npm
+   start~. When the app loads, we should see the image render to our screen.
+
+   #+CINDEX:@code{storage.list}
+   #+CINDEX:Storage
+   #+CINDEX:list all images on S3 bucket
+   #+CINDEX:S3 bucket, list all images
+   #+CINDEX:Amplify documentation
+   #+CINDEX:documentation, Amplify
+   [05:24] Storage also has a ~storage.list~ method that will list out all of
+   the images available in the S3 bucket. To learn more, check out the docs at
+   [[https://aws-amplify.github.io][Storage Docs]].
 
 * Deploy Your React Application to AWS Using the Amplify CLI
 
+  - Deploy React application
+  - To AWS
+  - Using Amplify CLI
+  - And Amazon S3
+
+  #+CINDEX:deploy React app to AWS
+  #+CINDEX:deploy using Amplify CLI, S3
+  #+CINDEX:React app, deploy to AWS using Amplify CLI, S3
   In this lesson we learn how to deploy your React application to AWS
   using the Amplify CLI & Amazon S3.
 
-  [00:02] To add hosting, we can run amplify add hosting. For the
-  environment setup, we can either choose dev for S3 with HTTP or prod
-  for S3 with HTTPS with CloudFront distribution. I'll choose dev.
+** Add Hosting
 
-  [00:16] Next, we're prompted for the bucket name. Give the bucket a
-  unique name. For the index doc and the error doc, we can choose
-  index.html.
+   #+CINDEX:add hosting
+   #+CINDEX:hosting, add
+   #+CINDEX:@command{amplify add hosting}
+   #+CINDEX:environment setup
+   #+CINDEX:@env{DEV} environment
+   #+CINDEX:@env{PROD}
+   #+CINDEX:HTTPS, S3
+   #+CINDEX:S3 HTTPS
+   #+CINDEX:CloudFront distribution
+   [00:02] To add hosting, we can run ~amplify add hosting~. For the
+   environment setup, we can either choose =DEV= for S3 with HTTP or =PROD= for
+   S3 with HTTPS with CloudFront distribution. I'll choose =DEV=.
 
-  [00:31] To deploy our new setup, we can run amplify publish. Once the
-  deployment is complete, our app should launch in a new window. If we
-  open the URL, we see that the app is indeed running from our S3
-  bucket.
+   #+CINDEX:bucket name
+   #+CINDEX:@file{index.html}
+   #+CINDEX:@samp{index} doc
+   #+CINDEX:@samp{error} doc
+   #+CINDEX:doc, @samp{index}, @samp{error}
+   [00:16] Next, we're prompted for the bucket name. Give the bucket a unique
+   name. For the ~index~ doc and the ~error~ doc, we can choose ~index.html~.
+
+   #+CINDEX:deploy app, from S3 bucket
+   #+CINDEX:@command{amplify publish}, from S3 bucket
+   #+CINDEX:S3 bucket, deploy
+   [00:31] To deploy our new setup, we can run ~amplify publish~. Once the
+   deployment is complete, our app should launch in a new window. If we open
+   the URL, we see that the app is indeed running from our S3 bucket.
 
 * Amplify Console
   :PROPERTIES:
   :APPENDIX: t
   :END:
 
-  We've [Amazon] recently launched the Amplify Console, which is now
-  the preferred way of deploying Amplify applications & has built-in
-  CI / CD & atomic deployments. For more info, check out the
-  documentation at https://aws.amazon.com/amplify/console/.
+  #+CINDEX:Amplify console, launched
+  #+CINDEX:deploy Amplify applications, preferred method
+  #+CINDEX:atomic deployments
+  #+CINDEX:documentation at Amplify
+  We've [Amazon] recently launched the Amplify Console, which is now the
+  preferred way of deploying Amplify applications and has built-in CI / CD &
+  atomic deployments. For more info, check out the documentation at
+  https://aws.amazon.com/amplify/console/.
 
 * Index
   :PROPERTIES:
@@ -877,10 +1053,12 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.0.3 <2019-02-07 Thu 19:43>
+#+MACRO:VERSION Version 0.1.0 <2019-02-08 Fri 10:17>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
+#+MACRO:file @@texinfo:@file{@@$1@@texinfo:}@@
+#+MACRO:dfn @@texinfo:@dfn{@@$1@@texinfo:}@@
 * EXPORT SETUP                                                     :noexport:
 #+TEXINFO_FILENAME:react-aws-amplify.info
 #+TEXINFO_CLASS: info
