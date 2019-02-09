@@ -9,25 +9,38 @@
 * Introduction
 
   #+CINDEX:course description
-  React makes it intuitive to build real-world web application. But in
-  reality, you need to use a host of other services to get the app in
-  front of real users.  This course walks you through setup and
-  implementation to get your cloud-based application up and running.
+  #+CINDEX:React
+  #+CINDEX:web application
+  #+CINDEX:cloud-based web application
+  React makes it intuitive to build real-world web applications.  But in
+  reality, you need to use a host of other services to get the app in front of
+  real users.  /This course walks you through setup and implementation to get
+  your cloud-based application up and running./
+
   You’ll learn to set up:
 
-  - a new project in AWS Amplify configured to your React app
-  - user authentication with Amazon Cognito
-  - managed GraphQL with AWS AppSync
-  - image storage and retrieval with Amazon S3
-  - text translation via Lambda functions
+  #+CINDEX:AWS Amplify
+  #+CINDEX:Amazon Cognito
+  #+CINDEX:GraphQL
+  #+CINDEX:AWS AppSync
+  #+CINDEX:Amazon S3
+  #+CINDEX:Lambda functions
+  #+CINDEX:deployment using Amazon S3
+  - a new project in [[https://aws-amplify.github.io/][AWS Amplify]] configured to your React app
+  - user authentication with [[https://aws.amazon.com/cognito/][Amazon Cognito]]
+  - manage [[https://graphql.org/][GraphQL]] with [[https://aws.amazon.com/appsync/][AWS AppSync]]
+  - image storage and retrieval with [[https://aws.amazon.com/s3/][Amazon S3]]
+  - text translation via [[https://aws.amazon.com/lambda/][Lambda functions]]
   - and finally, deployment of your application on AWS using Amazon S3
 
 
+  #+CINDEX:React application, serverless
+  #+CINDEX:serverless React application
   You’ll finish the course ready to quickly and easily deploy your
   serverless React application, so users can start using and enjoying
   it right away.
 
-* Install & Configure the AWS Amplify CLI
+* Set Up the AWS Amplify CLI
 
   #+CINDEX:AWS Amplify
   #+CINDEX:Amplify CLI
@@ -36,30 +49,32 @@
   #+CINDEX:IAM user
   #+CINDEX:new project, Amplify
   #+CINDEX:Amplify project, new
-  In this lesson we’ll show how to install the AWS Amplify CLI & then
-  configure it with an IAM user so we can begin creating new Amplify
-  projects.
+  In this lesson we’ll show how to install the [[https://github.com/aws-amplify/amplify-cli][AWS Amplify CLI]] [fn:1] and then
+  configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM user]] [fn:2] so we can begin creating new Amplify projects.
 
-** Install CLI
+** Install and Configure the AWS Amplify CLI
    #+CINDEX:CLI, install
    #+CINDEX:install CLI
    #+CINDEX:@command{npm install}
+   #+CINDEX:@command{amplify configure}
    #+CINDEX:configure Amplify
-   #+CINDEX:Amplify, configure
    #+CINDEX:AWS console
    #+CINDEX:console, AWS
    #+CINDEX:AWS account
    #+CINDEX:account, AWS
    #+CINDEX:log in, AWS console
-   [00:01] To get started, we'll install the CLI by running
+   [00:01] To get started, we'll install the CLI [fn:3] by running:
    : npm install -g @aws-amplify/cli
-   Now that the CLI has been installed, we'll run
-   : amplify-configure
-   to configure the CLI with the user from our AWS account.  This
-   should open up the AWS console.  Once you're logged into the
-   console, jump back to the command-line.
+   {{{noindent}}}Now that the CLI has been installed, we'll run:
+   : amplify configure
+   #+CINDEX:AWS access credentials
+   #+CINDEX:access credentials, AWS
+   #+CINDEX:credentials, access, AWS
+   {{{noindent}}}to configure the CLI with the user from our AWS account.[fn:4]
+   This should open up the AWS console.  Once you're logged into the console,
+   jump back to the command-line.
 
-** Setup and Configure AWS
+** Setup and Configure AWS IAM User
 
    #+CINDEX:AWS region
    #+CINDEX:region, AWS
@@ -70,36 +85,36 @@
    #+CINDEX:dashboard, IAM
    #+CINDEX:AWS account
    #+CINDEX:accountm, AWS
-   [00:33] We're next prompted to specify an AWS region.  For me,
-   that's us-east-1.  Now we can give a username for the new user that
-   we're about to create.  I'll give mine the username of
-   =amplify-egghead-cli-user=. This should open up the IAM dashboard
-   in our AWS account.
+   [00:33] We're next prompted to specify an AWS region. [fn:5] For me, that's
+   =us-east-1=.  Now we can give a =username= for the new user that we're about
+   to create.  I'll give mine the =username= of ~amplify-egghead-cli-user~.
+   This should open up the [[https://aws.amazon.com/iam/][IAM dashboard]] in our [[https://aws.amazon.com/][AWS account]].
 
    #+CINDEX:IAM user
    #+CINDEX:settings, preconfigured
    #+CINDEX:access key ID
    #+CINDEX:secret access key
    #+CINDEX:keys, access and secret access
-   [00:53] This IAM user has some preconfigured settings that we can
-   accept by clicking Next Permissions, Next Review, and Create
-   User. Once the user's been created, we're given an access key ID
-   and a secret access key.
+   [00:53] This IAM user has some preconfigured settings that we can accept by
+   clicking {{{key(Next Permissions)}}}, {{{key(Next Review)}}}, and
+   {{{key(Create User)}}}.  Once the user's been created, we're given an
+   =access key ID= and a =secret access key=.
 
 ** Setup Access Keys
 
    #+CINDEX:access key ID
    #+CINDEX:secret access key
-   [01:16] Copy the access key ID to your clipboard, jump back to the
-   command-line and paste it into the prompt.  Do the same with the
-   secret access key.
+   [01:16] Copy the =access key ID= to your clipboard, jump back to the
+   command-line and paste it into the prompt.  Do the same with the =secret
+   access key=. [fn:6]
 
    #+CINDEX:profile name, set
-   #+CINDEX:CLI, confifgure
-   [01:29] Here we can set a profile name. I'll give the profile name
-   a name of =amplify-egghead-cli-user=.  Now the CLI has been
-   configured and we're ready to begin initializing new AWS Amplify
-   projects.
+   #+CINDEX:CLI, configured
+   #+CINDEX:AWS Amplify project, initialize
+   #+CINDEX:initialize AWS Amplify project
+   [01:29] Here we can set a =profile name=. I'll give the =profile name= a
+   name of ~amplify-egghead-cli-user~.  Now the CLI has been configured and
+   we're ready to begin initializing new AWS Amplify projects.
 
 * Create & Configure an AWS Amplify Project with a React Application
 
@@ -1053,12 +1068,14 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.1.0 <2019-02-08 Fri 10:17>
+#+MACRO:VERSION Version 0.1.1 <2019-02-09 Sat 10:59>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
 #+MACRO:file @@texinfo:@file{@@$1@@texinfo:}@@
 #+MACRO:dfn @@texinfo:@dfn{@@$1@@texinfo:}@@
+#+MACRO:noindent @@texinfo:@noindent @@
+#+MACRO:key @@texinfo:@key{@@$1@@texinfo:}@@
 * EXPORT SETUP                                                     :noexport:
 #+TEXINFO_FILENAME:react-aws-amplify.info
 #+TEXINFO_CLASS: info
@@ -1078,3 +1095,30 @@
 #+SELECT_TAGS: export
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 26.1 (Org mode 9.1.14)
+
+* Footnotes
+
+[fn:1] The AWS Amplify CLI is a toolchain which includes a robust feature set
+for simplifying mobile and web application development. The CLI uses AWS
+CloudFormation and nested stacks, which allows you to add or modify
+configurations locally before you push them for execution in your account.
+
+[fn:2] An AWS Identity and Access Management (IAM) user is an entity that you
+create in AWS to represent the person or application that uses it to interact
+with AWS. A user in AWS consists of a name and credentials.
+
+[fn:3] Requires Node.js® version 8.11.x or later
+
+[fn:4] Configures the AWS access credentials, AWS Region and sets up a new AWS
+User Profile
+
+[fn:5] Amazon cloud computing resources are hosted in multiple locations
+world-wide. These locations are composed of AWS Regions and Availability
+Zones. Each AWS Region is a separate geographic area. Each AWS Region has
+multiple, isolated locations known as Availability Zones. Amazon RDS provides
+you the ability to place resources, such as instances, and data in multiple
+locations. Resources aren't replicated across AWS Regions unless you do so
+specifically.
+
+[fn:6] [[https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys][Access Keys (Access Key ID and Secret Access Key).]]
+
