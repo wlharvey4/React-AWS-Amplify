@@ -52,7 +52,15 @@
   In this lesson we’ll show how to install the [[https://github.com/aws-amplify/amplify-cli][AWS Amplify CLI]] [fn:1] and then
   configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM user]] [fn:2] so we can begin creating new Amplify projects.
 
+- Install AWS Amplify CLI
+- Configure with Amazon IAM user
+- Setup Access Keys
+
 ** Install and Configure the AWS Amplify CLI
+
+- Install AWS Amplify CLI
+- Configure AWS Amplify CLI
+
    #+CINDEX:CLI, install
    #+CINDEX:install CLI
    #+CINDEX:@command{npm install}
@@ -63,7 +71,7 @@
    #+CINDEX:AWS account
    #+CINDEX:account, AWS
    #+CINDEX:log in, AWS console
-   [00:01] To get started, we'll install the CLI [fn:3] by running:
+   [00:01] To get started, we'll [[https://github.com/aws-amplify/amplify-cli#install-the-cli][install the CLI]] [fn:3] by running:
    : npm install -g @aws-amplify/cli
    {{{noindent}}}Now that the CLI has been installed, we'll run:
    : amplify configure
@@ -1068,7 +1076,7 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.1.1 <2019-02-09 Sat 10:59>
+#+MACRO:VERSION Version 0.1.2 <2019-02-09 Sat 11:09>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
