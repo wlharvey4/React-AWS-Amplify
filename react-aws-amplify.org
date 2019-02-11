@@ -135,7 +135,11 @@
   AWS Amplify project, & configure the React application to begin
   working with Amplify & AWS services.
 
-** Create React App
+  - New React Application
+  - New AWS Amplify project
+  - Configure Application to Work with AWS Amplify Services
+
+** Create A New React Application
 
     [00:01] Now that we've installed and configured the CLI, let's
     create a new React application, and then initialize a new Amplify
@@ -143,34 +147,35 @@
 
     #+CINDEX:@command{create-react-app}
     #+CINDEX:React application, create new
-    [00:14] To do so, we'll use ~create-react-app~ to create a new
-    React application called ~MyAmplify.app~.  Once the new React
+    [00:14] To do so, we'll use {{{command(create-react-app)}}}[fn:7] to create
+    a [[https://reactjs.org/docs/create-a-new-react-app.html][new React application]] called ~MyAmplify.app~.  Once the new React
     application has been created, let's change into the new directory.
 
-** Initialize Amplify
+** Initialize A New Amplify Project
 
-   #+CINDEX:@code{amplify init}
+   #+CINDEX:@command{amplify init}
    #+CINDEX:Amplify project, initialize
    #+CINDEX:initialize, Amplify project
    #+CINDEX:options, Amplify project
    #+CINDEX:editor, default
+   #+CINDEX:default editor, Amplify project
    #+CINDEX:JavaScript, app type
    #+CINDEX:app, JavaScript
    #+CINDEX:React, framework type
    #+CINDEX:framework, React
-    [00:31] From within the new directory, we'll run ~amplify.init~ to
-    initialize a new Amplify project.  We'll then be prompted for a few
-    options.  For the default editor, I'll choose Visual Studio
-    code.  For the type of app we're building, we can choose
-    JavaScript.  For the framework we're using, we can choose React.
+   [00:31] From within the new directory, we'll run {{{command(amplify init)}}}
+   to [[https://aws-amplify.github.io/docs/js/start][initialize]] a new [[https://www.amplify.com/][Amplify]] project.  We'll then be prompted for a few
+   options.  For the default editor, I'll choose Visual Studio code.  For the
+   type of app we're building, we can choose JavaScript.  For the framework
+   we're using, we can choose React.
 
     #+CINDEX:directories, source, distribution
     #+CINDEX:build command
     #+CINDEX:start command
     #+CINDEX:commands, build, start
-    [00:49] The source directory can be left as ~source~.  The
-    distribution directory, ~build~.  The build command can be left as
-    ~build~.  The start command can be left as ~start~.
+    [00:49] The source directory can be left as ~source~.  The distribution
+    directory, ~build~.  The {{{command(build)}}} command can be left as
+    ~build~.  The {{{command(start)}}} command can be left as ~start~.
 
     #+CINDEX:AWS profile, choose
     [01:04] Next, we're given the option to choose an AWS
@@ -211,9 +216,9 @@
   #+CINDEX:@code{withAuthenticator} HOC
   #+CINDEX:sign-up flow, create
   #+CINDEX:sign-in flow, create
-  In this lesson we’ll enable user authentication (Amazon Cognito) in
+  In this lesson we’ll enable *user authentication* ([[https://aws.amazon.com/cognito/][Amazon Cognito]]) in
   the existing AWS Amplify project, then use the ~withAuthenticator~
-  higher order component from AWS Amplify to quickly add a
+  /higher order component/ [fn:9] from AWS Amplify [fn:8] to quickly add a
   preconfigured sign up and sign in flow.
 
 ** Add Authentication
@@ -224,11 +229,11 @@
    #+CINDEX:@command{amplify add}
    #+CINDEX:service, @code{auth}
    #+CINDEX:@code{auth} service
-    [00:02] The first service that we're going to add is
-    authentication.  To add a new service using Amplify, we can run
-    ~amplify add~ with the name of the service.  The service name that
-    we're going to be adding is ~auth~, so we can run ~amplify add
-    auth~.
+    [00:02] The first service that we're going to add is *authentication*.  To
+    add a new service using Amplify, we can run {{{command(amplify add)}}} with
+    the name of the service.  The service name that we're going to be adding is
+    ~auth~, so we can run {{{command(amplify add auth)}}}.  See [[https://aws-amplify.github.io/docs/js/authentication][Docs
+    Authentication]].
 
     #+CINDEX:default authentication and security configuration
     #+CINDEX:configuration, default authentication and security
@@ -240,9 +245,9 @@
     #+CINDEX:resources, provision new
     #+CINDEX:resources, create
     [00:16] Here, we'll be asked if we would like to use the default
-    authentication and security configuration.  We'll choose =yes=.
-    Now the new configuration has been created in our project.  We'll
-    run ~amplify push~ to push the new configuration into our account
+    authentication and security configuration.  We'll choose =yes=.  Now the
+    new configuration has been created in our project.  We'll run
+    {{{command(amplify push)}}} to push the new configuration into our account
     and create and provision the new resources.
 
     #+CINDEX:create new authentication service
@@ -253,11 +258,10 @@
     in our account.  This may take a couple of minutes to complete.
 
     #+CINDEX:@file{AWS-exports.js}
-    [00:52] Now that the authentication service has been created, we
-    should be able to look in our source directory and see a new file
-    that was created for us called ~AWS-exports.js~.  This file is
-    created and updated by the CLI, so there's no reason for us to
-    change it.
+    [00:52] Now that the authentication service has been created, we should be
+    able to look in our source directory and see a new file that was created
+    for us called {{{file(AWS-exports.js)}}}.  This file is created and updated
+    by the CLI, so there's no reason for us to change it.
 
 ** Configure React App with AWS Resources
 
@@ -368,8 +372,10 @@
 
   #+CINDEX:@code{Auth} class
   #+CINDEX:create custom user sign-in, sign-up flow
+  #+CINDEX:sign-in flow, create
+  #+CINDEX:sign-up flow, create
   In this lesson we’ll look at how we can use the ~Auth~ class [to] directly
-  create a custom user sign in and sign up flow.
+  create a custom user sign-in and sign-up flow.
 
 ** Import Authentication Functionality For Sign-Up
   #+CINDEX:@command{import auth}
@@ -380,10 +386,10 @@
   #+CINDEX:state, create initial
   #+CINDEX:user, signup
   #+CINDEX:user information, add
-  [00:02] The first thing we'll do is we'll ~import auth~ from the AWS
-  Amplify library.  Next, we'll create some initial state.  We'll need
-  to keep up with the username, password, email, phone number, and
-  authentication code for the user that is being signed up.
+  [00:02] The first thing we'll do is we'll {{{command(import auth)}}} from the
+  AWS Amplify library.  Next, we'll create some initial state.  We'll need to
+  keep up with the username, password, email, phone number, and authentication
+  code for the user that is being signed up.
 
 ** Code Authentication for Sign-Up Functionality
   #+CINDEX:@code{onChange} handler
@@ -392,8 +398,8 @@
   #+CINDEX:@code{setState}
   #+CINDEX:@code{event.target.name}, set
   #+CINDEX:@code{event.target.value}, set
-  [00:30] Next, we'll need an ~onChange~ handler to handle the user's
-  text input.  This function will call ~this.setState~, setting the
+  [00:30] Next, we'll need an ~onChange~ handler to handle the user's text
+  input.  This function will call ~this.setState~, setting the
   ~event.target.name~ and the ~event.target.value~.
 
   #+CINDEX:sign-up, create class method
@@ -406,13 +412,12 @@
   #+CINDEX:call @code{auth.signUp}
   #+CINDEX:attributes object
   #+CINDEX:successful sign-up
-  [00:49] We'll next create a sign up and confirm sign up class
-  method.  Sign up will be async, so we'll create a ~try-catch~ block.
-  We'll first destructure the username, password, email, and phone
-  number from the state.  We'll then call ~auth.signUp~, passing in
-  the username and password as well as an ~attributes~ object
-  containing the email and the phone number.  If the sign up is
-  successful, we'll ~console.log~ ``Successfully signed up.''
+  [00:49] We'll next create a =sign-up= and =confirm sign-up= class method.
+  =Sign-up= will be /async/, so we'll create a ~try-catch~ block.  We'll first
+  destructure the username, password, email, and phone number from the state.
+  We'll then call ~auth.signUp~, passing in the username and password as well
+  as an ~attributes~ object containing the email and the phone number.  If the
+  sign up is successful, we'll ~console.log~ ``Successfully signed up.''
 
   #+CINDEX:@code{confirm sign up}
   #+CINDEX:multi-factor authentication
@@ -422,12 +427,11 @@
   #+CINDEX:@code{auth.confirmSignup}, call
   #+CINDEX:call @code{auth.confirmSignup}
   #+CINDEX:user, successful sign-up
-  [01:57] ~Confirm sign up~ will handle the multi-factor
-  authentication, so we'll destructure both the username and the
-  authentication code from the state.  Here we'll also set up a
-  ~try-catch~ block.  We'll call ~auth.confirmSignup~, passing in the
-  username and the authentication code.  If this is successful, we'll
-  ~console.log~ ``User successfully signed up.''
+  [01:57] =Confirm sign up= will handle the /multi-factor authentication/, so
+  we'll destructure both the username and the authentication code from the
+  state.  Here we'll also set up a ~try-catch~ block.  We'll call
+  ~auth.confirmSignup~, passing in the username and the authentication code.
+  If this is successful, we'll ~console.log~ ``User successfully signed up.''
 
 ** Two Sign-up Forms
 
@@ -438,9 +442,9 @@
    #+CINDEX:variable @code{step}
    #+CINDEX:@code{step} variable
    #+CINDEX:toggle forms
-   [02:41] This component will contain two forms, one for signing up
-   and one for confirming the sign up.  We'll create a variable called
-   ~step~ that we'll use to toggle these two forms.
+   [02:41] This component will contain two forms, one for signing up and one
+   for confirming the sign up.  We'll create a variable called ~step~ that
+   we'll use to toggle these two forms.
 
    #+CINDEX:@code{render} method
    #+CINDEX:@code{state.step}
@@ -1076,12 +1080,13 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.1.2 <2019-02-09 Sat 11:09>
+#+MACRO:VERSION Version 0.1.3 <2019-02-10 Sun 17:44>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
 #+MACRO:file @@texinfo:@file{@@$1@@texinfo:}@@
 #+MACRO:dfn @@texinfo:@dfn{@@$1@@texinfo:}@@
+#+MACRO:command @@texinfo:@command{@@$1@@texinfo:}@@
 #+MACRO:noindent @@texinfo:@noindent @@
 #+MACRO:key @@texinfo:@key{@@$1@@texinfo:}@@
 * EXPORT SETUP                                                     :noexport:
@@ -1129,4 +1134,10 @@ locations. Resources aren't replicated across AWS Regions unless you do so
 specifically.
 
 [fn:6] [[https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys][Access Keys (Access Key ID and Secret Access Key).]]
+
+[fn:7] [[https://reactjs.org/][React]]; [[https://facebook.github.io/create-react-app/][Create React App]]; [[https://github.com/facebook/create-react-app][GitHub create-react-app]]
+
+[fn:9] [[https://aws-amplify.github.io/docs/js/authentication][~withAuthenticator~]]
+
+[fn:8] [[https://aws-amplify.github.io/docs/js/ui][AWS Amplify HOCs]]
 
