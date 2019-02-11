@@ -495,17 +495,17 @@
    #+CINDEX:sign-up, new user
    #+CINDEX:form, @samp{confirm sign up}
    #+CINDEX:@samp{confirm sign up} form
-   [05:21] To test this out, let's run ~npm start~.  When we sign up a
-   new user, we should see "Successfully signed up" logged out to the
+   [05:21] To test this out, let's run {{{command(npm start)}}}.  When we sign
+   up a new user, we should see ``Successfully signed up'' logged out to the
    console.  We should also see the =confirm sign up= form appear on our
    screen.
 
    #+CINDEX:confirm sign-up
    #+CINDEX:sign-up, confirm
-   [05:52] To confirm sign up, use the username you just created as
-   well as the authentication code you received in your email and
-   click =confirm sign up=.  If the sign up is successful, you should
-   see "User successfully signed up" logged out to the console.
+   [05:52] To confirm sign up, use the username you just created as well as the
+   authentication code you received in your email and click =confirm sign up=.
+   If the sign up is successful, you should see ``User successfully signed up''
+   logged out to the console.
 
 ** Make Sure New User Exists in AWS Dashboard
 
@@ -518,7 +518,7 @@
    #+CINDEX:user pools, manage
    #+CINDEX:manage user pools
    [06:06] To make sure that this user exists, let's jump into the AWS
-   dashboard and go to the Cognito console to look at the new user. In the
+   dashboard and go to the Cognito console to look at the new user.  In the
    Cognito dashboard we'll click on =manage user pools= and then we'll click on
    the name of the user pool for our app.  When we click on users and groups,
    we should now see the new user appear.
@@ -538,8 +538,8 @@
   #+CINDEX:data query
   #+CINDEX:render data in app
   #+CINDEX:mutations, perform for client
-  In this lesson we’ll create a new GraphQL API using the Amplify CLI and use
-  the Amplify GraphQL API to query data from the new API and render it in our
+  In this lesson we’ll create a new [[https://graphql.org/][GraphQL]] API using the Amplify CLI and use
+  the [[https://aws-amplify.github.io/docs/js/api][Amplify GraphQL API]] to query data from the new API and render it in our
   app.  We’ll also look at how to perform mutations from the client.
 
 ** Create AWS AppSync API
@@ -547,9 +547,10 @@
   #+CINDEX:@command{amplify add api}
   #+CINDEX:GraphQL service
   #+CINDEX:@code{amplifyTodoApp}
-  [00:01] To create an AWS AppSync API, we can run the command ~amplify add
-  api~. For the type of service, choose GraphQL. Next, we're prompted to give
-  the API a name. I'll give mine a name of =amplifyTodoApp=.
+  [00:01] To create an [[Y][AWS AppSync API]], we can run the command
+  {{{command(amplify add api)}}}. For the type of service, choose
+  GraphQL. Next, we're prompted to give the API a name. I'll give mine a name
+  of =amplifyTodoApp=.
 
   #+CINDEX:authorization type
   #+CINDEX:GraphQL schema
@@ -569,13 +570,13 @@
 
   #+CINDEX:@command{amplify push}
   [00:53] Once the file's been saved, jump back to the command line and press
-  @@texinfo:@key{@@Enter@@texinfo:}@@. Now the resources have been saved locally
-  and we can run ~amplify push~ to create the resource in our account.
+  {{{key(Enter)}}}.  Now the resources have been saved locally and we can run
+  {{{command{amplify push)}}} to create the resource in our account.
 
   #+CINDEX:AWS AppSync
-  [01:13] Once ~amplify push~ has successfully completed, open the AWS
-  console. From the AWS console, search for ``AWS AppSync'' so we can go ahead
-  and take a look at the new API that we just created.
+  [01:13] Once {{{command(amplify push)}}} has successfully completed, open the
+  AWS console. From the AWS console, search for =AWS AppSync= so we can go
+  ahead and take a look at the new API that we just created.
 
   #+CINDEX:dashboard, API
   #+CINDEX:Schema, dashboard
@@ -599,8 +600,8 @@
   #+CINDEX:@code{createTodo}
   #+CINDEX:@code{updateTodo}
   #+CINDEX:@code{deleteTodo}
-  [02:03] When we click on Mutations, we see that we have three different types
-  of mutations, 
+  [02:03] When we click on =Mutations=, we see that we have three different
+  types of mutations,
   - ~createTodo~,
   - ~updateTodo~, and
   - ~deleteTodo~. 
@@ -611,7 +612,7 @@
 
   #+CINDEX:mutation, execute
   #+CINDEX:Play button
-  [02:34] To execute the mutation, we can click on the orange Play
+  [02:34] To execute the mutation, we can click on the orange {{{key(Play)}}}
   button.
 
   #+CINDEX:query
@@ -658,8 +659,8 @@
   #+CINDEX:app, run
   #+CINDEX:run app
   #+CINDEX:@command{npm start}
-  [05:14] Now we're ready to run the app. I'll go ahead and open the
-  terminal and run ~npm start~. If everything is working correctly, we
+  [05:14] Now we're ready to run the app. I'll go ahead and open the terminal
+  and run {{{command(npm start)}}}. If everything is working correctly, we
   should see the todos on our screen.
 
 * Create & Interact with a Serverless REST API with AWS Lambda from React
@@ -1080,7 +1081,7 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.1.3 <2019-02-10 Sun 17:44>
+#+MACRO:VERSION Version 0.1.4 <2019-02-11 Mon 12:04>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
