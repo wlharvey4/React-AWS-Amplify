@@ -547,7 +547,7 @@
   #+CINDEX:@command{amplify add api}
   #+CINDEX:GraphQL service
   #+CINDEX:@code{amplifyTodoApp}
-  [00:01] To create an [[Y][AWS AppSync API]], we can run the command
+  [00:01] To create an [[https://docs.aws.amazon.com/appsync/latest/devguide/using-your-api.html][AWS AppSync API]], we can run the command
   {{{command(amplify add api)}}}. For the type of service, choose
   GraphQL. Next, we're prompted to give the API a name. I'll give mine a name
   of =amplifyTodoApp=.
@@ -1032,6 +1032,7 @@
   :PROPERTIES:
   :APPENDIX: t
   :END:
+
 [[https://aws-amplify.github.io][Amplify Framework]]
 
 ** Library
@@ -1061,10 +1062,75 @@ Utilities
 
 ** Toolchain
 
-A powerful toolchain built for developers
+#+CINDEX:toolchain
+A powerful [[https://aws-amplify.github.io/media/toolchain][toolchain]] built for developers
 
+#+CINDEX:serverless backends
 Effortlessly create and maintain sophisticated serverless backends for your
 apps.
+
+#+CINDEX:Amplify Command Line Interface (CLI)
+#+CINDEX:Amplify CLI
+#+CINDEX:CLI, Amplfy
+#+CINDEX:toolchain, unified
+#+CINDEX:serverless infrastructure
+The Amplify Command Line Interface (CLI) is a unified toolchain to create and
+manage your serverless infrastructure on AWS.
+
+*** Effortlessly configure backends
+
+#+CINDEX:serverless backend
+#+CINDEX:authentication
+#+CINDEX:analytics
+#+CINDEX:functions
+#+CINDEX:REST
+#+CINDEX:GraphQL
+#+CINDEX:AWS CloudFormation
+#+CINDEX:CloudFormation
+#+CINDEX:configurations, add, modify, share
+Create sophisticated serverless backends fast. The CLI includes support for
+authentication, analytics, functions, REST/GraphQL APIs, and much more. The
+toolchain uses AWS CloudFormation and enables you to add, modify, and share
+configurations.
+
+#+BEGIN_EXAMPLE
+$ cd <your-app>
+$ amplify init
+$ amplify add <category>
+$ amplify push
+#+END_EXAMPLE
+
+*** Hosting for static assets and websites
+
+#+CINDEX:content, distribute to end users
+#+CINDEX:object storage infrastructure
+#+CINDEX:Lambda functions, local testing
+#+CINDEX:Lambda functions, connect to APIs
+#+CINDEX:deploy, one command
+Distribute content to end users with low latency and high data transfer speeds
+via a secure, durable, and scalable object storage infrastructure. You can
+perform local testing of AWS Lambda functions, connect them to your APIs, and
+deploy everything in one command.
+
+#+BEGIN_EXAMPLE
+$ amplify add hosting
+$ amplify publish
+#+END_EXAMPLE
+
+*** Easily create APIs and generate client code
+
+#+CINDEX:GraphQL Scheme Definition language (SDL)
+#+CINDEX:SDL
+#+CINDEX:CloudFormation template
+#+CINDEX:data model, implement
+Define your API using the GraphQL Schema Definition Language (SDL). The
+toolchain will expand and transform a full CloudFormation template that
+implements your data model.
+
+#+BEGIN_EXAMPLE
+$ amplify codegen add
+$ amplify codegen generate
+#+END_EXAMPLE
 
 ** UI Components
 
@@ -1072,6 +1138,379 @@ A beautiful component library connected to the cloud
 
 Accelerate app development by leveraging our beautiful out-of-the box UI
 components.
+
+** Amplify CLI Tutorial
+
+[[https://aws-amplify.github.io/docs/cli/init][AWS Amplify CLI]]
+
+#+CINDEX:IAM user
+#+CINDEX:AWS profile, set up
+#+CINDEX:profile, set up AWS
+#+CINDEX:initialize AWS-powered apps
+The AWS Amplify CLI helps you
+- set up an AWS IAM user,
+- set up an AWS profile on your local system and then
+- initialize Amplify powered apps with all your defined configurations.
+
+
+#+CINDEX:share Amplify backend configuration
+#+CINDEX:reuse backend infrastructure
+We’ll also walk through steps as to
+- how you could share the Amplify generated backend configuration between other
+  frontend projects and
+- re-use the same backend infrastructure in-between multiple platforms/users.
+
+
+#+CINDEX:tutorial, AWS Amplify
+#+CINDEX:project, Amplify-enabled
+In this tutorial, we’ll walk through setting up an Amplify-enabled project and
+go into detail as to what happens behind the scenes when doing so. We’ll go
+over the following commands:
+#+CINDEX:@command{amplify configure}
+#+CINDEX:@command{amplify init}
+#+CINDEX:@command{amplify configure project}
+- {{{command(amplify configure)}}}
+- {{{command(amplify init)}}}
+- {{{command(amplify configure project)}}}
+
+*** Install the CLI
+
+#+CINDEX:CLI, install
+#+CINDEX:install CLI
+[[https://aws-amplify.github.io/docs/cli/init#install-the-cli][Install the CLI]]
+
+#+CINDEX:AWS account, sign up
+#+CINDEX:Node.js, install
+#+CINDEX:@command{npm}, install
+1. [[https://portal.aws.amazon.com/billing/signup?redirect_url=https%253A%252F%252Faws.amazon.com%252Fregistration-confirmation#/start][sign up for an AWS Account]]
+2. install Node.js (8.11+) and {{{command(npm)}}} (5.x+)
+
+*** Amplify Configure
+
+#+CINDEX:CLI, configure
+#+CINDEX:configure CLI
+[[https://aws-amplify.github.io/docs/cli/init#amplify-configure][Amplify configure]]
+
+#+CINDEX:@command{amplify configure}
+#+CINDEX:@command{amplify init}, on new projects
+#+CINDEX:projects, new, @command{amplify init}
+The {{{command(amplify configure)}}} command is a one-time setup step. After
+you perform this on your system you only need to run {{{command(amplify
+init)}}} going forward on new projects.
+
+#+CINDEX:AWS, set-up, sign-in
+#+CINDEX:IAM User, set-up
+#+CINDEX:policies, IAM User
+#+CINDEX:resources, deploy
+#+CINDEX:AWS Profile, create
+#+CINDEX:@samp{accessKey}, IAM user
+#+CINDEX:@samp{secretKey}, IAM user
+#+CINDEX:profile name
+#+CINDEX:initialize project, using AWS Profile
+The amplify configure step helps you with the following:
+- AWS :: Signing up and signing into AWS
+- IAM User :: Setting up an IAM user with the appropriate policies for the CLI
+              to deploy AWS resources on behalf of the customer.[fn:10]
+- AWS Profile :: Creating an AWS Profile on your local system with reference to
+                 the =accessKey= and =secretKey= tied to the IAM user created
+                 in the above step.
+
+                 This AWS Profile could be given a custom name (by default we
+                 name it “default”) and can be used for /initializing/ any
+                 number of projects moving forward. *Essentially the AWS
+                 profile defines which AWS account and region the AWS resources
+                 would be deployed to.*
+
+
+#+CINDEX:behind the scenes
+{{{heading(What happens behind the scenes?)}}}
+
+#+CINDEX:IAM user, created
+#+CINDEX:policies, IAM user
+#+CINDEX:AWS account
+- An *IAM user* is created in your AWS account with the appropriate policies
+  required for the CLI to work
+
+  #+CINDEX:AWS Profile, created
+  #+CINDEX:@file{~/.aws/config}
+  #+CINDEX:profile name, in @file{config} file
+- An *AWS Profile* is created on your local machine. If you check your
+  {{{file(~/.aws/config)}}} file on your machine, you would observe a region
+  associated with your profile name in the following format:
+
+#+BEGIN_EXAMPLE
+[profile amplifyprofile]
+region=us-east-1
+#+END_EXAMPLE
+
+#+CINDEX:@file{~/.aws/credentials} file
+#+CINDEX:@samp{accesskey}, AWS profile
+#+CINDEX:@samp{aws_access_key}
+#+CINDEX:@samp{secretkey}, AWS profile
+#+CINDEX:@samp{aws_secret_access_key}
+- Similarly, in your {{{file(~/.aws/credentials)}}} file, you would see the
+  =accesskey= and =secretkey= associated with your profile in the following
+  format:
+
+  #+BEGIN_EXAMPLE
+  [amplifyprofile]
+  aws_access_key_id=AKIAI6N66xxxxxxxxxxxx
+  aws_secret_access_key=4Nmtuxxxxxxxxxxxxxxxxxxxx
+  #+END_EXAMPLE
+
+
+#+CINDEX:new project, initialize
+#+CINDEX:initialize new project
+#+CINDEX:region, AWS
+#+CINDEX:IAM user, profile
+When you initialize a new project, the CLI will ask you to select an AWS
+profile. Based on upon your selection all the corresponding resources are
+deployed to the region and IAM user tied to the selected profile.
+
+*** Amplify Init
+
+#+CINDEX:CLI, initialize
+#+CINDEX:initialize CLI
+[[https://aws-amplify.github.io/docs/cli/init#amplify-init][Amplify init]]
+
+#+CINDEX:@command{amplify init}
+#+CINDEX:initialization step, new project
+#+CINDEX:new project, initialize
+#+CINDEX:JavaScript project, new, initialize
+#+CINDEX:iOS project, new, initialize
+#+CINDEX:Android project, new, initialize
+#+CINDEX:backend, AWS, connect project to
+The {{{command(amplify init)}}} command is a one-time initialization step for
+your Amplify-powered cloud app. You run this once for each project (JavaScript,
+iOS, or Android) to connect your app with an AWS backend.
+
+#+CINDEX:AWS Profile, select
+#+CINDEX:provision cloud resources
+#+CINDEX:frontend framework, select
+#+CINDEX:frontend configuration
+#+CINDEX:build command, build frontend code
+This setup helps you with the following:
+- Selecting your AWS Profile which would be used to provision cloud resources
+  for your app
+- Selecting the frontend framework for your app and corresponding frontend
+  framework-related configurations (like the build command to build your
+  frontend code).
+
+  #+CINDEX:publish app to cloud
+  #+CINDEX:build command
+  #+CINDEX:@command{amplify run} command
+  This information helps the CLI publish the app to the cloud (after executing
+  the build command), as well as helping to run the app locally for you to test
+  using the {{{command(amplify run)}}} command.
+
+{{{heading(What happens behind the scenes?)}}}
+
+#+CINDEX:CloudFormation stack, deployed
+#+CINDEX:parent stack
+- A CloudFormation stack is deployed for you (which we like to call the parent
+stack)
+
+#+CINDEX:resources, provisioned by parent CloudFormation stack
+- The parent CloudFormation stack provisions the following resources:
+  #+CINDEX:S3 deployment bucket
+  #+CINDEX:bucket, S3 deployment
+  - S3 deployment bucket. It is used to store the following contents:
+      #+CINDEX:Parent CloudFormation template
+    - Parent CloudFormation template
+      #+CINDEX:Nested CloudFormation templqtes
+    - Nested CloudFormation templates when you add further AWS resources to
+      your project.
+      #+CINDEX:Lambda Zip files
+      #+CINDEX:API Gateway
+      #+CINDEX:Lambda services
+    - Lambda Zip files (which are used when using API Gateway & Lambda services
+      in your project)
+      #+CINDEX:AppSync scheme, resolver files
+    - AppSync schema and resolver files
+  #+CINDEX:Auth Role
+  #+CINDEX:Unauth Role
+  #+CINDEX:policies, roles, populated
+  - Auth & Unauth Role with no policies in it during the initialization
+    phase. The policies get populated in it eventually, based on your
+    permission/authorization selections when adding resources to your project
+    like API, Storage, and Analytics
+
+#+CINDEX:@file{amplify/} directory, created
+- An {{{file(amplify/)}}} directory gets created at the root of your project
+  with the following structure:
+
+  #+BEGIN_EXAMPLE
+  <project-root>
+    |_amplify/
+    |_ #current-cloud-backend/
+        |_ amplify-meta.json
+    |_ .config
+        |_ local-aws-info.json
+        |_ local-env-info.json
+        |_ project-config.json
+    |_ backend/
+        |_amplify-meta.json
+    |_team-provider-info.json
+  #+END_EXAMPLE
+
+  #+CINDEX:@file{amplify/backend} directory
+  #+CINDEX:backend configuration
+  #+CINDEX:CloudFormation templates
+  #+CINDEX:@command{amplify add <category>} command
+  #+CINDEX:@file{back-config.json} file
+  #+CINDEX:backend infrastructure
+  #+CINDEX:@file{amplify-meta.json} file
+  #+CINDEX:metadata
+- The {{{file(amplify/backend)}}} directory contains all the local changes to
+  your backend configurations–such as the CloudFormation templates---when you
+  add resources to your project using the {{{command(amplify add <category>)}}}
+  command. It contains the {{{file{backend-config.json)}}} file which is a
+  structure to represent your backend infrastructure and certain CLI runtime
+  files like the {{{file(amplify-meta.json)}}} file which contains all the
+  metadata tied to your resources which you add via the Amplify CLI.
+
+  #+CINDEX:@file{#current-cloud-backend} directory
+  #+CINDEX:@file{backend} directory
+  #+CINDEX:@command{amplify push} command
+- The {{{file(#current-cloud-backend)}}} directory has a similar structure to
+  the {{{file(backend)}}} directory. The only differences between it and the
+  {{{file(backend)}}} directory are that it has the configurations that reflect
+  what resources were deployed in the cloud with your last {{{command(amplify
+  push)}}} command and it helps the CLI diff between the configuration of the
+  resources already provisioned in the cloud and what is currently in your
+  local {{{file(backend)}}} directory (which reflects your local changes).
+
+  #+CINDEX:@file{.config} directory
+  #+CINDEX:metadata files
+  #+CINDEX:@file{project-config.json} file
+  #+CINDEX:app-specific information
+- The {{{file(.config)}}} directory consists of the metadata files tied to your
+  project. The {{{file(project-config.json)}}} file, which can be safely
+  checked into a version control system, represents information specific to the
+  app you’re building. For e.g. a sample format shown below reflects the
+  framework you’re using for your app:
+
+  #+BEGIN_EXAMPLE
+  {
+    "projectName": "testapp",
+    "javascript": {
+        "framework": "react",
+        "config": {
+            "SourceDir": "src",
+            "DistributionDir": "dist",
+            "BuildCommand": "npm run-script build",
+            "StartCommand": "npm run-script start"
+        }
+    },
+    "providers": [
+        "awscloudformation"
+    ],
+    "frontend": "javascript",
+    "version": "1.0"
+  }
+  #+END_EXAMPLE
+
+#+CINDEX:@file{.config} directory
+#+CINDEX:@file{local-aws-info.json} file
+#+CINDEX:profile, key pair
+#+CINDEX:resources, adding to project
+The {{{file(.config)}}} directory also has a {{{file(local-aws-info.json)}}}
+file that lets the CLI know which AWS =profile/accesskey-secret key= pair to
+use when adding AWS resources to your project.  *Note:* This file should not be
+checked into version control since it has information specific to a system on
+which the CLI is running on.
+
+If you’re using an AWS profile to initialize your project, the format should be
+the following:
+
+#+BEGIN_EXAMPLE
+{
+    "dev": {
+        "configLevel": "project",
+        "useProfile": true,
+        "profileName": "devprofile"
+    },
+    "prod": {
+        "configLevel": "project",
+        "useProfile": true,
+        "profileName": "prodprofile"
+    }
+}
+#+END_EXAMPLE
+
+#+CINDEX:@file{local-env-info.json} file
+#+CINDEX:@file{.config} directory
+#+CINDEX:preferences, user/system
+#+CINDEX:configuration preferences
+#+CINDEX:@command{amplify configure project} command
+The {{{file(local-env-info.json)}}} file present in the {{{file(.config)}}}
+directory lets the CLI store user/system preferences which the user inputs when
+initializing the Amplify project in his/her system. These configurations could
+be later changed using the {{{command(amplify configure project)}}} command.
+*Note:* This file should not be checked into version control since it has
+information specific to a system on which the CLI is running on.
+
+This file has the following format:
+
+#+BEGIN_EXAMPLE
+{
+    "projectPath": "/Users/kaustavg/migtest",
+    "defaultEditor": "sublime",
+    "envName": "dev"
+}
+#+END_EXAMPLE
+
+#+CINDEX:@file{team-provider-info.json} file
+#+CINDEX:deployment related information
+#+CINDEX:environments, tied to project
+- The {{{file(team-provider-info.json)}}} file consists of deployment-related
+  information for all the environments tied to a project which is specifically
+  useful and should be checked into a version control system when sharing your
+  environments and backend infrastructure within a team. This file isn’t
+  required to be shared if you’re publicly sharing your app infrastructure.
+
+  This file has the following format:
+
+  #+BEGIN_EXAMPLE
+  {
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "multenvtest-20181115101929-authRole",
+            "UnauthRoleArn": "arn:aws:iam::132393967379:role/multenvtest-20181115101929-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::132393967379:role/multenvtest-20181115101929-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "multenvtest-20181115101929-deployment",
+            "UnauthRoleName": "multenvtest-20181115101929-unauthRole",
+            "StackName": "multenvtest-20181115101929",
+            "StackId": "arn:aws:cloudformation:us-east-1:132393967379:stack/multenvtest-20181115101929/fc7b1010-e902-11e8-a9bd-50fae97e0835"
+        }
+    },
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "multenvtest-20181115102119-authRole",
+            "UnauthRoleArn": "arn:aws:iam::345090917734:role/multenvtest-20181115102119-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::345090917734:role/multenvtest-20181115102119-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "multenvtest-20181115102119-deployment",
+            "UnauthRoleName": "multenvtest-20181115102119-unauthRole",
+            "StackName": "multenvtest-20181115102119",
+            "StackId": "arn:aws:cloudformation:us-east-1:345090917734:stack/multenvtest-20181115102119/3e907b70-e903-11e8-a18b-503acac41e61"
+        }
+  }
+  #+END_EXAMPLE
+
+*** Amplify Configure Project
+
+#+CINDEX:project, configure
+#+CINDEX:configure project
+[[https://aws-amplify.github.io/docs/cli/init#amplify-configure-project][Amplify configure project]]
+
+*** Assuming an IAM Role
+
+#+CINDEX:IAM role, assume
+#+CINDEX:assume IAM role
+#+CINDEX:role, IAM
+[[https://aws-amplify.github.io/docs/cli/init#assuming-an-iam-role][Assuming an IAM Role]]
 
 * Index
   :PROPERTIES:
@@ -1126,7 +1565,7 @@ components.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.1 <2019-02-12 Tue 07:48>
+#+MACRO:VERSION Version 0.2.2 <2019-02-12 Tue 10:35>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
@@ -1186,4 +1625,7 @@ specifically.
 [fn:9] [[https://aws-amplify.github.io/docs/js/authentication][~withAuthenticator~]]
 
 [fn:8] [[https://aws-amplify.github.io/docs/js/ui][AWS Amplify HOCs]]
+
+[fn:10] By default we give administrator access to this IAM user since the CLI
+needs access to a variety of services for deployments.
 
