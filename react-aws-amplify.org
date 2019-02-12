@@ -1028,6 +1028,51 @@
   atomic deployments. For more info, check out the documentation at
   https://aws.amazon.com/amplify/console/.
 
+* AWS Amplify
+  :PROPERTIES:
+  :APPENDIX: t
+  :END:
+[[https://aws-amplify.github.io][Amplify Framework]]
+
+** Library
+
+A comprehensive library for building sophisticated cloud-powered apps
+
+Choose your cloud services and easily connect them to your app with just a few
+lines of code.
+
+Categories:
+- Analytics
+- API
+- Authentication
+- Storage
+- Interactions
+- PubSub
+- Notifications
+- XR
+
+
+Utilities
+- Cache
+- Hub
+- I18n
+- Logger
+- Service Worker
+
+** Toolchain
+
+A powerful toolchain built for developers
+
+Effortlessly create and maintain sophisticated serverless backends for your
+apps.
+
+** UI Components
+
+A beautiful component library connected to the cloud
+
+Accelerate app development by leveraging our beautiful out-of-the box UI
+components.
+
 * Index
   :PROPERTIES:
   :INDEX:    cp
@@ -1081,7 +1126,7 @@
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.1.4 <2019-02-11 Mon 12:04>
+#+MACRO:VERSION Version 0.2.1 <2019-02-12 Tue 07:48>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
