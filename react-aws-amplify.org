@@ -1028,6 +1028,133 @@
   atomic deployments. For more info, check out the documentation at
   https://aws.amazon.com/amplify/console/.
 
+* AWS Identify and Access Management IAM
+:PROPERTIES:
+:APPENDIX: t
+:END:
+
+[[https://aws.amazon.com/iam/][AWS IAM]]
+
+#+CINDEX:IAM
+#+CINDEX:Identify and Access Management
+#+CINDEX:AWS services and resources, manage access to
+#+CINDEX:services, manage access to
+#+CINDEX:resources, manage access to
+Securely manage access to AWS services and resources
+
+#+CINDEX:AWS users and groups
+#+CINDEX:users, AWS
+#+CINDEX:groups, AWS
+#+CINDEX:permissions, AWS resources
+AWS Identity and Access Management (IAM) enables you to manage access to AWS
+services and resources securely. Using IAM, you can
+- create and manage AWS users and groups, and
+- use permissions to allow and deny their access to AWS resources.
+
+
+#+CINDEX:AWS account
+IAM is a feature of your AWS account offered at no additional charge. You will
+be charged only for use of other AWS services by your users.
+
+#+CINDEX:IAM, start
+#+CINDEX:AWS Management Console
+#+CINDEX:Management Console
+#+CINDEX:console, management
+#+CINDEX:IAM best practices
+#+CINDEX:best practices, IAM
+#+CINDEX:practices, IAM best
+To get started using IAM, or if you have already registered with AWS, go to the
+[[https://console.aws.amazon.com/iam/home][AWS Management Console]] and get started with these [[http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html][IAM Best Practices]].
+
+** Use Cases
+
+#+ATTR_TEXINFO: :indic b
+#+CINDEX:AWS resources, access to
+#+CINDEX:resources, access to AWS
+- Fine-grained access control to AWS resources ::
+     #+CINDEX:AWS service APIs, access to
+     #+CINDEX:service APIs, access to
+  - IAM enables your users to control access to AWS service APIs and to
+    specific resources.
+    #+CINDEX:conditions on use, AWS IAM
+    #+CINDEX:originating IP address
+    #+CINDEX:SSL, using
+    #+CINDEX:authenticated using MFA
+    #+CINDEX:MFA
+  - IAM also enables you to add specific conditions such as time of day to
+    control how a user can use AWS, their originating IP address, whether they
+    are using SSL, or whether they have authenticated with a multi-factor
+    authentication device.
+
+    #+CINDEX:access control, mobile applications
+    #+CINDEX:Web Identity Providers
+    #+CINDEX:security credentials, temporary
+- Manage access control for mobile applications with Web Identity Providers ::
+  - You can enable your mobile and browser-based applications to securely
+    access AWS resources by requesting temporary security credentials that
+    grant access only to specific AWS resources for a configurable period of
+    time.
+
+    #+CINDEX:Multi-factor authentication
+- Multi-factor authentication for highly privileged users ::
+  - Protect your AWS environment by using AWS MFA, a security feature
+    available at no extra cost that augments user name and password
+    credentials.
+  - MFA requires users to prove physical possession of a hardware MFA token or
+    MFA-enabled mobile device by providing a valid MFA code.
+
+    #+CINDEX:identity management
+    #+CINDEX:corporate directory
+    #+CINDEX:employees
+    #+CINDEX:federated access
+    #+CINDEX:SAML 2.0
+    #+CINDEX:AWS Console SSO
+    #+CINDEX:API federation
+- Integrate with your corporate directory ::
+     - IAM can be used to grant your employees and applications federated
+       access to the AWS Management Console and AWS service APIs, using your
+       existing identity systems such as Microsoft Active Directory.
+     - You can use any identity management solution that supports SAML 2.0, or
+       feel free to use one of our federation samples (AWS Console SSO or API
+       federation).
+
+** How It Works
+
+#+CINDEX:roles, create
+#+CINDEX:permissions, create
+{{{heading(IAM assists in creating roles and permissions.)}}}
+
+AWS IAM allows you to:
+
+#+CINDEX:IAM users, manage
+#+CINDEX:users, manage IAM
+#+CINDEX:access, manage IAM
+- Manage IAM users and their access ::
+  - You can create users in IAM,
+  - assign them individual security credentials (in other words, access keys,
+    passwords, and multi-factor authentication devices), or
+  - request temporary security credentials to provide users access to AWS
+    services and resources.
+  - You can manage permissions in order to control which operations a user can
+    perform.
+
+- Manage IAM roles and their permissions ::
+  - You can create roles in IAM and manage permissions to control which
+    operations can be performed by the entity, or AWS service, that assumes
+    the role.
+  - You can also define which entity is allowed to assume the role. In
+    addition, you can use service-linked roles to delegate permissions to AWS
+    services that create and manage AWS resources on your behalf.
+
+- Manage federated users and their permissions ::
+  - You can enable identity federation to allow existing identities (users,
+    groups, and roles) in your enterprise to access the AWS Management
+    Console,
+  - call AWS APIs, and
+  - access resources, without the need to create an IAM user for each identity.
+  - Use any identity management solution that supports SAML 2.0, or use one of
+    our federation samples (AWS Console SSO or API federation).
+
 * AWS Amplify
   :PROPERTIES:
   :APPENDIX: t
@@ -1512,6 +1639,10 @@ This file has the following format:
 #+CINDEX:role, IAM
 [[https://aws-amplify.github.io/docs/cli/init#assuming-an-iam-role][Assuming an IAM Role]]
 
+** Tutorial
+
+[[https://www.youtube.com/watch?v=uiTQL7Ne8rY][AWS Amplify React Tutorial]] by the author.
+
 * Index
   :PROPERTIES:
   :INDEX:    cp
@@ -1565,7 +1696,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.2 <2019-02-12 Tue 10:35>
+#+MACRO:VERSION Version 0.2.3 <2019-02-13 Wed 08:05>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
