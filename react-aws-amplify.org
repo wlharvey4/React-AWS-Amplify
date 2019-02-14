@@ -1264,6 +1264,59 @@ To give entities permissions, you can attach a policy that specifies
 - In addition, you can specify any conditions that must be set for access to be
   allowed or denied.
 
+*** Assign Permissions
+
+#+CINDEX:permissions, assign
+#+CINDEX:policy, create
+To assign permissions to a user, group, role, or resource, you create a policy
+that lets you specify:
+
+#+ATTR_TEXINFO: :indic b
+- Actions ::
+             Which AWS service actions you allow. For example, you might allow
+             a user to call the Amazon S3 ListBucket action. Any actions that
+             you don't explicitly allow are denied.
+- Resources ::
+               Which AWS resources you allow the action on. For example, what
+               Amazon S3 buckets will you allow the user to perform the
+               ListBucket action on? Users cannot access any resources that you
+               do not explicitly grant permissions to.
+- Effect ::
+            Whether to allow or deny access. Because access is denied by
+            default, you typically write policies where the effect is to allow.
+- Conditions ::
+                Which conditions must be present for the policy to take
+                effect. For example, you might allow access only to the
+                specific S3 buckets if the user is connecting from a specific
+                IP range or has used multi-factor authentication at login.
+
+
+*** Create Policies
+
+#+CINDEX:policies, create
+You create policies by using either the visual editor or JSON.
+
+#+CINDEX:policy
+A {{{dfn(policy)}}} consists of one or more statements, each of which describes
+one set of permissions.
+
+#+CINDEX:AWS IAM Policy Reference
+To learn more about the policy language, see [[http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html][AWS IAM Policy Reference]].
+
+**** Visual Editor
+
+#+CINDEX:visual editor
+The visual editor guides you through granting permissions by using IAM policies
+without requiring you to write the policies in JSON (although you can still
+author and edit policies in JSON, if you prefer). The policy in the following
+screenshot was created with the visual editor. It grants five Amazon S3 List
+and Read actions to the S3 bucket and objects in SampleBucket if the prefix
+starts with MyPrefix.
+
+#+NAME:img:manage-permissions
+#+CAPTION:Policy created using the Visual Editor
+[[file:img/ManagePermissions.jpg]]
+
 * AWS Amplify
   :PROPERTIES:
   :APPENDIX: t
@@ -1805,7 +1858,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.4 <2019-02-14 Thu 08:46>
+#+MACRO:VERSION Version 0.2.5 <2019-02-14 Thu 09:10>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
