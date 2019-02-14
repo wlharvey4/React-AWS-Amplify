@@ -1290,7 +1290,6 @@ that lets you specify:
                 specific S3 buckets if the user is connecting from a specific
                 IP range or has used multi-factor authentication at login.
 
-
 *** Create Policies
 
 #+CINDEX:policies, create
@@ -1316,6 +1315,70 @@ starts with MyPrefix.
 #+NAME:img:manage-permissions
 #+CAPTION:Policy created using the Visual Editor
 [[file:img/ManagePermissions.jpg]]
+
+*** View Policy Summaries
+
+#+CINDEX:policy summaries, view
+#+CINDEX:view policy summaries
+#+CINDEX:AWS Management Console
+#+CINDEX:manage permissions
+#+CINDEX:permissions, manage
+#+CINDEX:access levels
+#+CINDEX:List access level
+#+CINDEX:Read access level
+#+CINDEX:Write access level
+#+CINDEX:Permissions access level
+#+CINDEX:policy permissions
+#+CINDEX:permissions, policy
+#+CINDEX:actions, AWS service
+#+CINDEX:AWS service action policy
+If you use the AWS Management Console to manage permissions, you can view
+policy summaries. A {{{dfn(policy summary)}}} /lists the access level,
+resources, and conditions for each service defined in a policy/ (see the
+following screenshot for an example). To help you understand the permissions
+defined in a policy, each AWS service’s actions are categorized in four access
+levels: List, Read, Write, and Permissions management.
+
+#+NAME:img:view-policies
+#+CAPTION:View policy summaries
+[[file:img/JC1final-UPDATED_65.png]]
+
+#+CINDEX:predefined policy, select
+#+CINDEX:policy generator, create own policy
+#+CINDEX:policy, predefined by AWS
+You can select a predefined policy managed by AWS or create your own using the
+policy generator. For more information, see the [[http://docs.aws.amazon.com/IAM/latest/UserGuide/PoliciesOverview.html][Overview of IAM Policies]]
+section of the [[http://docs.aws.amazon.com/IAM/latest/UserGuide/][Using IAM guide]].
+
+** Getting started with AWS IAM
+
+https://aws.amazon.com/iam/getting-started/
+
+AWS IAM helps you manage access to your AWS resources.  Using IAM, you can
+manage:
+#+ATTR_TEXINFO: :indic b
+- Authentication :: who can use your AWS resources and
+- Authorization :: what resources they can use and in what ways.
+
+{{{heading(Tutorials and guides)}}}
+
+Get started with AWS Identity and Access Management (IAM) quickly using the
+following tutorials and guides:
+
+- What is AWS Identity and Access Management (IAM), and what can I do with it [[https://aws.amazon.com/premiumsupport/knowledge-center/iam-intro/][==>]]
+- User Guide: Getting Started [[http://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started.html][==>]]
+- What is an IAM user and what can an IAM user do [[https://aws.amazon.com/premiumsupport/knowledge-center/iam-user-basics/][==>]]
+- How to create a new IAM user [[https://aws.amazon.com/premiumsupport/knowledge-center/create-new-iam-user/][==>]]
+- Tutorial: Delegate Access to the Billing Console [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_billing.html][==>]]
+- Tutorial: Delegate Access Across AWS Accounts Using IAM Roles [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html][==>]]
+- Tutorial: Create and Attach Your First Customer Managed Policy [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_managed-policies.htmlhttp://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_managed-policies.html][==>]]
+- Tutorial: Enable Your Users to Configure Their Own Credentials and MFA
+  Settings [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_users-self-manage-mfa-and-creds.html][==>]]
+
+
+Want to learn more? See
+- [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorials.html][AWS IAM Tutorials]] and
+- the [[https://aws.amazon.com/premiumsupport/knowledge-center/#iam][AWS IAM section in the Knowledge Center]].
 
 * AWS Amplify
   :PROPERTIES:
@@ -1805,6 +1868,12 @@ This file has the following format:
 
 [[https://www.youtube.com/watch?v=uiTQL7Ne8rY][AWS Amplify React Tutorial]] by the author.
 
+* List of Figures
+:PROPERTIES:
+:APPENDIX: t
+:END:
+#+TEXINFO:@listoffloats Figure
+
 * Index
   :PROPERTIES:
   :INDEX:    cp
@@ -1858,7 +1927,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.5 <2019-02-14 Thu 09:10>
+#+MACRO:VERSION Version 0.2.6 <2019-02-14 Thu 10:57>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
