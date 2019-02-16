@@ -1410,6 +1410,228 @@ Want to learn more? See
 - [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorials.html][AWS IAM Tutorials]] and
 - the [[https://aws.amazon.com/premiumsupport/knowledge-center/#iam][AWS IAM section in the Knowledge Center]].
 
+** IAM Best Practices
+
+#+CINDEX:recommended best practices
+#+CINDEX:real-world scenarios
+To get the greatest benefits from IAM, take time to learn the recommended best
+practices. One way to do this is to see how IAM is used in real-world scenarios
+to work with other AWS services.
+
+*** Lock Away Your AWS Account Root User Access Keys
+
+#+CINDEX:programmatic requests to AWS
+#+CINDEX:root user access keys, do not use
+You use an access key (an access key ID and secret access key) to make
+programmatic requests to AWS. However, do not use your AWS account root user
+access key. The access key for your AWS account root user gives full access to
+all your resources for all AWS services, including your billing
+information. You cannot reduce the permissions associated with your AWS account
+root user access key.
+
+Therefore, protect your root user access key like you would your credit card
+numbers or any other sensitive secret. Here are some ways to do that:
+
+#+CINDEX:root user access key, do not create
+#+CINDEX:IAM user, create with administrative permissions
+- If you don't already have an access key for your AWS account root user, don't
+  create one unless you absolutely need to. Instead, use your account email
+  address and password to sign in to the AWS Management Console and create an
+  IAM user for yourself that has administrative permissions.
+
+  #+CINDEX:root user access key, delete
+- If you do have an access key for your AWS account root user, delete it.
+
+- Never share your AWS account root user password or access keys with anyone.
+
+- Use a strong password to help protect account-level access to the AWS
+  Management Console.
+
+  #+CINDEX:multi-factor authentication, root user account
+- Enable AWS multi-factor authentication (MFA) on your AWS account root user
+  account.
+
+*** Create Individual IAM Users
+
+#+CINDEX:create individual users
+#+CINDEX:IAM user with administrative permissions
+Don't use your AWS account root user credentials to access AWS, and don't give
+your credentials to anyone else. Instead, create individual users for anyone
+who needs access to your AWS account. Create an IAM user for yourself as well,
+give that user administrative permissions, and use that IAM user for all your
+work.
+
+For information about how to do this, see
+
+#+CINDEX:IAM user, create first
+- [[https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html][Creating Your First IAM Admin User and Group]].
+
+By creating individual IAM users for people accessing your account, you can
+give each IAM user a unique set of security credentials. You can also grant
+different permissions to each IAM user. If necessary, you can change or revoke
+an IAM user's permissions any time.
+
+*** Use Groups to Assign Permissions to IAM Users
+
+#+CINDEX:groups, assign permissions to
+Instead of defining permissions for individual IAM users,
+
+#+CINDEX:job functions
+- it's usually more convenient to create groups that relate to job functions
+  (administrators, developers, accounting, etc.).
+
+- Next, define the relevant permissions for each group.
+
+  #+CINDEX:users, assign to groups
+- Finally, assign IAM users to those groups.
+
+
+All the users in an IAM group inherit the permissions assigned to the
+group. That way, you can make changes for everyone in a group in just one
+place. As people move around in your company, you can simply change what IAM
+group their IAM user belongs to.
+
+#+CINDEX:manage IAM groups
+#+CINDEX:groups, manage
+- [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage.html][Managing IAM Groups]]
+
+*** Grant Least Privilege
+
+#+CINDEX:least privilege
+#+CINDEX:tasks, policies for
+When you create IAM policies, follow the standard security advice of granting
+/least privilege/, or granting only the permissions required to perform a
+task. Determine what users need to do and then craft policies for them that let
+the users perform /only/ those tasks.
+
+#+CINDEX:permissions, minimum set
+Start with a minimum set of permissions and grant additional permissions as
+necessary. Doing so is more secure than starting with permissions that are too
+lenient and then trying to tighten them later.
+
+#+CINDEX:access level groupings
+#+CINDEX:policy actions
+#+CINDEX:List
+#+CINDEX:Read
+#+CINDEX:Write
+#+CINDEX:Permissions manaagement
+#+CINDEX:Tagging
+You can use access level groupings to understand the level of access that a
+policy grants. *Policy actions* are classified as:
+
+- =List=,
+- =Read=,
+- =Write=,
+- =Permissions management=, or
+- =Tagging=.
+
+
+#+CINDEX:read-only access
+For example, you can choose actions from the =List= and =Read= access levels to
+grant read-only access to your users.
+
+#+CINDEX:policy summaries, use
+#+CINDEX:access level permissions
+To learn how to use policy summaries to understand access level permissions, see
+
+- [[https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#use-access-levels-to-review-permissions][Use Access Levels to Review IAM Permissions]].
+
+{{{subheading(Service Last Accessed Data)}}}
+
+#+CINDEX:service last accessed data
+#+CINDEX:Access Advisor tab
+#+CINDEX:IAM console details page
+One feature that can help with this is /service last accessed data/. View this
+data on the {{{key(Access Advisor)}}} tab on the =IAM console details= page for
+a user, group, role, or policy.
+
+#+CINDEX:AWS CLI, service last accessed data
+#+CINDEX:AWS API, service last accessed data
+You can also use the AWS CLI or AWS API to retrieve /service last accessed
+data/.
+
+#+CINDEX:unnecessary permissions, identify
+This data includes information about which services a user, group, role, or
+anyone using a policy attempted to access and when. You can use this
+information to identify unnecessary permissions so that you can refine your IAM
+policies to better adhere to the principle of least privilege.
+
+For more information, see:
+
+#+CINDEX:reducing permissions, service last accessed data
+- [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html][Reducing Permissions Using Service Last Accessed Data]]
+
+{{{subheading(CloudTrail Event history)}}}
+
+#+CINDEX:CloudTrail Event history
+#+CINDEX:Event history, CloudTrail
+To further reduce permissions, you can view your account's events in CloudTrail
+*Event history*. CloudTrail event logs include detailed event information that
+you can use to reduce the policy's permissions and include only the actions and
+resources that your IAM entities need.
+
+For more information, see (in the AWS CloudTrail User Guide):
+
+#+CINDEX:CloudTrail Events in CloudTrail Console
+- [[https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events-console.html][Viewing CloudTrail Events in the CloudTrail Console]]
+
+**** Access Management
+
+#+CINDEX:access management
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html
+
+**** Policy topics for individual services
+
+#+CINDEX:write policies
+#+CINDEX:policies, write for service-specific resources
+provide examples of how to write policies for service-specific resources
+
+#+CINDEX:Amazon DynamoDB, authentication, access control
+- [[https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html][Authentication and Access Control for Amazon DynamoDB]] in the /Amazon DynamoDB
+  Developer Guide/
+
+  #+CINDEX:bucket policies
+  #+CINDEX:policies, bucket and user
+  #+CINDEX:Amazon Simple Storage Service
+- [[https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html][Using Bucket Policies and User Policies]] in the /Amazon Simple Storage Service
+  Developer Guide/
+
+  #+CINDEX:Access Control List (ACL)
+- [[https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html][Access Control List (ACL) Overview]] in the /Amazon Simple Storage Service
+  Developer Guide/
+
+*** Get Started Using Permissions With AWS Managed Policies
+
+*** Use Customer Managed Policies Instead of Inline Policies
+
+*** Use Access Levels to Review IAM Permissions
+
+*** Configure a Strong Password Policy for Your Users
+
+*** Enable MFA for Privileged Users
+
+*** Use Roles for Applications That Run on Amazon EC2 Instances
+
+*** Use Roles to Delegate Permissions
+
+*** Do Not Share Access Keys
+
+*** Rotate Credentials Regularly
+
+*** Remove Unnecessary Credentials
+
+*** Use Policy Conditions for Extra Security
+
+*** Monitor Activity in Your AWS Account
+
+*** Video Presentation About IAM Best Practices
+
+The following video includes a conference presentation that covers these best
+practices and shows additional details about how to work with the features
+discussed here.
+
+[[https://youtu.be/_wiGpBQGCjU]]
+
 * AWS Amplify
   :PROPERTIES:
   :APPENDIX: t
@@ -1957,7 +2179,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.7 <2019-02-15 Fri 14:15>
+#+MACRO:VERSION Version 0.2.8 <2019-02-16 Sat 11:06>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
