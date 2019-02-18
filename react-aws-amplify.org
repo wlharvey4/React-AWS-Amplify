@@ -1602,15 +1602,216 @@ provide examples of how to write policies for service-specific resources
 
 *** Get Started Using Permissions With AWS Managed Policies
 
+#+CINDEX:AWS managed policies
+#+CINDEX:managed policies
+#+CINDEX:policies, managed
+To get started quickly, you can use AWS managed policies to give your employees
+the permissions they need to get started. These policies are already available
+in your account and are maintained and updated by AWS. For more information
+about AWS managed policies, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies][AWS Managed Policies]].
+
+AWS managed policies are designed to provide permissions for many common use
+cases.  AWS managed policies make it easier for you to assign appropriate
+permissions to users, groups, and roles than if you had to write the policies
+yourself.
+
+#+CINDEX:full access managed policy
+#+CINDEX:managed policy, full access
+#+CINDEX:AmazonDynamoDBFullAccess
+#+CINDEX:IAMFullAccess
+- Full Access ::
+                 Full access AWS managed policies such as
+                 [[https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess][AmazonDynamoDBFullAccess]] and [[https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/IAMFullAccess][IAMFullAccess]] define permissions
+                 for service administrators by granting full access to a
+                 service.
+
+                 #+CINDEX:power user managed policy
+                 #+CINDEX:managed policy, power user
+                 #+CINDEX:AWSCodeCommitPowerUser
+                 #+CINDEX:AWSKeyManagementServicePowerUser
+- Power User ::
+                Power-user AWS managed policies such as [[https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AWSCodeCommitPowerUser][AWSCodeCommitPowerUser]]
+                and [[https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AWSKeyManagementServicePowerUser][AWSKeyManagementServicePowerUser]] provide multiple levels of
+                access to AWS services without allowing permissions management
+                permissions.
+
+                #+CINDEX:partial access managed policy
+                #+CINDEX:managed policy, partial access
+                #+CINDEX:AmazonMobileAnalyicsWriteOnlyAccess
+                #+CINDEX:AmazonEC2ReadOnyAccess
+- Partial Access ::
+                    Partial-access AWS managed policies such as
+                    [[https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AmazonMobileAnalyticsWriteOnlyAccess][AmazonMobileAnalyticsWriteOnlyAccess]] and
+                    [[https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess][AmazonEC2ReadOnlyAccess]] provide specific levels of access
+                    to AWS services.
+
+
+#+CINDEX:managed policies for job functions
+#+CINDEX:job functions, AWS managed policies
+#+CINDEX:IT industry job functions
+#+CINDEX:AWS Managed Policies for Job Functions
+AWS managed policies for job functions can span multiple services and align
+with common job functions in the IT industry. For a list and descriptions of
+job function policies, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html][AWS Managed Policies for Job Functions]].
+
 *** Use Customer Managed Policies Instead of Inline Policies
+
+#+CINDEX:managed policies
+#+CINDEX:inline policies
+For custom policies, we recommend that you use managed policies instead of
+inline policies.
+
+#+CINDEX:inline policies, definition
+#+CINDEX:IAM identity
+{{{dfn(Inline policies)}}} are policies that exist only on an IAM identity
+(user, group, or role).
+
+#+CINDEX:managed policies, definition
+#+CINDEX:multiple identities
+{{{dfn(Managed policies)}}} are separate IAM resources that you can attach to
+multiple identities.
+
+For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html][Managed Policies and Inline Policies]].
+
+- A key advantage of using these policies is that you can view all of your
+  managed policies in one place in the console.
+
+- You can also view this information with a single AWS CLI or AWS API
+  operation.
+
+
+#+CINDEX:convert inline policies to managed policies
+#+CINDEX:inline policies, convert to managed policies
+If you have inline policies in your account, you can convert them to managed
+policies. To do this, copy the policy to a new managed policy, attach the new
+policy to the identity that has the inline policy, and then delete the inline
+policy.
+
+#+CINDEX:inline policies rather than managed policies
+In some circumstances, we do recommend choosing inline policies over managed
+policies. For details, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#choosing-managed-or-inline][Choosing Between Managed Policies and Inline
+Policies]].
 
 *** Use Access Levels to Review IAM Permissions
 
+#+CINDEX:review IAM policies
+To improve the security of your AWS account, you should regularly review and
+monitor each of your IAM policies. Make sure that your policies grant the least
+privilege that is needed to perform only the necessary actions.
+
+#+CINDEX:policy summary, view
+#+CINDEX:access level, for each service
+#+CINDEX:service action
+#+CINDEX:List access level
+#+CINDEX:Read access level
+#+CINDEX:Write access level
+#+CINDEX:Permissions management access level
+When you review a policy, you can view the policy summary that includes a
+summary of the access level for each service within that policy. AWS
+categorizes each service action into one of four access levels based on what
+each action does: List, Read, Write, or Permissions management. You can use
+these access levels to determine which actions to include in your policies.
+
+#+BEGIN_cartouche
+For example, in the Amazon S3 service, you might want to allow a large group of
+users to access List and Read actions. Such actions permit those users to list
+the buckets and get objects in Amazon S3. However, you should allow only a
+small group of users to access the Amazon S3 Write actions to delete buckets or
+put objects into an S3 bucket. Additionally, you should reduce permissions to
+allow only administrators to access the Amazon S3 Permissions management
+actions. This ensures that only a limited number of people can manage bucket
+policies in Amazon S3. This is especially important for Permissions management
+actions in IAM and AWS Organizations services.
+#+END_cartouche
+
+#+CINDEX:access level classificationm, view
+To view the access level classification that is assigned to each action in a
+service, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html][Actions, Resources, and Condition Keys for AWS Services]].
+
+#+CINDEX:policy summary
+#+CINDEX:Policies page for managed policies
+#+CINDEX:Users page for policies attached to a user
+To see the access levels for a policy, you must first locate the policy's
+summary. The policy summary is included on the Policies page for managed
+policies, and on the Users page for policies that are attached to a user. For
+more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_understand-policy-summary.html][Policy Summary (List of Services)]].
+
+#+CINDEX:policy summary, within
+#+CINDEX:Access level column
+#+CINDEX:Full access
+#+CINDEX:Limited access
+#+CINDEX:level of access, policy provides
+Within a policy summary, the Access level column shows that the policy provides
+Full or Limited access to one or more of the four AWS access levels for the
+service. Alternately, it might show that the policy provides Full access to all
+the actions within the service. You can use the information within this Access
+level column to understand the level of access that the policy provides. You
+can then take action to make your AWS account more secure. For details and
+examples of the access level summary, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_understand-policy-summary-access-level-summaries.html][Understanding Access Level Summaries
+Within Policy Summaries]].
+
 *** Configure a Strong Password Policy for Your Users
+
+#+CINDEX:strong passwords
+#+CINDEX:passwords, strong, rotate
+#+CINDEX:rotate passwords
+If you allow users to change their own passwords, require that they create
+strong passwords and that they rotate their passwords periodically.
+
+#+CINDEX:Account Settings page of IAM console
+-  [[https://console.aws.amazon.com/iam/home?#account_settings][Account Settings]] page of the IAM console ::
+     Create a password policy for your account.  You can use the password
+     policy to define password requirements, such as minimum length, whether it
+     requires non-alphabetic characters, how frequently it must be rotated, and
+     so on.
+
+
+For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html][Setting an Account Password Policy for IAM Users]].
 
 *** Enable MFA for Privileged Users
 
+#+CINDEX:multi-factor authentication (MFA)
+#+CINDEX:privileged IAM users, definition
+For extra security, enable multi-factor authentication (MFA) for
+{{{dfn(privileged IAM users)}}} (users who are allowed access to sensitive
+resources or API operations).
+
+For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html][Using Multi-Factor Authentication (MFA) in AWS]].
+
 *** Use Roles for Applications That Run on Amazon EC2 Instances
+
+#+CINDEX:Amazon EC2
+#+CINDEX:credentials, EC2 instance
+Applications that run on an Amazon EC2 instance need credentials in order to
+access other AWS services. To provide credentials to the application in a
+secure way, use IAM roles.
+
+#+CINDEX:role, definition
+- Role ::
+          A {{[dfn(role)}}} is an entity that has its own set of permissions,
+          but that isn't a user or group.  Roles also don't have their own
+          permanent set of credentials the way IAM users do.
+#+CINDEX:temporary credentials
+#+CINDEX:credentials, temporary
+- Temporary credentials ::
+     In the case of Amazon EC2, IAM dynamically provides temporary credentials
+     to the EC2 instance, and these credentials are automatically rotated for
+     you.
+
+
+#+CINDEX:EC2 instance launch
+#+CINDEX:launch EC2 instance
+#+CINDEX:role, specify for an instance
+#+CINDEX:launch parameter, role
+#+CINDEX:permissions, role
+#+CINDEX:role permissions
+When you launch an EC2 instance, you can specify a role for the instance as a
+launch parameter.  Applications that run on the EC2 instance can use the role's
+credentials when they access AWS resources.  The role's permissions determine
+what the application is allowed to do.
+
+For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html][Using an IAM Role to Grant Permissions to
+Applications Running on Amazon EC2 Instances]].
 
 *** Use Roles to Delegate Permissions
 
@@ -2179,7 +2380,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.8 <2019-02-16 Sat 11:06>
+#+MACRO:VERSION Version 0.2.9 <2019-02-18 Mon 11:14>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
