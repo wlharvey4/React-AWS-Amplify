@@ -1815,15 +1815,84 @@ Applications Running on Amazon EC2 Instances]].
 
 *** Use Roles to Delegate Permissions
 
+#+CINDEX:security credentials, no sharing
+#+CINDEX:IAM roles, not sharing
+#+CINDEX:roles, define
+Don't share security credentials between accounts to allow users from another
+AWS account to access resources in your AWS account. Instead, use IAM
+roles. You can define a role that specifies what permissions the IAM users in
+the other account are allowed. You can also designate which AWS accounts have
+the IAM users that are allowed to assume the role.
+
+For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html][Roles Terms and Concepts]].
+
 *** Do Not Share Access Keys
+
+#+CINDEX:access keys
+#+CINDEX:programmatic access, access keys
+{{{dfn(Access keys)}}} provide programmatic access to AWS.
+
+Do not embed access keys within unencrypted code or share these security
+credentials between users in your AWS account.
+
+#+CINDEX:temporary security credentials, roles
+#+CINDEX:roles, temporary security credentials
+For applications that need access to AWS, configure the program to retrieve
+temporary security credentials using an IAM role.
+
+#+CINDEX:IAM user
+#+CINDEX:personal access key
+To allow your users individual programmatic access, create an IAM user with
+personal access keys.
 
 *** Rotate Credentials Regularly
 
+#+CINDEX:password policy
+#+CINDEX:password, change frequently
+Change your own passwords and access keys regularly, and make sure that all IAM
+users in your account do as well. That way, if a password or access key is
+compromised without your knowledge, you limit how long the credentials can be
+used to access your resources. You can apply a password policy to your account
+to require all your IAM users to rotate their passwords, and you can choose how
+often they must do so.
+
 *** Remove Unnecessary Credentials
+
+Remove IAM user credentials (passwords and access keys) that are not needed.
+
+#+CINDEX:credentials report
+#+CINDEX:unused passwords, find
+#+CINDEX:unused access keys, find
+You can find unused passwords or access keys using the console, using the CLI
+or API, or by downloading the credentials report.  See [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html][Finding Unused
+Credentials]].
 
 *** Use Policy Conditions for Extra Security
 
+#+CINDEX:conditions, define
+To the extent that it's practical, define the conditions under which your IAM
+policies allow access to a resource.
+
+- For example, you can write conditions to specify a range of allowable IP
+  addresses that a request must come from.
+
+- You can also specify that a request is allowed only within a specified date
+  range or time range.
+
+- You can also set conditions that require the use of SSL or MFA (multi-factor
+  authentication).
+
+#+CINDEX:IAM JSON Policy Elements
+For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html][IAM JSON Policy Elements: Condition]] in the IAM Policy
+Elements Reference.
+
 *** Monitor Activity in Your AWS Account
+
+#+CINDEX:logging features
+You can use logging features in AWS to determine the actions users have taken
+in your account and the resources that were used. The log files show the time
+and date of actions, the source IP for an action, which actions failed due to
+inadequate permissions, and more.
 
 *** Video Presentation About IAM Best Practices
 
@@ -2380,7 +2449,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.2.9 <2019-02-18 Mon 11:14>
+#+MACRO:VERSION Version 0.3.0 <2019-02-18 Mon 17:33>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
