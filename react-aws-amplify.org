@@ -1028,7 +1028,7 @@
   atomic deployments. For more info, check out the documentation at
   https://aws.amazon.com/amplify/console/.
 
-* AWS Identity and Access Management IAM
+* IAM Identity and Access Management
 :PROPERTIES:
 :APPENDIX: t
 :END:
@@ -1038,7 +1038,9 @@
 - [[https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html][IAM Documentation]]
 
 #+CINDEX:IAM
-#+CINDEX:Identify and Access Management
+#+CINDEX:Identity and Access Management
+#+CINDEX:web service, IAM
+#+CINDEX:AWS resources, access to
 #+CINDEX:AWS services and resources, manage access to
 #+CINDEX:AWS users and groups
 #+CINDEX:services, manage access to
@@ -1046,14 +1048,18 @@
 #+CINDEX:users, AWS
 #+CINDEX:groups, AWS
 #+CINDEX:permissions, AWS resources
-AWS Identity and Access Management (IAM) enables you to manage access to AWS
-services and resources securely. Using IAM, you can
+AWS Identity and Access Management (IAM) is a web service that helps you
+securely control access to (manage) AWS /resources/. You use IAM to control who
+is /authenticated/ (signed in) and /authorized/ (has permissions) to use
+resources.
+
+Using IAM, you can:
 - create and manage AWS *users and groups*, and
 - use *permissions* to allow and deny their access to AWS resources.
 
 
 - {{{dfn(Resources)}}} ::
-     are objects within a service.  IAM resources include
+     are objects within a service.  IAM resources include:
   - groups,
   - users,
   - roles, and
@@ -1072,6 +1078,22 @@ be charged only for use of other AWS services by your users.
 #+CINDEX:practices, IAM best
 To get started using IAM, or if you have already registered with AWS, go to the
 [[https://console.aws.amazon.com/iam/home][AWS Management Console]] and get started with these [[http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html][IAM Best Practices]].
+
+** Root User
+
+#+CINDEX:root user
+When you first create an AWS account, you begin with a single sign-in identity
+that has complete access to all AWS services and resources in the account. This
+identity is called the AWS account {{{dfn(root user)}}} and is accessed by
+signing in with the /email address/ and /password/ that you used to create the
+account.
+
+#+CINDEX:best practices
+We strongly recommend that you do not use the root user for your everyday
+tasks, even the administrative ones.  Instead, adhere to the [[#root_user][best practice]] of
+using the root user only to create your first IAM user. Then securely lock away
+the root user credentials and use them to perform only a few account and
+service management tasks.
 
 ** Use Cases
 
@@ -1419,6 +1441,9 @@ practices. One way to do this is to see how IAM is used in real-world scenarios
 to work with other AWS services.
 
 *** Lock Away Your AWS Account Root User Access Keys
+:PROPERTIES:
+:CUSTOM_ID: root_user
+:END:
 
 #+CINDEX:programmatic requests to AWS
 #+CINDEX:root user access keys, do not use
@@ -2449,7 +2474,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.0 <2019-02-18 Mon 17:33>
+#+MACRO:VERSION Version 0.3.1 <2019-02-19 Tue 08:05>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
