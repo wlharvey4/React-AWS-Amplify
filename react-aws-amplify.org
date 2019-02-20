@@ -1095,6 +1095,109 @@ using the root user only to create your first IAM user. Then securely lock away
 the root user credentials and use them to perform only a few account and
 service management tasks.
 
+*** First-Time Access---Your Root User Credentials
+
+#+CINDEX:root user credentials
+When you create an AWS account, you create an *AWS account root user identity*,
+which you use to sign in to AWS.  You can sign in to the AWS Management Console
+using this root user identity---that is, the email address and password that
+you provided when creating the account.  This combination of your email address
+and password is also called your {{{dfn(root user credentials)}}}.
+
+When you use your root user credentials, you have *complete, unrestricted
+access to all resources in your AWS account*, including access to your billing
+information and the ability to change your password.  This level of access is
+necessary when you first set up your account.
+
+However, we recommend that you /don't/ use root user credentials for everyday
+access.  *We especially recommend that you do not share your root user
+credentials with anyone*, because doing so gives them unrestricted access to
+your account.  /It is not possible to restrict the permissions that are granted
+to the root user./
+
+*** Users Identities and Permissions
+
+#+CINDEX:user identity
+#+CINDEX:user permissions
+The following sections explain how you can use IAM to create and manage user
+identity and permissions to provide secure, limited access to your AWS
+resources, both for yourself and for others who need to work with your AWS
+resources.
+
+**** Authentication of Users
+
+#+CINDEX:authentication
+#+CINDEX:identity, IAM
+#+CINDEX:who is the user
+The ``identity'' aspect of AWS Identity and Access Management (IAM) helps you
+with the question ``Who is that user?'', often referred to as
+{{{dfn(authentication)}}}.
+
+#+CINDEX:users
+Instead of sharing your root user credentials with others, you can create
+individual {{{dfn(IAM users)}}} within your account that correspond to users in
+your organization.  IAM users are not separate accounts; /they are users within
+your account/.
+
+#+CINDEX:password, user
+#+CINDEX:user password
+- Each user can have its own password for access to the AWS Management Console.
+  #+CINDEX:access key, user
+  #+CINDEX:user access key
+- You can also create an individual access key for each user so that the user
+  can make programmatic requests to work with resources in your account.
+- Users can be applications. An IAM user doesn't have to represent an actual
+  person; you can create an IAM user in order to generate an access key for an
+  application that runs in your corporate network and needs AWS access.
+
+
+We recommend that you create an IAM user for yourself and then assign yourself
+administrative permissions for your account. You can then sign in as that user
+to add more users as needed.
+
+**** Federating Existing Users
+
+#+CINDEX:federate users
+#+CINDEX:users, federate
+If the users in your organization already have a way to be authenticated, such
+as by signing in to your corporate network, you don't have to create separate
+IAM users for them. Instead, you can federate those user identities into AWS.
+
+#+CINDEX:temporary AWS security credentials
+A user can use IAM to get temporary AWS security credentials to access
+resources in your AWS account.
+
+#+CINDEX:federation
+Federation is particularly useful in these cases:
+
+- Your users already have identities in a corporate directory.
+
+  #+CINDEX:user has Internet identity
+  #+CINDEX:Internet identity
+  #+CINDEX:identity, Internet
+- Your users already have Internet identities.
+
+  #+CINDEX:mobile app
+  #+CINDEX:web-based app
+  #+CINDEX:app, mobile or web-based
+  #+CINDEX:Internet identity provider
+  #+CINDEX:Login with Amazon
+  #+CINDEX:Facebook
+  #+CINDEX:Google
+  #+CINDEX:OpenID Connect
+  #+CINDEX:OIDC
+  If you are creating a mobile app or web-based app that can let users identify
+  themselves through an Internet identity provider like Login with Amazon,
+  Facebook, Google, or any OpenID Connect (OIDC) compatible identity provider,
+  the app can use federation to access AWS.
+
+  #+CINDEX:web identity federation
+  For more information, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html][About Web Identity Federation]].
+
+  #+CINDEX:Amazon Cognito
+  To use identity federation with Internet identity providers, we recommend you
+  use [[https://docs.aws.amazon.com/cognito/devguide/][Amazon Cognito]].
+
 ** Use Cases
 
 #+CINDEX:AWS resources, access to
@@ -1147,6 +1250,63 @@ service management tasks.
        feel free to use one of our federation samples (AWS Console SSO or API
        federation).
 
+** Features of IAM
+
+#+CINDEX:features of IAM
+#+CINDEX:shared access
+- Shared access to your AWS account ::
+     You can grant other people permission to administer and use resources in
+     your AWS account without having to share your password or access key.
+     #+CINDEX:permissions, granular
+- Granular Permissions ::
+     You can grant different permissions to different people for different
+     resources.
+
+     For example, you might allow some users complete access to Amazon Elastic
+     Compute Cloud (Amazon EC2), Amazon Simple Storage Service (Amazon S3),
+     Amazon DynamoDB, Amazon Redshift, and other AWS services.
+
+     For other users, you can allow read-only access to just some S3 buckets,
+     or permission to administer just some EC2 instances, or to access your
+     billing information but nothing else.
+     #+CINDEX:credentials for EC2
+- Secure access to AWS resources for applications that run on Amazon EC2 ::
+     You can use IAM features to securely provide credentials for applications
+     that run on EC2 instances. These credentials provide permissions for your
+     application to access other AWS resources. Examples include S3 buckets and
+     DynamoDB tables.
+     #+CINDEX:multi-factor authentication
+- Multi-factor authentication (MFA) ::
+     You can add two-factor authentication to your account and to individual
+     users for extra security. With MFA you or your users must provide not only
+     a password or access key to work with your account, but also a code from a
+     specially configured device.
+     #+CINDEX:identify federation
+- Identity federation ::
+     You can allow users who already have passwords elsewhere---for example, in
+     your corporate network or with an internet identity provider---to get
+     temporary access to your AWS account.
+     #+CINDEX:CloudTrail
+     #+CINDEX:log requests for resources
+     #+CINDEX:resources, logged requests
+- Identity information for assurance ::
+     f you use [[https://aws.amazon.com/cloudtrail/][AWS CloudTrail]], you receive log records that include information
+     about those who made requests for resources in your account. That
+     information is based on IAM identities.
+     #+CINDEX:Payment Card Industry
+     #+CINDEX:PCI
+     #+CINDEX:Data Security Standard
+     #+CINDEX:DSS
+- PCI DSS Compliance ::
+     IAM supports the processing, storage, and transmission of credit card data
+     by a merchant or service provider, and has been validated as being
+     compliant with {{{dfn(Payment Card Industry)}}} (PCI) {{{dfn(Data Security
+     Standard)}}} (DSS).
+     #+CINDEX:services, integrated with IAM
+- Integrated with many AWS services ::
+     For a list of AWS services that work with IAM, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html][AWS Services That Work
+     with IAM]].
+
 ** How It Works
 
 #+CINDEX:roles, create
@@ -1185,9 +1345,72 @@ AWS IAM allows you to:
   - Use any identity management solution that supports SAML 2.0, or use one of
     our federation samples (AWS Console SSO or API federation).
 
+*** Accessing IAM
+
+You can work with AWS Identity and Access Management in any of the following
+ways.
+
+#+CINDEX:management console
+#+CINDEX:console, AWS management
+- AWS Management Console ::
+     The console is a browser-based interface to manage IAM and AWS resources.
+
+     See [[https://docs.aws.amazon.com/IAM/latest/UserGuide/console.html][The IAM Console and Sign-in Page]].
+
+     #+CINDEX:management console, tutorial
+     For a tutorial that guides you through using the console, see [[https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html][Creating
+     Your First IAM Admin User and Group]].
+
+     #+CINDEX:command-line tools
+- AWS Command Line Tools ::
+     You can use the AWS command line tools to issue commands at your system's
+     command line to perform IAM and AWS tasks.
+
+     Using the command line can be faster and more convenient than the
+     console. The command line tools are also useful if you want to build
+     scripts that perform AWS tasks.
+
+     AWS provides two sets of command line tools:
+  - the [[https://aws.amazon.com/cli/][AWS Command Line Interface]] (AWS CLI); see the [[https://docs.aws.amazon.com/cli/latest/userguide/][AWS Command Line
+    Interface User Guide]].
+  - the [[https://aws.amazon.com/powershell/][AWS Tools for Windows PowerShell]]
+
+    #+CINDEX:software development kits
+    #+CINDEX:SDKs for IAM
+- AWS SDKs ::
+     AWS provides SDKs (software development kits) that consist of libraries
+              and sample code for various programming languages and platforms
+              (Java, Python, Ruby, .NET, iOS, Android, etc.).  The SDKs provide
+              a convenient way to create programmatic access to IAM and AWS.
+
+              For example, the SDKs take care of tasks such as
+              cryptographically signing requests, managing errors, and retrying
+              requests automatically.
+
+              See the [[https://aws.amazon.com/tools/][Tools for Amazon Web Services]] page.
+  #+CINDEX:HTTPS API
+- IAM HTTPS API ::
+                   You can access IAM and AWS programmatically by using the IAM
+                   HTTPS API, which lets you issue HTTPS requests directly to
+                   the service.  When you use the HTTPS API, you must include
+                   code to digitally sign requests using your credentials.
+
+                   See [[https://docs.aws.amazon.com/IAM/latest/UserGuide/programming.html][Calling the API by Making HTTP Query Requests]];
+
+                   See also the [[https://docs.aws.amazon.com/IAM/latest/APIReference/][IAM API Reference]].
 ** Manage Users
 
+#+CINDEX:users, manage
+#+CINDEX:users, definition
+#+CINDEX:federating
+For greater security and organization, you can give access to your AWS account
+to specific {{{dfn(users)}}}---identities that you create with custom
+permissions. You can further simplify access for those users by /federating/
+existing identities into AWS.
+
 [[https://aws.amazon.com/iam/details/manage-users/]]
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_identity-management.html
 
 #+CINDEX:IAM users
 #+CINDEX:users, manage IAM
@@ -1432,7 +1655,7 @@ Want to learn more? See
 - [[http://docs.aws.amazon.com/IAM/latest/UserGuide/tutorials.html][AWS IAM Tutorials]] and
 - the [[https://aws.amazon.com/premiumsupport/knowledge-center/#iam][AWS IAM section in the Knowledge Center]].
 
-** IAM Best Practices
+** Best Practices
 
 #+CINDEX:recommended best practices
 #+CINDEX:real-world scenarios
@@ -1926,7 +2149,6 @@ practices and shows additional details about how to work with the features
 discussed here.
 
 [[https://youtu.be/_wiGpBQGCjU]]
-
 * AWS Amplify
   :PROPERTIES:
   :APPENDIX: t
@@ -2474,7 +2696,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.1 <2019-02-19 Tue 08:05>
+#+MACRO:VERSION Version 0.3.2 <2019-02-20 Wed 10:15>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
