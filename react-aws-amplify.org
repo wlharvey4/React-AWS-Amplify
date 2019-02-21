@@ -1079,48 +1079,47 @@ be charged only for use of other AWS services by your users.
 To get started using IAM, or if you have already registered with AWS, go to the
 [[https://console.aws.amazon.com/iam/home][AWS Management Console]] and get started with these [[http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html][IAM Best Practices]].
 
-** Root User
+** AWS Account Root User Identity and Credentials
 
-#+CINDEX:root user
-When you first create an AWS account, you begin with a single sign-in identity
-that has complete access to all AWS services and resources in the account. This
-identity is called the AWS account {{{dfn(root user)}}} and is accessed by
-signing in with the /email address/ and /password/ that you used to create the
-account.
-
-#+CINDEX:best practices
-We strongly recommend that you do not use the root user for your everyday
-tasks, even the administrative ones.  Instead, adhere to the best practice
-([[#root_user][best practice]]) of using the root user only to create your first IAM user.
-Then securely lock away the root user credentials and use them to perform only
-a few account and service management tasks.
-
-*** First-Time Access---Your Root User Credentials
-
+#+CINDEX:root user identity
+#+CINDEX:sign-in identity
+#+CINDEX:identity, sign-in
+#+CINDEX:identity, root user
+#+CINDEX:credetials, root user
 #+CINDEX:root user credentials
-When you create an AWS account, you create an *AWS account root user identity*,
-which you use to sign in to AWS.  You can sign in to the AWS Management Console
-using this root user identity---that is, the email address and password that
-you provided when creating the account.  This combination of your email address
-and password is also called your {{{dfn(root user credentials)}}}.
+When you first create an AWS account, you begin with a single sign-in identity
+that has complete access to all AWS services and resources in the account.
+This identity is called the AWS Account {{{dfn(Root User Identity)}}} and is
+accessed by signing in with the /email address/ and /password/ that you used to
+create the account.  This combination of your email address and password is
+also called your {{{dfn(root user credentials)}}}.  When you use your /root
+user credentials/, you have *complete, unrestricted access to all resources in
+your AWS account*, including access to your billing information and the ability
+to change your password.
 
-When you use your root user credentials, you have *complete, unrestricted
-access to all resources in your AWS account*, including access to your billing
-information and the ability to change your password.  This level of access is
-necessary when you first set up your account.
+{{{heading(Do Not Use Your Root User Credentials)}}}
 
-However, we recommend that you /don't/ use root user credentials for everyday
-access.  *We especially recommend that you do not share your root user
-credentials with anyone*, because doing so gives them unrestricted access to
-your account.  /It is not possible to restrict the permissions that are granted
-to the root user./
+#+CINDEX:best practice, do not use root
+This level of access is necessary when you first set up your account, but you
+should not use root user credentials for everyday access.  It is highly
+recommended that you do not use the root user for your everyday tasks, even the
+administrative ones.  Instead, adhere to the best practice ([[#root_user][best practice]]) of
+using the root user only to create your first IAM user.  Then securely lock
+away the root user credentials and use them to perform only a few account and
+service management tasks.
+
+{{{subheading(Do Not Share Your Root User Credentials)}}}
+
+*We especially recommend that you do not share your root user credentials with
+anyone*, because doing so gives them unrestricted access to your account.  /It
+is not possible to restrict the permissions that are granted to the root user./
 
 ** Users Identities and Permissions
 
 #+CINDEX:user identity
 #+CINDEX:user permissions
 The following sections explain how you can use IAM to create and manage user
-identity and permissions to provide secure, limited access to your AWS
+identities and permissions to provide secure, limited access to your AWS
 resources, both for yourself and for others who need to work with your AWS
 resources.
 
@@ -1151,6 +1150,7 @@ your account/.
   application that runs in your corporate network and needs AWS access.
 
 
+#+CINDEX:administrative permissions
 We recommend that you create an IAM user for yourself and then assign yourself
 administrative permissions for your account. You can then sign in as that user
 to add more users as needed.
@@ -1164,6 +1164,10 @@ as by signing in to your corporate network, you don't have to create separate
 IAM users for them. Instead, you can federate those user identities into AWS.
 
 #+CINDEX:temporary AWS security credentials
+#+CINDEX:security credentials, temporary
+#+CINDEX:credentials, temporary security
+#+CINDEX:access resources
+#+CINDEX:resources, access
 A user can use IAM to get temporary AWS security credentials to access
 resources in your AWS account.
 
@@ -1182,10 +1186,13 @@ Federation is particularly useful in these cases:
   #+CINDEX:app, mobile or web-based
   #+CINDEX:Internet identity provider
   #+CINDEX:Login with Amazon
+  #+CINDEX:Amazon
   #+CINDEX:Facebook
   #+CINDEX:Google
   #+CINDEX:OpenID Connect
   #+CINDEX:OIDC
+  #+CINDEX:federation, access to AWS
+  #+CINDEX:access to AWS using federation
   If you are creating a mobile app or web-based app that can let users identify
   themselves through an Internet identity provider like Login with Amazon,
   Facebook, Google, or any OpenID Connect (OIDC) compatible identity provider,
@@ -1757,6 +1764,218 @@ if a person changes jobs in your organization, instead of editing that user's
 permissions, you can remove him or her from the old group and add him or her to
 the new group.
 #+END_cartouche
+
+*** Web Identity Federation
+
+#+CINDEX:mobile app, access AWS resources
+#+CINDEX:app, access AWS resources
+#+CINDEX:access AWS resources, mobile app
+#+CINDEX:resources, access AWS resources
+Imagine that you are creating a mobile app that accesses AWS resources, such as
+a game that runs on a mobile device and stores player and score information
+using Amazon S3 and DynamoDB.
+
+#+CINDEX:requests to AWS services
+#+CINDEX:access key
+When you write such an app, you'll make requests to AWS services that must be
+signed with an AWS access key.
+
+*However, we strongly recommend that you do not embed or distribute long-term
+AWS credentials with apps that a user downloads to a device*, even in an
+encrypted store.
+
+#+CINDEX:request temporary AWS security credentials
+#+CINDEX:temporary AWS security credentials
+#+CINDEX:security credentials, temporary, request for
+#+CINDEX:credentials, request for temporary security
+#+CINDEX:dynamic request, temporary security credentials
+#+CINDEX:web identity federation
+#+CINDEX:AWS role
+#+CINDEX:role
+#+CINDEX:permissions to perform task
+Instead, build your app so that it requests /temporary AWS security
+credentials/ dynamically when needed using *web identity federation*.  The
+supplied temporary credentials map to an AWS role that has only the permissions
+needed to perform the tasks required by the mobile app.
+
+#+CINDEX:external identity provider (IdP)
+#+CINDEX:identity provider (IdP), external
+#+CINDEX:Login with Amazon
+#+CINDEX:Amazon
+#+CINDEX:Facebook
+#+CINDEX:Google
+#+CINDEX:OpenID Connect (OIDC)
+#+CINDEX:IdP
+#+CINDEX:authentication token
+#+CINDEX:temporary security credentials
+#+CINDEX:role with permissions
+With web identity federation, you don't need to create custom sign-in code or
+manage your own user identities. Instead, users of your app can sign in using a
+well-known external identity provider (IdP), such as Login with Amazon,
+Facebook, Google, or any other OpenID Connect (OIDC)-compatible IdP. They can
+receive an authentication token, and then exchange that token for temporary
+security credentials in AWS that map to an IAM role with permissions to use the
+resources in your AWS account. Using an IdP helps you keep your AWS account
+secure, because you don't have to embed and distribute long-term security
+credentials with your application.
+
+{{{heading(Use Amazon Cognito)}}}
+
+#+CINDEX:Amazon Cognito
+#+CINDEX:identity broker
+For most scenarios, we recommend that you use Amazon Cognito because it acts as
+an identity broker and does much of the federation work for you.
+
+#+CINDEX:mobile apps, Amazon Cognito
+For details, see the following section, [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc_cognito.html][Using Amazon Cognito for Mobile Apps]].
+
+{{{subheading(Assume Role with Web Identities API)}}}
+
+#+CINDEX:@code{AssumeRoleWithWebIdentity} API
+#+CINDEX:authentication token, trade for security credentials
+If you don't use Amazon Cognito, then you must write code that interacts with a
+web IdP, such as Facebook, and then calls the ~AssumeRoleWithWebIdentity~ API
+to trade the authentication token you get from those IdPs for AWS temporary
+security credentials. If you have already used this approach for existing apps,
+you can continue to use it.
+
+The process for using web identity federation without Amazon Cognito follows
+this general outline:
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc_manual.html
+
+**** Web Identity Federation Playground
+
+#+CINDEX:Web Identity Federation Playground
+#+CINDEX:web identity federation
+#+CINDEX:authenticating via service
+#+CINDEX:temporary security credentials
+#+CINDEX:security credentials, temporary
+#+CINDEX:credentials, temporary security
+#+CINDEX:request to AWS, using credentials
+To help understand how web identity federation works, you can use the [[https://web-identity-federation-playground.s3.amazonaws.com/index.html][Web
+Identity Federation Playground]].  This interactive website lets you walk through
+the process of authenticating via Login with Amazon, Facebook, or Google,
+getting temporary security credentials, and then using those credentials to
+make a request to AWS.
+
+**** Identifying Users with Web Identity Federation
+
+When you create access policies in IAM, it's often useful to be able to specify
+permissions based on configured apps and on the ID of users who have
+authenticated using an external identity provider (IdP).
+
+For example, your mobile app that's using web identity federation might keep
+information in Amazon S3 using a structure like this:
+
+#+BEGIN_EXAMPLE
+myBucket/app1/user1
+myBucket/app1/user2
+myBucket/app1/user3
+...
+myBucket/app2/user1
+myBucket/app2/user2
+myBucket/app2/user3
+...
+#+END_EXAMPLE
+
+You might also want to additionally distinguish these paths by provider. In
+that case, the structure might look like the following (only two providers are
+listed to save space):
+
+#+BEGIN_EXAMPLE
+myBucket/Amazon/app1/user1
+myBucket/Amazon/app1/user2
+myBucket/Amazon/app1/user3
+...
+myBucket/Amazon/app2/user1
+myBucket/Amazon/app2/user2
+myBucket/Amazon/app2/user3
+
+myBucket/Facebook/app1/user1
+myBucket/Facebook/app1/user2
+myBucket/Facebook/app1/user3
+...
+myBucket/Facebook/app2/user1
+myBucket/Facebook/app2/user2
+myBucket/Facebook/app2/user3
+...
+#+END_EXAMPLE
+
+For these structures, app1 and app2 represent different apps, such as different
+games, and each user of the app has a distinct folder. The values for app1 and
+app2 might be friendly names that you assign (for example, ~mynumbersgame~) or
+they might be the app IDs that the providers assign when you configure your
+app. If you decide to include provider names in the path, those can also be
+friendly names like Cognito, Amazon, Facebook, and Google.
+
+#+CINDEX:AWS Management Console
+#+CINDEX:run time, folder creation
+#+CINDEX:@code{SubjectFromWebIdentityToken} value
+#+CINDEX:@code{AssumeRoleWithWebIdentity}
+You can typically create the folders for app1 and app2 through the AWS
+Management Console, since the application names are static values. That's true
+also if you include the provider name in the path, since the provider name is
+also a static value. In contrast, the user-specific folders (user1, user2,
+user3, etc.) have to be created at run time from the app, using the user ID
+that's available in the ~SubjectFromWebIdentityToken~ value that is returned by
+the request to ~AssumeRoleWithWebIdentity~.
+
+To write policies that allow exclusive access to resources for individual
+users, you can match the complete folder name, including the app name and
+provider name, if you're using that. You can then include the following
+provider-specific context keys that reference the user ID that the provider
+returns:
+
+- cognito-identity.amazonaws.com:sub
+- www.amazon.com:user_id
+- graph.facebook.com:id
+- accounts.google.com:sub
+
+
+For OIDC providers, use the fully qualified URL of the OIDC provider with the
+subcontext key, like the following example:
+
+- server.example.com:sub
+
+
+The following example shows a permission policy that grants access to a bucket
+in Amazon S3 only if the prefix for the bucket matches the string:
+: myBucket/Amazon/mynumbersgame/user1
+
+The example assumes that the user is signed in using Login with Amazon, and
+that the user is using an app called mynumbersgame. The user's unique ID is
+presented as an attribute called user_id.
+
+#+BEGIN_EXAMPLE
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket"],
+      "Resource": ["arn:aws:s3:::myBucket"],
+      "Condition": {"StringLike": {"s3:prefix": ["Amazon/mynumbersgame/${www.amazon.com:user_id}/*"]}}
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::myBucket/amazon/mynumbersgame/${www.amazon.com:user_id}",
+        "arn:aws:s3:::myBucket/amazon/mynumbersgame/${www.amazon.com:user_id}/*"
+      ]
+    }
+  ]
+}
+#+END_EXAMPLE
+
+You would create similar policies for users who sign in using Amazon Cognito,
+Facebook, Google, or another OpenID Connect–compatible IdP. Those policies
+would use a different provider name as part of the path as well as different
+app IDs.
 
 ** Manage Permissions
 
@@ -2886,6 +3105,605 @@ This file has the following format:
 ** Tutorial
 
 [[https://www.youtube.com/watch?v=uiTQL7Ne8rY][AWS Amplify React Tutorial]] by the author.
+* Amazon Cognito
+:PROPERTIES:
+:APPENDIX: t
+:END:
+
+{{{heading(Simple and Secure User Sign-Up, Sign-In, and Access Control)}}}
+
+#+CINDEX:user sign-up, sign-in
+#+CINDEX:access control to apps
+#+CINDEX:social identity providers
+#+CINDEX:Facebook
+#+CINDEX:Google
+#+CINDEX:Amazon
+#+CINDEX:SAML 2.0
+Amazon Cognito lets you add user sign-up, sign-in, and access control to your
+web and mobile apps quickly and easily. Amazon Cognito scales to millions of
+users and supports sign-in with social identity providers, such as Facebook,
+Google, and Amazon, and enterprise identity providers via SAML 2.0.
+
+- [[https://aws.amazon.com/cognito/][Amazon Cognito Home]]
+
+{{{subheading(Secure and scalable user directory)
+
+#+CINDEX:Amazon Cognito User Pools
+#+CINDEX:user directory
+#+CINDEX:User Pools
+Amazon Cognito User Pools provide a secure user directory that scales to
+hundreds of millions of users. As a fully managed service, User Pools are easy
+to set up without any worries about standing up server infrastructure.
+
+{{{subheading(Social and enterprise identity federation)}}}
+
+#+CINDEX:social identity providers for sign-in
+#+CINDEX:enterprise identity providers
+#+CINDEX:Microsoft Active Directory
+#+CINDEX:SAML
+With Amazon Cognito, your users can sign in through social identity providers
+such as Google, Facebook, and Amazon, and through enterprise identity providers
+such as Microsoft Active Directory via SAML.
+
+{{{subheading(Standards-based authentication)}}}
+
+#+CINDEX:standards-based Identity Provider
+#+CINDEX:Identity Provider, standards-based
+#+CINDEX:OAuth 2.0
+#+CINDEX:SAML 2.0
+#+CINDEX:OpenID Connect
+Amazon Cognito User Pools is a standards-based Identity Provider and supports
+identity and access management standards, such as Oauth 2.0, SAML 2.0, and
+OpenID Connect.
+
+{{{subheading(Security for your apps and users)}}}
+
+#+CINDEX:multi-factor authentication
+#+CINDEX:encryption
+#+CINDEX:HIPAA eligible
+#+CINDEX:PCI DSS
+#+CINDEX:SOC
+#+CINDEX:ISO/EIC 27001, 27017, 27018
+#+CINDEX:ISO 9001
+Amazon Cognito supports multi-factor authentication and encryption of
+data-at-rest and in-transit. Amazon Cognito is HIPAA eligible and PCI DSS, SOC,
+ISO/EIC 27001, ISO/EIC 27017, ISO/EIC 27018, and ISO 9001 compliant.
+
+{{{subheading(Access control for AWS resources)}}}
+
+#+CINDEX:backend resources, access to
+#+CINDEX:resources, access to backend
+#+CINDEX:roles, define
+Amazon Cognito provides solutions to control access to backend resources from
+your app. You can define roles and map users to different roles so your app can
+access only the resources that are authorized for each user.
+
+{{{subheading(Easy integration with your app)}}}
+
+#+CINDEX:federating identity providers
+#+CINDEX:user sign-in, sign-up
+#+CINDEX:branding
+With a built-in UI and easy configuration for federating identity providers,
+you can integrate Amazon Cognito to add user sign-in, sign-up, and access
+control to your app in minutes. You can customize the UI to put your company
+branding front and center for all user interactions.
+
+{{{heading(Pay only for what you use. No minimums.)}}}
+
+#+CINDEX:payment, Amazon Cognito
+#+CINDEX:User Pool, cost
+#+CINDEX:cost, User Pool
+#+CINDEX:cost, Amazon Cognito
+#+CINDEX:monthly active users (MAUs)
+#+CINDEX:MAUs
+#+CINDEX:user, MAU
+If you are using Amazon Cognito Identity to create a User Pool, you pay based
+on your monthly active users (MAUs) only. A user is counted as a MAU if, within
+a calendar month, there is an identity operation related to that user, such as
+sign-up, sign-in, token refresh, or password change. You are not charged for
+subsequent sessions or for inactive users within that calendar month.
+
+Free for first 50,000 MAUs.
+
+For users who sign in through SAML or OIDC federation, the price for MAUs above
+the 50 MAU free tier is $0.015 per MAU. Using the Federated Identities feature
+to get AWS credentials for authenticated or guest users is always free with
+Amazon Cognito.
+
+Read more about [[https://aws.amazon.com/cognito/pricing/][our pricing here]].
+
+** Amazon Cognito Features
+
+*** A directory for all your apps and users
+
+#+CINDEX:user directory
+#+CINDEX:User Pools
+#+CINDEX:user profiles
+#+CINDEX:authentication tokens
+#+CINDEX:federated users
+Amazon Cognito User Pools provide a secure user directory that scales to
+hundreds of millions of users. As a fully managed service, User Pools are easy
+to set up without any worries about server infrastructure. User Pools provide
+user profiles and authentication tokens for users who sign up directly and for
+federated users who sign in with social and enterprise identity providers.
+
+#+CINDEX:social identity federation, providers
+#+ATTR_TEXINFO: :indic b
+- Social and enterprise identity federation ::
+     With Amazon Cognito, your users can sign-in through social identity
+     providers such as Google, Facebook, and Amazon, and through enterprise
+     identity providers such as Microsoft Active Directory using SAML.
+
+#+CINDEX:roles
+#+CINDEX:access control, roles
+- Access control for AWS resources ::
+     Amazon Cognito provides solutions to control access to AWS resources from
+     your app. You can define roles and map users to different roles so your
+     app can access only the resources that are authorized for each user.
+
+#+CINDEX:authentication
+#+CINDEX:OAuth 2.0
+#+CINDEX:SAML 2.0
+- Standards-based authentication ::
+     Amazon Cognito uses common identity management standards including OpenID
+     Connect, OAuth 2.0, and SAML 2.0.
+
+*** Built-in customizable UI to sign in users
+
+#+CINDEX:UI for user sign-up, sign-in
+#+CINDEX:user sign-up, sign-in, UI
+#+CINDEX:SKDs, Android, iOS, JavaScript
+Amazon Cognito provides a built-in and customizable UI for user sign-up and
+sign-in. You can use Android, iOS, and JavaScript SDKs for Amazon Cognito to
+add user sign-up and sign-in pages to your apps.
+
+*** Advanced security features to protect your users
+
+#+CINDEX:security features
+#+CINDEX:protect access to user accounts
+#+CINDEX:risk-based adaptive authentication
+#+CINDEX:compromised credentials
+Using advanced security features for Amazon Cognito helps you protect access to
+user accounts in your applications. These advanced security features provide
+risk-based adaptive authentication and protection from the use of compromised
+credentials. With just a few clicks, you can enable these advanced security
+features for your Amazon Cognito User Pools.
+
+#+CINDEX:adaptive authentication
+#+CINDEX:SMS
+#+CINDEX:Time-based One-time Password (TOTP)
+#+CINDEX:TOTP
+#+CINDEX:Google Authenticator
+#+ATTR_TEXINFO: :indic b
+- Adaptive authentication ::
+     Using advanced security features for Amazon Cognito to add adaptive
+     authentication to your applications helps protect your applications’ user
+     accounts and user experience. When Amazon Cognito detects unusual sign-in
+     activity, such as sign-in attempts from new locations and devices, it
+     assigns a risk score to the activity and lets you choose to either prompt
+     users for additional verification or block the sign-in request. Users can
+     verify their identities using SMS or a Time-based One-time Password (TOTP)
+     generator, such as Google Authenticator.
+
+#+CINDEX:compromised credentials
+- Protection from compromised credentials ::
+     Advanced security features for Amazon Cognito helps protect your
+     application users from unauthorized access to their accounts using
+     compromised credentials. When Amazon Cognito detects users have entered
+     credentials that have been compromised elsewhere, it prompts them to
+     change their password.
+
+- Supports Multiple Compliance Programs ::
+     Amazon Cognito helps you meet multiple security and compliance
+     requirements, including those for highly regulated organizations such as
+     healthcare companies and merchants. Amazon Cognito is HIPAA eligible and
+     PCI DSS, SOC, and ISO/IEC 27001, ISO/EIC 27017, ISO/EIC 27018, and ISO
+     9001 compliant.
+
+** Scenarios from Amazon Cognito
+
+#+CINDEX:scenarios, Amazon Cognito
+#+CINDEX:Amazon Cognito scenarios
+#+CINDEX:Cognito scenarios
+This topic describes six common scenarios for using Amazon Cognito.
+
+The two main components of Amazon Cognito are
+- user pools and
+- identity pools.
+
+
+#+CINDEX:user pools
+#+CINDEX:directory profile
+/User pools/ are user directories that provide sign-up and sign-in options for
+your web and mobile app users.  Your app users can sign in either directly
+through a user pool, or federate through a third-party identity provider
+(IdP). The user pool manages the overhead of handling the tokens that are
+returned from social sign-in through Facebook, Google, and Amazon, and from
+OpenID Connect (OIDC) and SAML IdPs.  Whether your users sign in directly or
+through a third party, all members of the user pool have a directory profile
+that you can access through an SDK.
+
+#+CINDEX:identity pools
+#+CINDEX:temporary credentials
+#+CINDEX:anonymous guest users
+#+CINDEX:users, anonymous
+/Identity pools/ provide AWS credentials to grant your users access to other
+AWS services.  With an identity pool, your users can obtain temporary AWS
+credentials to access AWS services, such as Amazon S3 and DynamoDB. Identity
+pools support anonymous guest users, as well as federation through third-party
+IdPs.
+
+*** Authenticate with a User Pool
+
+#+CINDEX:authenticate with user pool
+You can enable your users to authenticate with a user pool. Your app users can
+sign in either directly through a user pool, or federate through a third-party
+identity provider (IdP). The user pool manages the overhead of handling the
+tokens that are returned from social sign-in through Facebook, Google, and
+Amazon, and from OpenID Connect (OIDC) and SAML IdPs.
+
+#+CINDEX:pool tokens
+#+CINDEX:AWS credentials
+After a successful authentication, your web or mobile app will receive user
+pool tokens from Amazon Cognito. You can use those tokens to retrieve AWS
+credentials that allow your app to access other AWS services, or you might
+choose to use them to control access to your server-side resources, or to the
+Amazon API Gateway.
+
+For more information, see
+
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow.html][User Pool Authentication Flow]]
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html][Using Tokens with User Pools]]
+
+*** Access Your Server-side Resources with a User Pool
+
+#+CINDEX:user pool tokens
+#+CINDEX:server-side resources, access
+#+CINDEX:permissions
+After a successful user pool sign-in, your web or mobile app will receive user
+pool tokens from Amazon Cognito. You can use those tokens to control access to
+your server-side resources. You can also create user pool groups to manage
+permissions, and to represent different types of users.
+
+For more information on using groups to control access your resources see:
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html][Adding Groups to a User Pool]].
+
+#+CINDEX:hosted web UI
+#+CINDEX:sign-up, sign-in pages in app
+#+CINDEX:OAuth 2.0
+#+CINDEX:resource server
+#+CINDEX:protected resources, access
+Once you configure a domain for your user pool, Amazon Cognito provisions a
+hosted web UI that allows you to add sign-up and sign-in pages to your
+app. Using this OAuth 2.0 foundation you can create your own resource server to
+enable your users to access protected resources.
+
+For more information see:
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html][Defining Resource Servers for Your User Pool]]
+
+#+CINDEX:user pool authentication
+#+CINDEX:authentication, user pool
+For more information about user pool authentication see:
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow.html][User Pool Authentication Flow]]
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html][Using Tokens with User Pools]]
+
+*** Access Resources with API Gateway and Lambda with a User Pool
+
+#+CINDEX:API Gateway
+You can enable your users to access your API through API Gateway. API Gateway
+validates the tokens from a successful user pool authentication, and uses them
+to grant your users access to resources including Lambda functions, or your own
+API.
+
+#+CINDEX:user pool groups
+#+CINDEX:groups
+You can use groups in a user pool to control permissions with API Gateway by
+mapping group membership to IAM roles. The groups that a user is a member of
+are included in the ID token provided by a user pool when your app user signs
+in.
+
+For more information on user pool groups, see:
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html][Adding Groups to a User Pool]]
+
+  #+CINDEX:Lambda function
+You can submit your user pool tokens with a request to API Gateway for
+verification by an Amazon Cognito authorizer Lambda function.
+
+For more information on API Gateway, see:
+- [[https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html][Using API Gateway with Amazon Cognito User Pools]]
+
+*** Access AWS Services with a User Pool and an Identity Pool
+
+#+CINDEX:AWS services, access, identity pool
+After a successful user pool authentication, your app will receive user pool
+tokens from Amazon Cognito. You can exchange them for temporary access to other
+AWS services with an identity pool.
+
+For more information, see
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-integrating-user-pools-with-identity-pools.html][Accessing AWS Services Using an Identity Pool After Sign-in]]
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-identity-pools.html][Getting Started with Amazon Cognito Identity Pools (Federated Identities)]]
+
+*** Authenticate with a Third Party and Access AWS Services with an Identity Pool
+
+#+CINDEX:IdP token
+You can enable your users access to AWS services through an identity pool. An
+identity pool requires an IdP token from a user that's authenticated by a
+third-party identity provider (or nothing if it's an anonymous guest). In
+exchange, the identity pool grants temporary AWS credentials that you can use
+to access other AWS services.
+
+For more information, see:
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-identity-pools.html][Getting Started with Amazon Cognito Identity Pools (Federated Identities)]]
+
+*** Access AWS AppSync Resources with Amazon Cognito
+
+#+CINDEX:AWS AppSync
+#+CINDEX:AppSync
+You can grant your users access to AWS AppSync resources with tokens from a
+successful Amazon Cognito authentication (from a user pool or an identity
+pool).
+
+For more information, see
+- [[https://docs.aws.amazon.com/appsync/latest/devguide/security.html][Access AWS AppSync and Data Sources with User Pools or Federated Identities]]
+
+** Getting Started with Amazon Cognito
+
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-getting-started.html][Getting Started]]
+
+This section describes the top Amazon Cognito tasks and where to start.
+
+#+CINDEX:user pools
+#+CINDEX:identity pools
+The two main components of Amazon Cognito are /user pools/ and /identity
+pools/.
+
+- {{{dfn(User Pools)}}} ::
+     are user directories that provide sign-up and sign-in options for your web
+     and mobile app users.
+
+- {{{dfn(Identity Pools)}}} ::
+     provide AWS credentials to grant your users access to other AWS services.
+
+
+You can use user pools and identity pools separately or together.
+
+{{{heading(Top Tasks and Where to Start)}}}
+
+{{{subheading(Add Sign-up and Sign-in with a User Pool)}}}
+
+#+CINDEX:user directory
+#+CINDEX:user pool
+#+CINDEX:hosted UI
+#+CINDEX:social sign-in
+#+CINDEX:SAML-based identity provider sign-in
+#+CINDEX:sign-in
+#+CINDEX:OpenID Connect sign-in
+#+CINDEX:OIDC sign-in
+#+CINDEX:customize UI
+#+CINDEX:customize user pool workflows
+#+CINDEX:Lambda triggers
+#+CINDEX:data
+#+CINDEX:Amazon Pinpoint analytics
+1. Create a user directory with a user pool.
+2. Add an app to enable the hosted UI.
+3. Add social sign-in to a user pool.
+4. Add sign-in through SAML-based identity providers (IdPs) to a user pool.
+5. Add sign-in through OpenID Connect (OIDC) IdPs to a user pool.
+6. Install a user pool SDK.
+7. Customize the built-in hosted web UI sign-in and sign-up pages.
+8. Configure user pool security features.
+9. Customize user pool workflows with Lambda triggers.
+10. Gather data and target campaigns with Amazon Pinpoint analytics.
+
+{{{subheadin(Manage Users in a User Pool)}}}
+
+#+CINDEX:manage users in user pool
+1. Sign up and confirm user accounts.
+2. Create user accounts as administrator.
+3. Manage and search user accounts.
+4. Add groups to a user pool.
+5. Import users into a user pool.
+
+{{{subheading(Access Resources)}}}
+
+#+CINDEX:access resources
+#+CINDEX:authenticate with a user pool
+#+CINDEX:user pool, authenticate with
+#+CINDEX:backend resources, access
+#+CINDEX:API Gateway
+#+CINDEX:Lambda
+#+CINDEX:API AppSync
+#+CINDEX:AWS services, access
+1. Authenticate with a user pool.
+2. Access backend resources through a user pool.
+3. Access API Gateway and Lambda through a user pool.
+4. Access AWS services with a user pool and an identity pool.
+5. Access AWS services through a third party and an identity pool.
+6. Access AWS AppSync resources through a user pool or an identity pool.
+
+*** Amazon Cognito User Pools
+
+You can quickly create your own directory to sign up and sign in users, and to
+store user profiles using Amazon Cognito User Pools. User Pools provide a user
+interface you can customize to match your app. User Pools also enable easy
+integration with social identity providers such as Facebook, Google, and
+Amazon, and enterprise identity providers such as Microsoft Active Directory
+through SAML.
+
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-cognito-user-pools.html][Getting started with User Pools]]
+
+These steps describe setting up and configuring a user pool with the Amazon
+Cognito console.
+
+*** Amazon Cognito Federated Identities
+
+#+CINDEX:access control to backend resources
+You can control access to your backend AWS resources and APIs through Amazon
+Cognito so users of your app get only the appropriate access. You can map users
+to different roles and permissions and get temporary AWS credentials for
+accessing AWS services such as Amazon S3, Amazon DynamoDB, Amazon API Gateway,
+and AWS Lambda.
+
+#+CINDEX:identity pools
+Amazon Cognito identity pools enable you to create unique identities and assign
+permissions for users. Your identity pool can include:
+
+- Users in an Amazon Cognito user pool
+
+  #+CINDEX:identity providers
+  #+CINDEX:Facebook
+  #+CINDEX:Google
+  #+CINDEX:SAML-based identity provider
+- Users who authenticate with external identity providers such as Facebook,
+  Google, or a SAML-based identity provider
+
+- Users authenticated via your own existing authentication process
+
+
+#+CINDEX:temporary AWS credentials
+#+CINDEX:Amazon API Gateway
+With an identity pool, you can obtain temporary AWS credentials with
+permissions you define to directly access other AWS services or to access
+resources through Amazon API Gateway.
+
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-identity-pools.html][Getting Started with Amazon Cognito Identity Pools]]
+
+** Using Amazon Cognito for Mobile Apps
+
+#+CINDEX:web identity federation, Amazon Cognito
+#+CINDEX:Amazon Cognito
+#+CINDEX:Cognito
+The preferred way to use web identity federation is to use [[https://aws.amazon.com/cognito/][Amazon Cognito]].
+
+#+BEGIN_cartouche
+For example, Adele the developer is building a game for a mobile device where
+user data such as scores and profiles is stored in Amazon S3 and Amazon
+DynamoDB. Adele could also store this data locally on the device and use Amazon
+Cognito to keep it synchronized across devices.
+
+She knows that for security and maintenance reasons, long-term AWS security
+credentials should not be distributed with the game. She also knows that the
+game might have a large number of users. For all of these reasons, she does not
+want to create new user identities in IAM for each player.
+
+Instead, she builds the game so that users can sign in using an identity that
+they've already established with a well-known external identity provider (IdP),
+such as Login with Amazon, Facebook, Google, or any OpenID Connect
+(OIDC)-compatible IdP. Her game can take advantage of the authentication
+mechanism from one of these providers to validate the user's identity.
+#+END_cartouche
+
+{{{heading(Enable Mobile App to Access AWS Resources)}}}
+
+#+CINDEX:developer ID
+- To enable the mobile app to access her AWS resources, Adele first registers
+  for a developer ID with her chosen IdPs.
+
+- She also configures the application with each of these providers.
+
+  #+CINDEX:IAM roles, create
+  #+CINDEX:roles, create IAM
+  #+CINDEX:permissions, define
+- In her AWS account that contains the Amazon S3 bucket and DynamoDB table for
+  the game, Adele uses Amazon Cognito to create IAM roles that precisely define
+  permissions that the game needs.
+
+  #+CINDEX:OIDC identity provider
+- If she is using an OIDC IdP, she also creates an IAM OIDC identity provider
+  entity to establish trust between her AWS account and the IdP.
+
+- In the app's code, Adele calls the sign-in interface for the IdP that she
+  configured previously.
+
+  #+CINDEX:OAuth access token
+  #+CINDEX:OIDC ID token
+- The IdP handles all the details of letting the user sign in, and the app gets
+  an OAuth access token or OIDC ID token from the provider.
+
+  #+CINDEX:temporary security credentials, trade with authentication info
+- Adele's app can trade this authentication information for a set of temporary
+  security credentials that consist of an AWS access key ID, a secret access
+  key, and a session token.
+
+  #+CINDEX:limited permissions
+  #+CINDEX:permissions, limited
+- The app can then use these credentials to access web services offered by AWS.
+  The app is limited to the permissions that are defined in the role that it
+  assumes.
+
+
+The following figure shows a simplified flow for how this might work, using
+Login with Amazon as the IdP. For Step 2, the app can also use Facebook,
+Google, or any OIDC-compatible IdP, but that's not shown here.
+
+#+CINDEX:Cognito login flow
+#+NAME:fig:cognito-login
+#+CAPTION:Flow for Amazon Cognito LogIn
+[[file:img/mobile-app-web-identity-federation.png]]
+
+1. A customer starts your app on a mobile device. The app asks the user to sign
+   in.
+2. The app uses Login with Amazon resources to accept the user's credentials.
+3. The app uses Cognito API operations to exchange the Login with Amazon ID token for a Cognito token.
+4. The app requests temporary security credentials from AWS STS, passing the Cognito token.
+5. The temporary security credentials can be used by the app to access any AWS
+   resources required by the app to operate. The role associated with the
+   temporary security credentials and its assigned policies determines what can
+   be accessed.
+
+
+{{{heading(Configure App to Use Amazon Cognito to Authenticate)}}}
+
+#+CINDEX:Amazon Cognito
+#+CINDEX:Cognito
+#+CINDEX:configure app, Amazon Cognito
+#+CINDEX:authenticate users
+#+CINDEX:resources, allow to an app
+Use the following process to configure your app to use Amazon Cognito to
+authenticate users and give your app access to AWS resources. For specific
+steps to accomplish this scenario, consult the documentation for Amazon
+Cognito.
+
+1. (Optional) Sign up as a  developer with Login with Amazon, Facebook, Google,
+   or any other OpenID Connect (OIDC)–compatible  IdP and configure one or more
+   apps with  the provider. This step  is optional because Amazon  Cognito also
+   supports unauthenticated (guest) access for your users.
+
+2. Go to [[https://console.aws.amazon.com/cognito/home][Amazon Cognito in the AWS Management Console]]. Use the Amazon Cognito
+   wizard to create an identity pool, which is a container that Amazon Cognito
+   uses to keep end user identities organized for your apps. You can share
+   identity pools between apps. When you set up an identity pool, Amazon
+   Cognito creates one or two IAM roles (one for authenticated identities, and
+   one for unauthenticated "guest" identities) that define permissions for
+   Amazon Cognito users.
+
+   #+CINDEX:AWS SDK for iOS, Android
+   #+CINDEX:SDK for iOS, Android
+3. Download and integrate the [[https://aws.amazon.com/sdkforios/][AWS SDK for iOS]] or the [[https://aws.amazon.com//sdkforandroid/][AWS SDK for Android]] with
+   your app, and import the files required to use Amazon Cognito.
+
+4. Create an instance of the Amazon Cognito credentials provider, passing the
+   identity pool ID, your AWS account number, and the Amazon Resource Name
+   (ARN) of the roles that you associated with the identity pool. The Amazon
+   Cognito wizard in the AWS Management Console provides sample code to help
+   you get started.
+
+5. When your app accesses an AWS resource, pass the credentials provider
+   instance to the client object, which passes temporary security credentials
+   to the client. The permissions for the credentials are based on the role or
+   roles that you defined earlier.
+
+
+- [[https://docs.aws.amazon.com/mobile/sdkforandroid/developerguide/cognito-auth.html][Amazon Cognito Identity]] in the AWS Mobile SDK for Android Developer Guide.
+- [[https://docs.aws.amazon.com/mobile/sdkforios/developerguide/cognito-auth.html][Amazon Cognito Identity]] in the AWS Mobile SDK for iOS Developer Guide.
+
+** Tutorials for Amazon Cognito
+
+#+CINDEX:tutorials, Amazon Cognito
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html][Tutorial: Creating a User Pool]]
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-identity-pool.html][Tutorial: Creating an Identity Pool]]
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-cleanup-tutorial.html][Tutorial: Cleaning Up Your AWS Resources]]
+- [[https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-add-apps.html][Tutorial: Adding a Web or Mobile App to a User Pool]]
 
 * List of Figures
 :PROPERTIES:
@@ -2946,7 +3764,7 @@ This file has the following format:
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.3 <2019-02-20 Wed 11:19>
+#+MACRO:VERSION Version 0.3.4 <2019-02-21 Thu 15:00>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
