@@ -2618,10 +2618,63 @@ practices and shows additional details about how to work with the features
 discussed here.
 
 [[https://youtu.be/_wiGpBQGCjU]]
-* AWS Amplify
+* Amplify
   :PROPERTIES:
   :APPENDIX: t
   :END:
+
+{{{heading(Develop With the Amplify Framework)}}}
+
+{{{subheading(Build scalable cloud-powered apps)}}}
+
+#+CINDEX:Amplify Framework
+#+CINDEX:development, mobile and web
+The Amplify Framework provides a command-line interface (CLI) and library for
+simplifying mobile and web development.[fn:11]
+
+#+CINDEX:Amplify CLI
+#+CINDEX:CLI, Amplify
+1. Install the CLI
+
+   #+CINDEX:Amplify Command Line Interface (CLI)
+   The Amplify Command Line Interface (CLI) is a unified toolchain to create,
+   integrate, and manage the AWS cloud services for your app.
+
+   - Install Node.js® and npm if they are not already on your machine.[fn:12]
+
+   - Install and configure the Amplify CLI.
+
+     #+BEGIN_EXAMPLE
+     $ npm install -g @aws-amplify/cli
+     $ amplify configure
+     #+END_EXAMPLE
+
+#+CINDEX:application services
+2. Setup application services
+
+3. Integrate with your app
+
+{{{heading(Deploy With the Amplify Console)}}}
+
+{{{subheading(Build, deploy, and host modern web apps)}}}
+
+#+CINDEX:continuous deployment
+#+CINDEX:CDN
+Connect your Git repository to continuously deploy your frontend and
+backend. Host it on a globally available CDN.
+
+#+CINDEX:repository
+1. Connect your repository[fn:13]
+
+   - Github
+   - BitBucket
+   - GitLab
+   - AWS CodeCommit
+
+#+CINDEX:build settings
+2. Configure build settings
+
+3. Deploy your app
 
 [[https://aws-amplify.github.io][Amplify Framework]]
 
@@ -2669,7 +2722,8 @@ manage your serverless infrastructure on AWS.
 
 *** Effortlessly configure backends
 
-#+CINDEX:serverless backend
+#+CINDEX:serverless backends
+#+CINDEX:backends, serverless
 #+CINDEX:authentication
 #+CINDEX:analytics
 #+CINDEX:functions
@@ -2722,34 +2776,24 @@ $ amplify codegen add
 $ amplify codegen generate
 #+END_EXAMPLE
 
-** UI Components
+** Usage
 
-A beautiful component library connected to the cloud
+See [[https://aws-amplify.github.io/docs/cli/init][AWS Amplify CLI]]
 
-Accelerate app development by leveraging our beautiful out-of-the box UI
-components.
+The AWS Amplify CLI helps you set up
 
-** Amplify CLI Tutorial
-
-[[https://aws-amplify.github.io/docs/cli/init][AWS Amplify CLI]]
-
-#+CINDEX:IAM user
-#+CINDEX:AWS profile, set up
-#+CINDEX:profile, set up AWS
-#+CINDEX:initialize AWS-powered apps
-The AWS Amplify CLI helps you
-- set up an AWS IAM user,
-- set up an AWS profile on your local system and then
+#+CINDEX:IAM user, Amplify CLI
+#+CINDEX:profile, Amplify CLI
+#+CINDEX:initialize apps, Amplify
+#+CINDEX:configurations, Amplify
+- an AWS IAM user
+- an AWS profile on your local system
 - initialize Amplify powered apps with all your defined configurations.
 
 
-#+CINDEX:share Amplify backend configuration
-#+CINDEX:reuse backend infrastructure
-We’ll also walk through steps as to
-- how you could share the Amplify generated backend configuration between other
-  frontend projects and
+We’ll also walk through steps as to how you could
+- share the Amplify generated backend configuration between other frontend projects
 - re-use the same backend infrastructure in-between multiple platforms/users.
-
 
 #+CINDEX:tutorial, AWS Amplify
 #+CINDEX:project, Amplify-enabled
@@ -3101,6 +3145,13 @@ This file has the following format:
 #+CINDEX:assume IAM role
 #+CINDEX:role, IAM
 [[https://aws-amplify.github.io/docs/cli/init#assuming-an-iam-role][Assuming an IAM Role]]
+
+** UI Components
+
+A beautiful component library connected to the cloud
+
+Accelerate app development by leveraging our beautiful out-of-the box UI
+components.
 
 ** Tutorial
 
@@ -3495,7 +3546,7 @@ You can use user pools and identity pools separately or together.
 9. Customize user pool workflows with Lambda triggers.
 10. Gather data and target campaigns with Amazon Pinpoint analytics.
 
-{{{subheadin(Manage Users in a User Pool)}}}
+{{{subheading(Manage Users in a User Pool)}}}
 
 #+CINDEX:manage users in user pool
 1. Sign up and confirm user accounts.
@@ -3764,7 +3815,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.4 <2019-02-21 Thu 15:00>
+#+MACRO:VERSION Version 0.3.5 <2019-02-22 Fri 07:17>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
@@ -3824,6 +3875,15 @@ specifically.
 [fn:9] [[https://aws-amplify.github.io/docs/js/authentication][~withAuthenticator~]]
 
 [fn:8] [[https://aws-amplify.github.io/docs/js/ui][AWS Amplify HOCs]]
+
+[fn:11] An opinionated, category-based client framework for building scalable
+mobile and web apps
+
+[fn:12] Verify that you are running at least Node.js version 8.x or greater and
+{{{command(npm)}}} version 5.x or greater by running ~node -v~ and ~npm -v~ in
+a terminal/console window.
+
+[fn:13] Amplify Console requires read-only access to your repository.
 
 [fn:10] By default we give administrator access to this IAM user since the CLI
 needs access to a variety of services for deployments.
