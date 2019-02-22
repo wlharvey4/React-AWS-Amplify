@@ -50,7 +50,8 @@
   #+CINDEX:new project, Amplify
   #+CINDEX:Amplify project, new
   In this lesson we’ll show how to install the [[https://github.com/aws-amplify/amplify-cli][AWS Amplify CLI]] [fn:1] and then
-  configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM user]] [fn:2] so we can begin creating new Amplify projects.
+  configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM user]] [fn:2] so we can begin creating new Amplify
+  projects.
 
 - Install AWS Amplify CLI
 - Configure with Amazon IAM user
@@ -3772,7 +3773,7 @@ Cognito.
   :COPYING:  t
   :END:
 
-  *{{{title}}}* by {{{author}}}
+  *{{{title}}}* by {{{author}}}[fn:14]
 
   \copy 2019
 
@@ -3845,6 +3846,9 @@ Cognito.
 #+CREATOR: Emacs 26.1 (Org mode 9.1.14)
 
 * Footnotes
+
+[fn:14] Developer Advocate at Amazon Web Services specializing in
+cross-platform & cloud-enabled application development.  http://naderdabit.me/
 
 [fn:1] The AWS Amplify CLI is a toolchain which includes a robust feature set
 for simplifying mobile and web application development. The CLI uses AWS
