@@ -49,9 +49,9 @@
   #+CINDEX:IAM user
   #+CINDEX:new project, Amplify
   #+CINDEX:Amplify project, new
-  In this lesson we’ll show how to install the [[https://github.com/aws-amplify/amplify-cli][AWS Amplify CLI]] [fn:1] and then
-  configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM user]] [fn:2] so we can begin creating new Amplify
-  projects.
+  In this lesson we’ll show how to install the Amplify CLI,
+  {{{pxref(Amplify Console)}}} [fn:1], and then configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM
+  user]] [fn:2] so we can begin creating new Amplify projects.
 
 - Install AWS Amplify CLI
 - Configure with Amazon IAM user
@@ -4151,7 +4151,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.7 <2019-02-24 Sun 09:00>
+#+MACRO:VERSION Version 0.3.8 <2019-02-24 Sun 09:35>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
@@ -4160,6 +4160,7 @@ Cognito.
 #+MACRO:command @@texinfo:@command{@@$1@@texinfo:}@@
 #+MACRO:noindent @@texinfo:@noindent @@
 #+MACRO:key @@texinfo:@key{@@$1@@texinfo:}@@
+#+MACRO:pxref @@texinfo:@pxref{@@$1@@texinfo:}@@
 * EXPORT SETUP                                                     :noexport:
 #+TEXINFO_FILENAME:react-aws-amplify.info
 #+TEXINFO_CLASS: info
