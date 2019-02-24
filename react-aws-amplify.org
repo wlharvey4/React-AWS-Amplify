@@ -72,16 +72,34 @@
    #+CINDEX:AWS account
    #+CINDEX:account, AWS
    #+CINDEX:log in, AWS console
-   [00:01] To get started, we'll [[https://github.com/aws-amplify/amplify-cli#install-the-cli][install the CLI]] [fn:3] by running:
+   [00:01] To get started, we'll [[https://github.com/aws-amplify/amplify-cli#install-the-cli][install the CLI]] [fn:3] by running either:
    : npm install -g @aws-amplify/cli
-   {{{noindent}}}Now that the CLI has been installed, we'll run:
-   : amplify configure
-   #+CINDEX:AWS access credentials
-   #+CINDEX:access credentials, AWS
-   #+CINDEX:credentials, access, AWS
-   {{{noindent}}}to configure the CLI with the user from our AWS account.[fn:4]
-   This should open up the AWS console.  Once you're logged into the console,
-   jump back to the command-line.
+   : yarn global add @aws-mplify/ci
+
+#+BEGIN_SRC sh :results output append :exports both
+which amplify && echo not necessary || yarn global add @aws-amplify/cli
+#+END_SRC
+
+#+RESULTS:
+: yarn global v1.13.0
+: [1/4] Resolving packages...
+: [2/4] Fetching packages...
+: [3/4] Linking dependencies...
+: [4/4] Building fresh packages...
+: success Installed "@aws-amplify/cli@1.1.4" with binaries:
+:       - amplify
+: Done in 47.85s.
+: /usr/local/bin/amplify
+: not necessary
+
+{{{noindent}}}Now that the CLI has been installed, we'll run:
+: amplify configure
+#+CINDEX:AWS access credentials
+#+CINDEX:access credentials, AWS
+#+CINDEX:credentials, access, AWS
+{{{noindent}}}to configure the CLI with the user from our AWS account.[fn:4]
+This should open up the AWS console.  Once you're logged into the console,
+jump back to the command-line.
 
 ** Setup and Configure AWS IAM User
 
@@ -3816,7 +3834,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.5 <2019-02-22 Fri 07:17>
+#+MACRO:VERSION Version 0.3.6 <2019-02-23 Sat 18:17>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
