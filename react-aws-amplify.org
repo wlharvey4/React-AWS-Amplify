@@ -76,21 +76,22 @@
    : npm install -g @aws-amplify/cli
    : yarn global add @aws-mplify/ci
 
-#+BEGIN_SRC sh :results output append :exports both
+#+BEGIN_SRC sh :results output append :exports both :eval never-export
 which amplify && echo not necessary || yarn global add @aws-amplify/cli
 #+END_SRC
 
 #+RESULTS:
-: yarn global v1.13.0
-: [1/4] Resolving packages...
-: [2/4] Fetching packages...
-: [3/4] Linking dependencies...
-: [4/4] Building fresh packages...
-: success Installed "@aws-amplify/cli@1.1.4" with binaries:
-:       - amplify
-: Done in 47.85s.
-: /usr/local/bin/amplify
-: not necessary
+   : yarn global v1.13.0
+   : [1/4] Resolving packages...
+   : [2/4] Fetching packages...
+   : [3/4] Linking dependencies...
+   : [4/4] Building fresh packages...
+   : success Installed "@aws-amplify/cli@1.1.4" with binaries:
+   :       - amplify
+   : Done in 47.85s.
+   : /usr/local/bin/amplify
+   : not necessary
+
 
 {{{noindent}}}Now that the CLI has been installed, we'll run:
 : amplify configure
@@ -1032,20 +1033,6 @@ jump back to the command-line.
    [00:31] To deploy our new setup, we can run ~amplify publish~. Once the
    deployment is complete, our app should launch in a new window. If we open
    the URL, we see that the app is indeed running from our S3 bucket.
-
-* Amplify Console
-  :PROPERTIES:
-  :APPENDIX: t
-  :END:
-
-  #+CINDEX:Amplify console, launched
-  #+CINDEX:deploy Amplify applications, preferred method
-  #+CINDEX:atomic deployments
-  #+CINDEX:documentation at Amplify
-  We've [Amazon] recently launched the Amplify Console, which is now the
-  preferred way of deploying Amplify applications and has built-in CI / CD &
-  atomic deployments. For more info, check out the documentation at
-  https://aws.amazon.com/amplify/console/.
 
 * IAM Identity and Access Management
 :PROPERTIES:
@@ -2637,10 +2624,10 @@ practices and shows additional details about how to work with the features
 discussed here.
 
 [[https://youtu.be/_wiGpBQGCjU]]
-* Amplify
-  :PROPERTIES:
-  :APPENDIX: t
-  :END:
+* Amplify Framework
+:PROPERTIES:
+:APPENDIX: t
+:END:
 
 {{{heading(Develop With the Amplify Framework)}}}
 
@@ -3175,6 +3162,336 @@ components.
 ** Tutorial
 
 [[https://www.youtube.com/watch?v=uiTQL7Ne8rY][AWS Amplify React Tutorial]] by the author.
+
+* Amplify Console
+:PROPERTIES:
+  :APPENDIX: t
+  :END:
+
+- [[https://aws.amazon.com/amplify/console/][MAIN SITE]]
+- [[https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html][DOCUMENTATION]]
+
+{{{heading(Scalable hosting for static web apps with serverless backends)}}}
+
+#+CINDEX:Amplify Console
+#+CINDEX:continuous deployment and hosting service
+#+CINDEX:mobile web applications
+The AWS Amplify Console is a continuous deployment and hosting service for
+mobile web applications. The AWS Amplify Console makes it easier for you to
+rapidly release new features, helps you avoid downtime during application
+deployment, and handles the complexity of simultaneously updating the frontend
+and backend of your applications.
+
+#+CINDEX:application release cycle
+#+CINDEX:connect Amplify to code repos
+The Amplify Console accelerates your application release cycle minimizing
+downtime.  *You just connect Amplify to your code repository and your frontend
+and backend are deployed in a single workflow on every code commit.* This
+ensures your web application is only updated once the deployment is
+successfully completed, eliminating inconsistencies between your application
+frontend and backend.
+
+#+CINDEX:Amplify console, launched
+#+CINDEX:deploy Amplify applications, preferred method
+#+CINDEX:atomic deployments
+#+CINDEX:documentation at Amplify
+We've [Amazon] recently launched the Amplify Console, which is now the
+preferred way of deploying Amplify applications and has built-in CI / CD &
+atomic deployments. For more info, check out the documentation at
+https://aws.amazon.com/amplify/console/.
+
+{{{subheading(Amplify Framework and the Amplify Console)}}}
+
+#+CINDEX:Amplify Framework
+The AWS Amplify Console can be used with Single Page Apps (SPA) and static
+sites, whether or not they use the open source Amplify Framework.  The AWS
+Amplify Console can deploy apps built with the Amplify Framework.
+
+#+CINDEX:command-line interface, Amplify
+#+CINDEX:CLI, Amplify
+#+CINDEX:backend resources, serverless, Amplify
+#+CINDEX:GraphQL
+#+CINDEX:REST
+#+CINDEX:AppSync
+#+CINDEX:API Gateway
+#+CINDEX:Lambda
+#+CINDEX:authentication
+#+CINDEX:Cognito
+The Amplify Framework provides a command-line interface (CLI) and library for
+simplifying serverless web and mobile development. The CLI provisions
+serverless backend resources (e.g., GraphQL APIs with AWS AppSync, REST APIs
+with Amazon API Gateway and AWS Lambda, and authentication with Amazon Cognito)
+and the library helps with integrating these backend resources in the frontend.
+
+If you are using the Amplify Framework’s CLI to configure backend resources for
+your app, /the AWS Amplify Console can provision/update these for you on each
+check-in you make to source control, prior to deploying your frontend./ There
+is support for a variety of configurations, such as an isolated backend
+deployment per branch.
+
+{{{subheading(Features)}}}
+
+#+CINDEX:content delivery network
+#+CINDEX:globally available
+- Globally available ::
+     Your app is served via Amazon's reliable content delivery network with 144
+       points of presence globally.
+
+#+CINDEX:domain setup, custom
+#+CINDEX:Route 53
+#+CINDEX:HTTPS certificate
+- Easy custom domain setup ::
+     Set up custom domains managed in Amazon Route 53 with a single click plus
+     get a free HTTPS certificate.
+
+#+CINDEX:continuous workflows
+#+CINDEX:git repo connection
+#+CINDEX:@code{git push} changes
+- Simplified continuous workflows ::
+     Connect your repository to 'git push' changes to your frontend and backend
+     in a single workflow.
+
+#+CINDEX:branch deployments
+#+CINDEX:feature branch deployments
+#+CINDEX:deployments, features
+- Feature branch deployments ::
+     Work on new features without impacting production. Create branch
+     deployments linked to each feature branch.
+
+#+CINDEX:atomic deployments
+#+CINDEX:deployments, atomic
+- Atomic deployments ::
+     All deployments either rollout successfully or fail without requiring
+     maintenance windows.
+
+#+CINDEX:password protection
+#+CINDEX:access authentication
+- Password protection ::
+     Share yet-to-be released features with internal stakeholders by setting a
+     username and password.
+
+     All web deployments can be password protected with basic access
+     authentication. When working on new features, developers can share updates
+     with internal stakeholders by setting up a username and password for a
+     branch deployment.
+
+** How It Works
+
+#+CINDEX:single page web apps
+#+CINDEX:static sites with serverless backends
+#+CINDEX:continuous deployment
+#+CINDEX:@indicateurl{amplifyapp.com} subdomain
+#+CINDEX:custom domain
+#+CINDEX:domain, custom
+AWS Amplify Console provides a complete workflow for developing, deploying, and
+hosting single page web apps or static sites with serverless
+backends. Continuous deployment allows developers to deploy updates to their
+web app on every code commit to their Git repository. When the build succeeds,
+the app is deployed and hosted on an ~amplifyapp.com~ subdomain. Developers can
+connect their custom domain to start receiving production traffic.
+
+#+CINDEX:modern web apps
+Modern web apps offer native app-like user experience by serving the app
+frontend, or user interface, efficiently to browsers as prebuilt
+HTML/JavaScript files that can then invoke backend functionality without
+reloading the page. /The Amplify Console provides a complete workflow for
+deploying these apps./
+
+To get started, go to the AWS Amplify Console and connect your source
+repository.  The AWS Amplify Console automatically determines the *frontend
+framework* used, and then builds and deploys the app to a globally available
+content delivery network (CDN).  The Console detects *backend functionality*
+added using the Amplify Framework, and can deploy the necessary AWS resources
+in the same deployment as the frontend.  The AWS Amplify Console will *build
+and deploy* your web app quickly, and host your web app on a globally available
+CDN with a friendly URL (example:
+@@texinfo:@indicateurl{https://master.appname.amplifyapp.com}@@).
+
+1. Connect your repository
+
+   You can connect private and public repositories from GitHub, BitBucket,
+   GitLab, and AWS CodeCommit.
+
+2. Configure build settings
+
+   #+CINDEX:environment variables
+   #+CINDEX:configurations required at runtime
+   Environment variables are configurations required by apps at runtime. These
+   configurations could include database connection details, third-party API
+   keys, different customization parameters and secrets. The best way to expose
+   these configurations is to do so with environment variables. You can add
+   environment variables when creating an app or by going to the app
+   settings. All environment variables are encrypted to prevent rogue access.
+
+   #+CINDEX:build run
+   #+CINDEX:compute container, temporary
+   #+CINDEX:CloudWatch
+   On a build run, AWS Amplify Console will create a temporary compute
+   container (4 vCPU, 7GB RAM), download the source code, execute the commands
+   configured in the project, deploy the generated artifact to a web hosting
+   environment, and then destroy the compute container. During the build, the
+   AWS Amplify Console will stream the build output to the service console and
+   Amazon CloudWatch
+
+3. Deploy your app
+
+   #+CINDEX:single page apps
+   #+CINDEX:SPAs
+   #+CINDEX:React
+   #+CINDEX:Angular
+   #+CINDEX:Vue
+   #+CINDEX:Ember
+   #+CINDEX:static sites
+   #+CINDEX:Gatsby
+   #+CINDEX:Eleventy
+   #+CINDEX:Hugo
+   #+CINDEX:VuePress
+   #+CINDEX:Jekyll
+   You can deploy Single page apps (SPAs) built with frameworks like React,
+   Angular, Vue, Ember; and static sites generated with frameworks like Gatsby,
+   Eleventy, Hugo, VuePress, and Jekyll. You can also host simple static sites.
+
+#+CINDEX:Amplify Console app
+#+CINDEX:app, Amplify Console
+#+CINDEX:project container
+#+CINDEX:app project
+#+CINDEX:feature branches
+#+CINDEX:custom domain
+#+CINDEX:build logs
+An AWS Amplify Console 'app' is your project container. Each app project
+contains a list of branches you have connected from your source repository. You
+can connect additional feature branches, a custom domain, or access your build
+logs from your app project.
+
+** Use cases
+
+{{{heading(Build Web Apps with Static and Dynamic Functionality)}}}
+
+#+CINDEX:single page app
+#+CINDEX:SPA
+#+CINDEX:frameworks
+#+CINDEX:React framework
+#+CINDEX:Angular framework
+#+CINDEX:Vue.js framework
+#+CINDEX:Ionic framework
+#+CINDEX:Ember framework
+#+CINDEX:static site generators
+#+CINDEX:Gatsby
+#+CINDEX:Eleventy
+#+CINDEX:Hugo
+#+CINDEX:VuePress
+#+CINDEX:Jekyll
+AWS Amplify Console supports all Single Page App (SPA) frontend frameworks
+(e.g. React, Angular, Vue.js, Ionic, Ember), as well as static-site generators
+like Gatsby, Eleventy, Hugo, VuePress, and Jekyll.
+
+#+CINDEX:blogs
+#+CINDEX:static web apps
+#+CINDEX:web apps, static
+#+CINDEX:apps, static web
+#+CINDEX:SSL, free
+- Blogs or static web apps ::
+     Use static site generators like Hugo or Jekyll to publish a blog. SSGs
+     perform faster than traditional websites. Deploy SSGs with free SSL on the
+     AWS Amplify Console.
+
+#+CINDEX:GraphQL
+#+CINDEX:REST
+- Serverless web apps ::
+     Add dynamic functionality using GraphQL or REST APIs. Use AWS Amplify
+     Console to deploy your frontend and backend in a single workflow.
+
+#+CINDEX:progressive web apps
+#+CINDEX:web apps, progressive
+#+CINDEX:apps, progressive web
+#+CINDEX:push notifications
+- Progressive web apps ::
+     PWAs offer native app-like performance, work offline, support push
+     notifications, and can be updated over-the-air.  Use AWS Amplify to deploy
+     PWAs to mobile devices.
+
+** Continuous Deployment
+
+#+CINDEX:continuous deployment
+Continuous deployment is a devops strategy for software releases where every
+code commit to a repository is automatically released to production or staging
+environment. This practice reduces time to market by ensuring that your hosted
+web app is always a reflection of the latest code in your repository.
+
+** Hosting
+
+#+CINDEX:hosting
+#+CINDEX:CloudFront Global Edge Network
+#+CINDEX:Points of Presence
+Hosting a modern web app does not require web servers and can use content
+delivery networks to store static content (HTML, CSS and JavaScript files). The
+AWS Amplify Console leverages the Amazon CloudFront Global Edge Network to
+distribute your web app globally. To deliver content to end users with lower
+latency, Amazon CloudFront uses a global network of 144 Points of Presence (133
+Edge Locations and 11 Regional Edge Caches) in 65 cities across 29 countries.
+
+*** Connecting a Domain
+
+#+CINDEX:Route53
+#+CINDEX:connecting a domain
+#+CINDEX:domain, connecting
+#+CINDEX:DNS records, configure
+#+CINDEX:subdomains, automatic creation
+#+CINDEX:HTTPS certificate
+If your domain is registered on Route53, simply pick it from a dropdown and Aws
+Amplify Console will automatically configure the DNS records to point the apex
+and ‘www’ subdomain to your website.  Additionally, we automatically create
+subdomains for all branches that are connected. For example, connecting a ‘dev’
+branch creates a deployment at
+@@texinfo:@indicateurl{https://dev.appname.amplifyapp.com}@@. As part of the
+custom domain setup, we generate a free HTTPS certificate to ensure traffic to
+your site is secure.
+
+#+CINDEX:domain registrars
+#+CINDEX:3rd party registrars
+#+CINDEX:registrars, domain, 3rd party
+#+CINDEX:Route53 registrar
+Domains purchased through all domain registrars can be connected to an app by
+defining a custom domain. For developers using Amazon Route53 as their
+registrar, AWS Amplify Console automatically updates the DNS records to point
+to their deployed app. For 3rd party registrars, AWS Amplify Console provides
+instructions on how to update their DNS records.
+
+*** Secure Traffic over HTTPS
+
+#+CINDEX:HTTPS certificate
+#+CINDEX:Route53 domains, HTTPS
+#+CINDEX:Amazon Certificate Manager (ACM)
+#+CINDEX:ACM, Amazon Certificate Manager
+#+CINDEX:SSL/TLS certificates
+#+CINDEX:wildcard domain support
+AWS Amplify Console generates a free HTTPS on all sites and will enable it
+automatically on all Route53-managed domains. The SSL certificate is generated
+by Amazon Certificate Manager and has wildcard domain support. ACM handles the
+complexity of creating and managing public SSL/TLS certificates for your AWS
+based websites and applications. With the wildcard option, the main domain and
+all subdomains can be covered by a single certificate.
+
+** Pricing
+
+#+CINDEX:pricing, Amplify Console
+#+CINDEX:build & deploy feature, price
+#+CINDEX:hosing feature, price
+AWS Amplify Console is priced for two features – build & deploy, and hosting.
+
+- build & deploy feature: ::
+     the price per build minute is $0.01.
+
+- hosting feature: ::
+     the price per GB served is $0.15 and price per GB stored is $0.023.
+
+
+#+CINDEX:Free Usage Tier
+With the AWS Free Usage Tier, you can get started for free. Upon sign up, new
+AWS customers receive 1,000 build minutes per month for the build and deploy
+feature, and 15 GB served per month and 5 GB data storage per month for the
+hosting feature.
+
 * Amazon Cognito
 :PROPERTIES:
 :APPENDIX: t
@@ -3834,7 +4151,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.6 <2019-02-23 Sat 18:17>
+#+MACRO:VERSION Version 0.3.7 <2019-02-24 Sun 09:00>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
