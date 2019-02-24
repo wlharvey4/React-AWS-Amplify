@@ -49,9 +49,10 @@
   #+CINDEX:IAM user
   #+CINDEX:new project, Amplify
   #+CINDEX:Amplify project, new
-  In this lesson we’ll show how to install the Amplify CLI,
-  {{{pxref(Amplify Console)}}} [fn:1], and then configure it with an [[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html][IAM
-  user]] [fn:2] so we can begin creating new Amplify projects.
+  In this lesson we’ll show how to install the Amplify Command-Line Interface
+  (CLI), {{{pxref(Install the Amplify CLI)}}} [fn:1], and then configure it,
+  {{{pxref(Amplify Configure)}}}, with an IAM user, {{{pxref(Manage
+  Users)}}} [fn:2], so we can begin creating new Amplify projects.
 
 - Install AWS Amplify CLI
 - Configure with Amazon IAM user
@@ -2624,7 +2625,7 @@ practices and shows additional details about how to work with the features
 discussed here.
 
 [[https://youtu.be/_wiGpBQGCjU]]
-* Amplify Framework
+* AWS Amplify Framework
 :PROPERTIES:
 :APPENDIX: t
 :END:
@@ -2633,20 +2634,105 @@ discussed here.
 
 {{{subheading(Build scalable cloud-powered apps)}}}
 
+- [[https://aws-amplify.github.io][HOME]]
+- [[https://aws-amplify.github.io/docs/js/start?platform=purejs][JAVASCRIPT DOCUMENTATION]]
+
+``Amplify your apps. Build on a flexible, scalable, and reliable serverless
+backend.''
+
+- Library ::
+             A comprehensive library for building sophisticated cloud-powered
+             apps.
+
+             Choose your cloud services and easily connect them to your app
+             with just a few lines of code.
+
+             iOS & Android are supported with our Native SDKs.
+
+             #+CINDEX:toolchain
+- Toolchain ::
+               A powerful [[https://aws-amplify.github.io/media/toolchain][toolchain]] built for developers.
+
+               #+CINDEX:CLI, Amplify
+               #+CINDEX:Command Line Interface (CLI)
+               The Amplify Command Line Interface (CLI) is a unified toolchain
+               to create and manage your serverless infrastructure on AWS.
+
+               #+CINDEX:backends, configure
+               #+CINDEX:configure backends
+               #+CINDEX:authentication
+               #+CINDEX:analytics
+               #+CINDEX:functions
+               #+CINDEX:REST
+               #+CINDEX:GraphQL
+               #+CINDEX:CloudFormation
+               - configure backends ::
+                    The CLI includes support for authentication, analytics,
+                    functions, REST/GraphQL APIs, and much more. The toolchain
+                    uses AWS CloudFormation and enables you to add, modify, and
+                    share configurations.
+               #+CINDEX:static assets, websites
+               #+CINDEX:host static websites
+               #+CINDEX:Lambda functions
+               #+CINDEX:deploy
+               - host static assets and websites ::
+                    Distribute content to end users with low latency and high
+                    data transfer speeds via a secure, durable, and scalable
+                    object storage infrastructure. You can perform local
+                    testing of AWS Lambda functions, connect them to your APIs,
+                    and deploy everything in one command.
+               #+CINDEX:GraphQL Schema Definition Language (SDL)
+               #+CINDEX:SDL
+               #+CINDEX:CloudFormation template
+               #+CINDEX:data model
+               - create APIs and generate client code ::
+                    Define your API using the GraphQL Schema Definition
+                    Language (SDL). The toolchain will expand and transform a
+                    full CloudFormation template that implements your data
+                    model.
+
+- UI Components ::
+                   A beautiful [[https://aws-amplify.github.io/media/ui_library][component library]] connected to the cloud.
+
+                   Launch your apps with our minimally-styled UI components or
+                   change them to match your app style.
+
+                   - Colors
+                   - Typography
+                   - Components for user authentication
+
+
+** Get Started
+
+Amplify is ``an opinionated, category-based client framework for building
+scalable mobile and web apps.''
+
 #+CINDEX:Amplify Framework
 #+CINDEX:development, mobile and web
+#+CINDEX:CLI, Amplify
+#+CINDEX:command-line interface
 The Amplify Framework provides a command-line interface (CLI) and library for
 simplifying mobile and web development.[fn:11]
 
+#+CINDEX:AWS account
+#+CINDEX:sign up, AWS account
+#+CINDEX:account, AWS
+1. Sign up for an AWS account.
+
+   #+CINDEX:Free Tier
+   There are no upfront charges or any term commitments to create an AWS
+   account and signing up gives you immediate access to the AWS Free Tier.
+
 #+CINDEX:Amplify CLI
 #+CINDEX:CLI, Amplify
-1. Install the CLI
+2. Install the CLI
 
    #+CINDEX:Amplify Command Line Interface (CLI)
    The Amplify Command Line Interface (CLI) is a unified toolchain to create,
    integrate, and manage the AWS cloud services for your app.
 
-   - Install Node.js® and npm if they are not already on your machine.[fn:12]
+   - Install Node.js® and {{{command(npm)}}} if they are not already on your
+     machine.[fn:12]
 
    - Install and configure the Amplify CLI.
 
@@ -2655,10 +2741,26 @@ simplifying mobile and web development.[fn:11]
      $ amplify configure
      #+END_EXAMPLE
 
-#+CINDEX:application services
-2. Setup application services
+#+CINDEX:app, build
+#+CINDEX:build app
+3. Build Your App
 
-3. Integrate with your app
+   #+CINDEX:iOS app
+   - [[https://aws-amplify.github.io/docs/ios/start?ref=amplify-iOS-btn][iOS]]
+
+   #+CINDEX:Android app
+   - [[https://aws-amplify.github.io/docs/android/start?ref=amplify-android-btn][Android]]
+
+   #+CINDEX:web app
+   - [[https://aws-amplify.github.io/docs/js/start?ref=amplify-js-btn&platform=purejs][Web]]
+
+   #+CINDEX:React Native app
+   - [[https://aws-amplify.github.io/docs/js/start?ref=amplify-rn-btn&platform=react-native][React Native]]
+
+#+CINDEX:application services
+3. Setup application services
+
+4. Integrate with your app
 
 {{{heading(Deploy With the Amplify Console)}}}
 
@@ -2782,7 +2884,7 @@ $ amplify codegen add
 $ amplify codegen generate
 #+END_EXAMPLE
 
-** Usage
+** Amplify CLI
 
 See [[https://aws-amplify.github.io/docs/cli/init][AWS Amplify CLI]]
 
@@ -2813,7 +2915,7 @@ over the following commands:
 - {{{command(amplify init)}}}
 - {{{command(amplify configure project)}}}
 
-*** Install the CLI
+*** Install the Amplify CLI
 
 #+CINDEX:CLI, install
 #+CINDEX:install CLI
@@ -4151,7 +4253,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.3.8 <2019-02-24 Sun 09:35>
+#+MACRO:VERSION Version 0.3.9 <2019-02-24 Sun 10:18>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
