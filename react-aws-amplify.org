@@ -367,61 +367,241 @@ To create a production build, use yarn build.
 
 ** Initialize A New Amplify Project
 
-   #+CINDEX:@command{amplify init}
-   #+CINDEX:Amplify project, initialize
-   #+CINDEX:initialize, Amplify project
-   #+CINDEX:options, Amplify project
-   #+CINDEX:editor, default
-   #+CINDEX:default editor, Amplify project
-   #+CINDEX:JavaScript, app type
-   #+CINDEX:app, JavaScript
-   #+CINDEX:React, framework type
-   #+CINDEX:framework, React
-   [00:31] From within the new directory, we'll run {{{command(amplify init)}}}
-   to [[https://aws-amplify.github.io/docs/js/start][initialize]] a new [[https://www.amplify.com/][Amplify]] project.  We'll then be prompted for a few
-   options.  For the default editor, I'll choose Visual Studio code.  For the
-   type of app we're building, we can choose JavaScript.  For the framework
-   we're using, we can choose React.
+#+CINDEX:@command{amplify init}
+#+CINDEX:Amplify project, initialize
+#+CINDEX:initialize, Amplify project
+#+CINDEX:options, Amplify project
+#+CINDEX:editor, default
+#+CINDEX:default editor, Amplify project
+#+CINDEX:JavaScript, app type
+#+CINDEX:app, JavaScript
+#+CINDEX:React, framework type
+#+CINDEX:framework, React
+[00:31] From within the new directory, we'll run {{{command(amplify init)}}}
+to [[https://aws-amplify.github.io/docs/js/start][initialize]] a new [[https://www.amplify.com/][Amplify]] project.  We'll then be prompted for a few
+options.  For the default editor, I'll choose Visual Studio code.  For the
+/type of app/ we're building, we can choose =JavaScript=.  For the
+/framework/ we're using, we can choose =React=.
 
-    #+CINDEX:directories, source, distribution
-    #+CINDEX:build command
-    #+CINDEX:start command
-    #+CINDEX:commands, build, start
-    [00:49] The source directory can be left as ~source~.  The distribution
-    directory, ~build~.  The {{{command(build)}}} command can be left as
-    ~build~.  The {{{command(start)}}} command can be left as ~start~.
+#+CINDEX:directories, source, distribution
+#+CINDEX:build command
+#+CINDEX:start command
+#+CINDEX:commands, build, start
+[00:49] The source directory can be left as ~source~.  The distribution
+directory, ~build~.  The {{{command(build)}}} command can be left as
+~build~.  The {{{command(start)}}} command can be left as ~start~.
 
-    #+CINDEX:AWS profile, choose
-    [01:04] Next, we're given the option to choose an AWS
-    profile.  Here, we can choose the profile that we created when we
-    configured this CLI.
+#+CINDEX:AWS profile, choose
+[01:04] Next, we're given the option to choose an AWS
+profile.  Here, we can choose the profile that we created when we
+configured this CLI.
 
-    #+CINDEX:Amplify project, initialized
-    #+CINDEX:rc file, Amplify
-    #+CINDEX:@file{.amplify} rc file
-    #+CINDEX:Amplify folder
-    #+CINDEX:folder, Amplify
-    #+CINDEX:root directory
-    [01:18] Now, our Amplify project has been initialized.  We should
-    now see a ~.amplify~ rc file, as well as an Amplify folder, in our
-    root directory.
+#+CINDEX:Amplify project, initialized
+#+CINDEX:rc file, Amplify
+#+CINDEX:@file{.amplify} rc file
+#+CINDEX:Amplify folder
+#+CINDEX:folder, Amplify
+#+CINDEX:root directory
+[01:18] Now, our Amplify project has been initialized.  We should now see a
+{{{file(.amplifyrc)}}} file[fn:15], as well as an {{{file(amplify)}}} folder, in
+our root directory.
+
+*** Amplify Initialization
+#+BEGIN_EXAMPLE
+$ amplify init
+Note: It is recommended to run this command from the root of your app directory
+? Enter a name for the project my-amplify-app
+? Enter a name for the environment ampenv
+? Choose your default editor: Emacs (via Terminal, Mac OS only)
+? Choose the type of app that you're building javascript
+Please tell us about your project
+? What javascript framework are you using react
+? Source Directory Path:  src
+? Distribution Directory Path: build
+? Build Command:  npm run-script build
+? Start Command: npm run-script start
+Using default provider  awscloudformation
+
+For more information on AWS Profiles, see:
+https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
+
+? Do you want to use an AWS profile? Yes
+? Please choose the profile you want to use amplify-cli-profile
+⠹ Initializing project in the cloud...
+
+CREATE_IN_PROGRESS DeploymentBucket              AWS::S3::Bucket            Mon Feb 25 2019 11:15:52 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS AuthRole                      AWS::IAM::Role             Mon Feb 25 2019 11:15:51 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UnauthRole                    AWS::IAM::Role             Mon Feb 25 2019 11:15:51 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS AuthRole                      AWS::IAM::Role             Mon Feb 25 2019 11:15:51 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS DeploymentBucket              AWS::S3::Bucket            Mon Feb 25 2019 11:15:50 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS UnauthRole                    AWS::IAM::Role             Mon Feb 25 2019 11:15:50 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS my-amplify-app-20190225111546 AWS::CloudFormation::Stack Mon Feb 25 2019 11:15:47 GMT-0800 (Pacific Standard Time) User Initiated
+⠴ Initializing project in the cloud...
+
+CREATE_COMPLETE DeploymentBucket AWS::S3::Bucket Mon Feb 25 2019 11:16:13 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE AuthRole         AWS::IAM::Role  Mon Feb 25 2019 11:16:08 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE UnauthRole       AWS::IAM::Role  Mon Feb 25 2019 11:16:08 GMT-0800 (Pacific Standard Time)
+✔ Successfully created initial AWS cloud resources for deployments.
+✔ Initialized provider successfully.
+Initialized your environment successfully.
+
+Your project has been successfully initialized and connected to the cloud!
+
+Some next steps:
+"amplify status" will show you what you've added already and if it's locally configured or deployed
+"amplify <category> add" will allow you to add features like user login or a backend API
+"amplify push" will build all your local backend resources and provision it in the cloud
+"amplify publish" will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud
+
+Pro tip:
+Try "amplify add api" to create a backend API and then "amplify publish" to deploy everything
+#+END_EXAMPLE
+
+*** Results of Amplify Initialization
+
+#+BEGIN_EXAMPLE
+$ amplify status
+
+Current Environment: ampenv
+
+| Category | Resource name | Operation | Provider plugin |
+| -------- | ------------- | --------- | --------------- |
+
+$ ls -A
+.gitignore   README.md    amplify      node_modules package.json public       src          yarn.lock
+
+$ tree amplify
+amplify
+├── #current-cloud-backend
+│   └── amplify-meta.json
+├── backend
+│   ├── amplify-meta.json
+│   └── backend-config.json
+└── team-provider-info.json
+
+2 directories, 4 files
+
+$ cat package.json
+{
+  "name": "my-amplify-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-scripts": "2.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
+#+END_EXAMPLE
 
 ** Install Client Libraries
 
-   #+CINDEX:client libraries, install
-   #+CINDEX:install client libraries
-   [01:29] The last thing we need to do is install the AWS Amplify and
-   AWS Amplify React Client Libraries into our React application.
+#+CINDEX:client libraries, install
+#+CINDEX:install client libraries
+[01:29] The last thing we need to do is install the AWS Amplify and
+AWS Amplify React Client Libraries into our React application.
 
-   #+CINDEX:@command{npm}
-   #+CINDEX:@command{yarn}
-   #+CINDEX:@code{AWS-Amplify} client library
-   #+CINDEX:@code{AWS-Amplify-React} client library
-   [01:39] To do so, we can either use ~npm~ or ~yarn~ to add AWS Amplify
-   and AWS Amplify React.
+#+CINDEX:@command{npm}
+#+CINDEX:@command{yarn}
+#+CINDEX:@code{aws-amplify} client library
+#+CINDEX:@code{aws-amplify-react} client library
+[01:39] To do so, we can either use {{{command(npm)}}} or
+{{{command(yarn)}}} to add ~AWS Amplify~ and ~AWS Amplify React~.
+: yarn add aws-amplify aws-amplify-react
 
-   [01:53] Now, the React app has been configured, the Amplify project
-   has been created, and we're ready to begin adding new features.
+[01:53] Now, the React app has been configured, the Amplify project
+has been created, and we're ready to begin adding new features.
+
+*** AWS Amplify and AWS Amplify React
+
+#+BEGIN_EXAMPLE
+$ yarn add aws-amplify aws-amplify-react
+yarn add v1.13.0
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+warning "react-scripts > pnp-webpack-plugin > ts-pnp@1.0.0" has unmet peer dependency "typescript@*".
+[4/4] 🔨  Building fresh packages...
+success Saved lockfile.
+success Saved 26 new dependencies.
+info Direct dependencies
+├─ aws-amplify-react@2.3.0
+├─ aws-amplify@1.1.19
+├─ react-dom@16.8.3
+└─ react@16.8.3
+info All dependencies
+├─ @aws-amplify/analytics@1.2.10
+├─ @aws-amplify/api@1.0.26
+├─ @aws-amplify/interactions@1.0.25
+├─ @aws-amplify/pubsub@1.0.22
+├─ @aws-amplify/storage@1.0.25
+├─ @aws-amplify/ui@1.0.15
+├─ @aws-amplify/xr@0.1.12
+├─ amazon-cognito-auth-js@1.2.4
+├─ amazon-cognito-identity-js@3.0.7
+├─ aws-amplify-react@2.3.0
+├─ aws-amplify@1.1.19
+├─ aws-sdk@2.329.0
+├─ axios@0.17.1
+├─ crypto-js@3.1.9-1
+├─ events@1.1.1
+├─ follow-redirects@1.7.0
+├─ graphql@0.13.0
+├─ ieee754@1.1.8
+├─ iterall@1.1.4
+├─ jmespath@0.15.0
+├─ qr.js@0.0.0
+├─ qrcode.react@0.8.0
+├─ react-dom@16.8.3
+├─ react@16.8.3
+├─ xml2js@0.4.19
+└─ xmlbuilder@9.0.7
+✨  Done in 7.75s.
+
+$ cat package.json
+{
+  "name": "my-amplify-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "aws-amplify": "^1.1.19",
+    "aws-amplify-react": "^2.3.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-scripts": "2.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
+#+END_EXAMPLE
 
 * Use the AWS Amplify ~withAuthenticator~ HOC to Implement a React User Authorization Flow
 
@@ -4436,7 +4616,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.1 <2019-02-24 Sun 18:03>
+#+MACRO:VERSION Version 0.4.2 <2019-02-25 Mon 11:49>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
@@ -4468,9 +4648,6 @@ Cognito.
 
 * Footnotes
 
-[fn:14] Developer Advocate at Amazon Web Services specializing in
-cross-platform & cloud-enabled application development.  http://naderdabit.me/
-
 [fn:1] The AWS Amplify CLI is a toolchain which includes a robust feature set
 for simplifying mobile and web application development. The CLI uses AWS
 CloudFormation and nested stacks, which allows you to add or modify
@@ -4497,6 +4674,8 @@ specifically.
 
 [fn:7] [[https://reactjs.org/][React]]; [[https://facebook.github.io/create-react-app/][Create React App]]; [[https://github.com/facebook/create-react-app][GitHub create-react-app]]
 
+[fn:15] NOTE: There is no {{{file(.amplifyrc)}}} file
+
 [fn:9] [[https://aws-amplify.github.io/docs/js/authentication][~withAuthenticator~]]
 
 [fn:8] [[https://aws-amplify.github.io/docs/js/ui][AWS Amplify HOCs]]
@@ -4512,4 +4691,7 @@ a terminal/console window.
 
 [fn:10] By default we give administrator access to this IAM user since the CLI
 needs access to a variety of services for deployments.
+
+[fn:14] Developer Advocate at Amazon Web Services specializing in
+cross-platform & cloud-enabled application development.  http://naderdabit.me/
 
