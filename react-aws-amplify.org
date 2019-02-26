@@ -661,9 +661,13 @@ couple of minutes to complete.
 
 #+CINDEX:@file{AWS-exports.js}
 [00:52] Now that the authentication service has been created, we should be able
-to look in our {{{file(src)}}} directory ([[*src directory]]) and see a new file
-that was created for us called {{{file(aws-exports.js)}}}.  This file is
-created and updated by the CLI, so there's no reason for us to change it.
+to look in our {{{file(src)}}} directory ([[*src directory and aws-exports.js]])
+and see a new file that was created for us called {{{file(aws-exports.js)}}}.
+This file is created and updated by the CLI, so there's no reason for us to
+change it.
+
+[01:07] We will, though, be using it in the next step to configure
+our React application with the AWS resources.
 
 *** amplify add auth
 
@@ -796,22 +800,12 @@ export default awsmobile;
 #+CINDEX:library, AWS Amplify, import
 #+CINDEX:import AWS Amplify library
 #+CINDEX:@code{amplify.configure}
-[01:07] We will, though, be using it in the next step to configure
-our React application with the AWS resources.
-
 To configure our React app with the AWS resources, we can open up
 {{{file(src/index.js)}}}.
 
-Here, we'll
-
-- ~import Amplify~ from the AWS Amplify library, ~aws-amplify~
-- ~import config~, the configuration, from AWS exports, ~./aws-exports~
-- and we'll call ~Amplify.configure(config)~, passing in the ~config~.
-
-*** index.js before
+{{{headingOriginal (~index.js)}}}
 
 #+BEGIN_EXAMPLE
-$ cat src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -826,37 +820,31 @@ ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();
 #+END_EXAMPLE
 
-*** index.js after
-#+BEGIN_EXAMPLE
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+{{{heading(Changes to ~index.js~)}}}
 
->>import Amplify from 'aws-amplify'
->>import config from './aws-exports'
->>Amplify.configure(config)
+Here, we'll
 
-ReactDOM.render(<App />, document.getElementByID('root'))
->>registerServiceWorker();
-#+END_EXAMPLE
-
-*** new index.js
+- ~import Amplify~ from the AWS Amplify library, ~aws-amplify~
+- ~import config~, the configuration, from AWS exports, ~./aws-exports~
+- and we'll call ~Amplify.configure(config)~, passing in the ~config~.
 
 #+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 
-import Amplify from 'aws-amplify'
-import config from './aws-exports'
-Amplify.configure(config)
+import Amplify from 'aws-amplify';
+import config from './aws-exports';
+Amplify.configure(config);
 
-ReactDOM.render(<App />, document.getElementByID('root'))
-registerServiceWorker();
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
 #+END_SRC
 
 ** Install Higher Order Component
@@ -869,17 +857,7 @@ registerServiceWorker();
 #+CINDEX:wrap App component with HOC @file{withAuthenticator}
 [01:47] Next, we'll open {{{file(src/App.js)}}}.
 
-Here we'll first:
-
-- import the ~withAuthenticator~ higher order component from thex AWS Amplify
-  React library, {{{file(aws-amplify-react)}}},
-  : import { withAuthenticator } from 'aws-amplify-react'
-
-- Instead of exporting the App component as a default export, we'll instead
-  wrap the app component with the ~withAuthenticator~ higher order component:
-  : export default withAuthenticator(App);
-
-*** App.js before
+{{{heading(Original ~App.js~)}}}
 
 #+BEGIN_EXAMPLE
 import React, { Component } from 'react';
@@ -912,14 +890,26 @@ class App extends Component {
 export default App;
 #+END_EXAMPLE
 
-*** App.js changes
+{{{subheading(Changes to ~App.js~)}}}
 
-#+BEGIN_EXAMPLE
+Here we'll first:
+
+- import the ~withAuthenticator~ higher order component from the AWS Amplify
+  React library, {{{file(aws-amplify-react)}}},
+  : import { withAuthenticator } from 'aws-amplify-react'
+
+- Instead of exporting the App component as a default export, we'll instead
+  wrap the app component with the ~withAuthenticator~ higher order component:
+  : export default withAuthenticator(App);
+
+{{{subheading(New ~App.js~)}}}
+
+#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/App.js
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
->>import { withAuthenticator } from 'aws-amplify-react'
+import { withAuthenticator } from 'aws-amplify-react';
 
 class App extends Component {
   render() {
@@ -944,34 +934,6 @@ class App extends Component {
   }
 }
 
->>export default withAuthenticator(App);
-#+END_EXAMPLE
-
-*** new App.js
-
-#+BEGIN_SRC js :eval no-export :tangle my-amplify-app/src/App.js
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-import { withAuthenticator } from 'aws-amplify-react'
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
-
 export default withAuthenticator(App);
 #+END_SRC
 
@@ -985,7 +947,7 @@ export default withAuthenticator(App);
 [02:24] Now we're ready to test it out.  To run the app, run:
 : npm start
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :dir my-amplify-app :result output
 npm start
 #+END_SRC
 
@@ -4908,7 +4870,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.3 <2019-02-25 Mon 16:59>
+#+MACRO:VERSION Version 0.4.4 <2019-02-25 Mon 18:24>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
