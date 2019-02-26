@@ -619,7 +619,7 @@ preconfigured sign up and sign in flow.
 - enable Amazon Cognito User Authentication in our project
 - add ~withAuthenticator~ HOC for sign-up and sign-in flows
 
-** Add Authentication Service
+** Add Cognito Authentication Service
 
 #+CINDEX:authentication, add service
 #+CINDEX:add new service, using Amplify
@@ -800,7 +800,7 @@ export default awsmobile;
 #+CINDEX:library, AWS Amplify, import
 #+CINDEX:import AWS Amplify library
 #+CINDEX:@code{amplify.configure}
-To configure our React app with the AWS resources, we can open up
+To configure our React app with the AWS Amplify resources, we edit
 {{{file(src/index.js)}}}.
 
 {{{heading(Original ~index.js)}}}
@@ -872,7 +872,7 @@ const awsmobile = {
 #+CINDEX:@file{source/app.js}
 #+CINDEX:import @file{withAuthenticator} HOC
 #+CINDEX:wrap App component with HOC @file{withAuthenticator}
-[01:47] Next, we'll open {{{file(src/App.js)}}}.
+[01:47] Next, we'll edit {{{file(src/App.js)}}}.
 
 {{{heading(Original ~App.js~)}}}
 
@@ -954,7 +954,7 @@ class App extends Component {
 export default withAuthenticator(App); /* MODIFIED */
 #+END_SRC
 
-** Test Application
+** Test the Application for User Authentication
 
 #+CINDEX:test application
 #+CINDEX:@command{run npm start}
@@ -994,44 +994,57 @@ storage.
 
 ** Create Sign-Out
 
-   #+CINDEX:sign-out button, create
-   #+CINDEX:@file{App.js}
-   #+CINDEX:@file{withAuthenticator}
-   #+CINDEX:@code{include-greetings} key
-   #+CINDEX:key, @code{include-greetings}
-   [03:28] Next, let's add a sign out button.  To do so we'll go back
-   into ~App.js~ and pass in a second argument to ~withAuthenticator~.
-   Here, we'll pass in an object with an ~include-greetings~ key set
-   to true.
+#+CINDEX:sign-out button, create
+#+CINDEX:@file{App.js}
+#+CINDEX:@file{withAuthenticator}
+#+CINDEX:@code{include-greetings} key
+#+CINDEX:key, @code{include-greetings}
+[03:28] Next, let's add a sign out button.  To do so we'll go back
+into ~App.js~ and pass in a second argument to ~withAuthenticator~.
+Here, we'll pass in an object with an ~include-greetings~ key set
+to true.
 
-   #+CINDEX:sign-out button
-   #+CINDEX:Amplify services, view enabled
-   #+CINDEX:enabled Amplify services, view
-   #+CINDEX:@command{amplify status}
-   #+CINDEX:resource name
-   [03:58] Now when we refresh, we should see a sign out button at the
-   top right corner of the page.  To view enabled Amplify services at
-   any time, we can run ~Amplify status~.  Here, we're given the
-   resource name for the authentication that we just created.
+#+CINDEX:sign-out button
+#+CINDEX:Amplify services, view enabled
+#+CINDEX:enabled Amplify services, view
+#+CINDEX:@command{amplify status}
+#+CINDEX:resource name
+[03:58] Now when we refresh, we should see a sign out button at the
+top right corner of the page.  To view enabled Amplify services at
+any time, we can run ~Amplify status~.  Here, we're given the
+resource name for the authentication that we just created.
 
 ** Cognito Authentication Service
-   #+CINDEX:Cognito authentication service, view
-   #+CINDEX:AWS account, Cognito authentication service
-   #+CINDEX:Cognito dashboard
-   #+CINDEX:Amazon Cognito user pool
-   #+CINDEX:dashboard, Cognito
-   #+CINDEX:@command{manage user pools}
-   #+CINDEX:user pool
-   [04:16] To view the Cognito authentication service in your AWS
-   account, open the AWS console and search for Cognito.  In the
-   Cognito dashboard, click on =manage user pools= and then click on
-   the user pool for the application that we just created.
 
-   #+CINDEX:users, view
-   #+CINDEX:signed-up users, view
-   [04:32] Here, we can view the settings for the Amazon Cognito user
-   pool that we've created and also view any of the users that have
-   signed up.
+#+CINDEX:Cognito authentication service, view
+#+CINDEX:AWS account, Cognito authentication service
+#+CINDEX:Cognito dashboard
+#+CINDEX:Amazon Cognito user pool
+#+CINDEX:dashboard, Cognito
+#+CINDEX:@command{manage user pools}
+#+CINDEX:user pool
+[04:16] To view the Cognito authentication service in your AWS
+account, open the AWS console and search for Cognito.  In the
+Cognito dashboard, click on =manage user pools= and then click on
+the user pool for the application that we just created.
+
+#+CINDEX:users, view
+#+CINDEX:signed-up users, view
+[04:32] Here, we can view the settings for the Amazon Cognito user
+pool that we've created and also view any of the users that have
+signed up.
+
+#+NAME:img:cognito-manage-user-pools
+#+CAPTION:Manage User Pools in Cognito
+[[file:img/cognito-manage-user-pools-50.png]]
+
+#+NAME:img:cognito-users-and-groups
+#+CAPTION: Users and Groups in Cognito
+file:img/cognito-users-and-groups-30.png
+
+#+NAME:img:cognito-users
+#+CAPTION:Users in Cognito
+file:img/cognito-users-50.png
 
 * Manually Sign Up New Users in React with AWS Amplify Auth Class
 
@@ -4887,7 +4900,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.5 <2019-02-25 Mon 18:49>
+#+MACRO:VERSION Version 0.4.6 <2019-02-26 Tue 09:12>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
