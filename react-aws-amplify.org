@@ -1099,122 +1099,226 @@ file:img/cognito-users-50.png
 
 * Manually Sign Up New Users in React with AWS Amplify Auth Class
 
-  #+CINDEX:@code{Auth} class
-  #+CINDEX:create custom user sign-in, sign-up flow
-  #+CINDEX:sign-in flow, create
-  #+CINDEX:sign-up flow, create
-  In this lesson we’ll look at how we can use the ~Auth~ class [to] directly
-  create a custom user sign-in and sign-up flow.
+#+CINDEX:@code{Auth} class
+#+CINDEX:create custom user sign-in, sign-up flow
+#+CINDEX:sign-in flow, create
+#+CINDEX:sign-up flow, create
+In this lesson we’ll look at how we can use the ~Auth~ class [to] directly
+create a custom user sign-in and sign-up flow.
+
+{{{heading(Steps for Custom Sign-In Flow)}}}
+
+In {{{file(App.js)}}}:
+- Import Auth from the AWS Amplify library
+- add ~onChange~ handler
+- add ~signUp~ and ~confirmSignUp~ class methods
+- add two forms for signing up and confirming
+- add sign-up button
+- add styles
 
 ** Import Authentication Functionality For Sign-Up
-  #+CINDEX:@command{import auth}
-  #+CINDEX:@code{auth}, import
-  #+CINDEX:AWS Amplify library
-  #+CINDEX:library, Amplify
-  #+CINDEX:initial state, create
-  #+CINDEX:state, create initial
-  #+CINDEX:user, signup
-  #+CINDEX:user information, add
-  [00:02] The first thing we'll do is we'll {{{command(import auth)}}} from the
-  AWS Amplify library.  Next, we'll create some initial state.  We'll need to
-  keep up with the username, password, email, phone number, and authentication
-  code for the user that is being signed up.
+
+#+CINDEX:@command{import auth}
+#+CINDEX:@code{auth}, import
+#+CINDEX:AWS Amplify library
+#+CINDEX:library, Amplify
+#+CINDEX:initial state, create
+#+CINDEX:state, create initial
+#+CINDEX:user, signup
+#+CINDEX:user information, add
+[00:02] Starting in {{{file(App.js)}}}, the first thing we'll do is import
+~Auth~ from the AWS Amplify library.
+: import { Auth } from 'aws-ampliify';
+
+Next, we'll create some initial state.  We'll need to keep up with the
+- username,
+- password,
+- email,
+- phone number, and
+- authentication code
+- <<step-attribute>>step ([[step][step]])
+
+for the user that is being signed up.
+
+#+NAME:code:state
+#+CAPTION:State Attributes
+#+BEGIN_SRC js -n :eval never
+state = {
+  username: '',
+  password: '',
+  email: '',
+  phone_number: '',
+  authenticationCode: ''
+}
+#+END_SRC
 
 ** Code Authentication for Sign-Up Functionality
-  #+CINDEX:@code{onChange} handler
-  #+CINDEX:handler, @code{onChange}
-  #+CINDEX:text input, handle
-  #+CINDEX:@code{setState}
-  #+CINDEX:@code{event.target.name}, set
-  #+CINDEX:@code{event.target.value}, set
-  [00:30] Next, we'll need an ~onChange~ handler to handle the user's text
-  input.  This function will call ~this.setState~, setting the
-  ~event.target.name~ and the ~event.target.value~.
 
-  #+CINDEX:sign-up, create class method
-  #+CINDEX:confirm sign-up, create class method
-  #+CINDEX:class method, sign-up
-  #+CINDEX:async, sign-up method
-  #+CINDEX:@code{try-catch} block
-  #+CINDEX:destructure user info
-  #+CINDEX:@code{auth.signUp}, call
-  #+CINDEX:call @code{auth.signUp}
-  #+CINDEX:attributes object
-  #+CINDEX:successful sign-up
-  [00:49] We'll next create a =sign-up= and =confirm sign-up= class method.
-  =Sign-up= will be /async/, so we'll create a ~try-catch~ block.  We'll first
-  destructure the username, password, email, and phone number from the state.
-  We'll then call ~auth.signUp~, passing in the username and password as well
-  as an ~attributes~ object containing the email and the phone number.  If the
-  sign up is successful, we'll ~console.log~ ``Successfully signed up.''
+#+CINDEX:@code{onChange} handler
+#+CINDEX:handler, @code{onChange}
+#+CINDEX:text input, handle
+#+CINDEX:@code{setState}
+#+CINDEX:@code{event.target.name}, set
+#+CINDEX:@code{event.target.value}, set
+[00:30] Next, we'll need an ~onChange~ handler to handle the user's text
+input.  This function will call ~this.setState~, setting the
+~event.target.name~ and the ~event.target.value~.
 
-  #+CINDEX:@code{confirm sign up}
-  #+CINDEX:multi-factor authentication
-  #+CINDEX:authentication, multi-factor
-  #+CINDEX:destructure user info
-  #+CINDEX:@code{try-catch} block
-  #+CINDEX:@code{auth.confirmSignup}, call
-  #+CINDEX:call @code{auth.confirmSignup}
-  #+CINDEX:user, successful sign-up
-  [01:57] =Confirm sign up= will handle the /multi-factor authentication/, so
-  we'll destructure both the username and the authentication code from the
-  state.  Here we'll also set up a ~try-catch~ block.  We'll call
-  ~auth.confirmSignup~, passing in the username and the authentication code.
-  If this is successful, we'll ~console.log~ ``User successfully signed up.''
+#+NAME:code:onChange
+#+CAPTION:State onChange Handler
+#+BEGIN_SRC js -n :eval never
+onChange = e => {
+  this.setState({
+    [e.target.name]: e.target.value
+  })
+}
+#+END_SRC
 
+#+CINDEX:sign-up, create class method
+#+CINDEX:confirm sign-up, create class method
+#+CINDEX:class method, sign-up
+#+CINDEX:async, sign-up method
+#+CINDEX:@code{try-catch} block
+#+CINDEX:destructure user info
+#+CINDEX:@code{auth.signUp}, call
+#+CINDEX:call @code{auth.signUp}
+#+CINDEX:attributes object
+#+CINDEX:successful sign-up
+[00:49] We'll next create ~signUp~ and ~confirmSignUp~ class methods.
+
+*** Sign Up Class Method
+=signUp= will be /async/, so we'll create a ~try-catch~ block.
+
+We'll first destructure the
+- username,
+- password,
+- email, and
+- phone number
+
+
+from the state.
+
+We'll then call ~auth.signUp~, passing in the =username= and =password= as well
+as an ~attributes~ object containing the =email= and the =phone_number=.
+
+If the sign up is successful, we'll console log ``Successfully signed up.''
+
+#+NAME:code:signUp
+#+CAPTION:signUp Class Method
+#+BEGIN_SRC js -n :eval never
+signUp = async () => {
+    const {
+        username,
+        password,
+        attributes: {
+            email,
+            phone_number
+        }
+    } = this.state;
+
+    try {
+        await Auth.signUp({
+            username,
+            password,
+            attributes: {
+                email,
+                phone_number
+            }
+        )}
+        console.log("Successfully signed up!");
+    } catch (err) {
+        console.log("Error signing up: ", err);
+    }
+}
+#+END_SRC
+
+*** Confirm Sign Up Class Method
+
+#+CINDEX:@code{confirm sign up}
+#+CINDEX:multi-factor authentication
+#+CINDEX:authentication, multi-factor
+#+CINDEX:destructure user info
+#+CINDEX:@code{try-catch} block
+#+CINDEX:@code{auth.confirmSignup}, call
+#+CINDEX:call @code{auth.confirmSignup}
+#+CINDEX:user, successful sign-up
+[01:57] ~confirmSignUp~ will handle the /multi-factor authentication/, so we'll
+destructure both the username and the authentication code from the state.  Here
+we'll also set up a =try-catch= block.  We'll call ~auth.confirmSignUp~,
+passing in the =username= and the =authenticationCode=.  If this is successful,
+we'll console log ``User successfully confirmed signed up.''
+
+#+NAME:code:confirmSignUp
+#+CAPTION:confirmSignUp Class Method
+#+BEGIN_SRC js -n :eval never
+confirmSignUp = async () => {
+    const {
+        username,
+        authenticationCode
+    } = this.state;
+
+    try {
+        await Auth.confirmSignUp(username, authenticationCode);
+        console.log("User successfully confirmed sign up!");
+    } catch (err) {
+        console.log("Error confirming sign up: ", err);
+    }
+}
+#+END_SRC
 ** Two Sign-up Forms
 
-   1. Sign-up form
-   2. Confirnm sign-up form
+1. Sign-up form
+2. Confirnm sign-up form
 
-   #+CINDEX:forms, for signing up
-   #+CINDEX:variable @code{step}
-   #+CINDEX:@code{step} variable
-   #+CINDEX:toggle forms
-   [02:41] This component will contain two forms, one for signing up and one
-   for confirming the sign up.  We'll create a variable called ~step~ that
-   we'll use to toggle these two forms.
+#+CINDEX:forms, for signing up
+#+CINDEX:variable @code{step}
+#+CINDEX:@code{step} variable
+#+CINDEX:toggle forms
+[02:41] This component will contain two forms, one for signing up and one for
+confirming the sign up.  <<step>>We'll create a variable called ~step~ that
+we'll use to toggle between these two forms ([[step-attribute][step-attribute]]).
 
-   #+CINDEX:@code{render} method
-   #+CINDEX:@code{state.step}
-   #+CINDEX:form, sign-up, show
-   #+CINDEX:sign-up form, show
-   #+CINDEX:@code{onChange} method, sign-up form
-   #+CINDEX:properties, name and style
-   [03:04] In our ~render~ method we'll check to see if ~this.state.step~ is
-   equal to zero.  If it is, we'll show the =sign-in= form.  The sign up form
-   will contain four inputs, each with an ~onChange~ method, a =name= property,
-   and a =style= property.
+#+CINDEX:@code{render} method
+#+CINDEX:@code{state.step}
+#+CINDEX:form, sign-up, show
+#+CINDEX:sign-up form, show
+#+CINDEX:@code{onChange} method, sign-up form
+#+CINDEX:properties, name and style
+[03:04] In our ~render~ method we'll check to see if ~this.state.step~ is equal
+to zero.  If it is, we'll show the =signUp= form.
 
-   #+CINDEX:placeholder @code{attributes}
-   #+CINDEX:@code{attributes} placeholder
-   #+CINDEX:sign-up button, create
-   #+CINDEX:button, create sign-up
-   #+CINDEX:confirm sign-up button, create
-   #+CINDEX:sign-up button, confirm, create
-   [03:43] We'll also add a placeholder ~attributes~.  Finally, we'll create a
-   sign-up button that will call ~this.signup~ when clicked.  To create the
-   =confirm sign-up= form, we can just copy and paste the sign-up form to get
-   started.
+The =signUp= form will contain four inputs, each with an ~onChange~ method, a
+=name= property, and a =style= property.
 
-   #+CINDEX:confirm sign-up button
-   #+CINDEX:@code{confirmSignup}, call
-   #+CINDEX:call @code{confirmSignup}
-   [04:31] This form will only need two inputs, one for the username
-   and one for the authentication code.  The button for this form will
-   call ~this.confirmSignup~.
+#+CINDEX:placeholder @code{attributes}
+#+CINDEX:@code{attributes} placeholder
+#+CINDEX:sign-up button, create
+#+CINDEX:button, create sign-up
+#+CINDEX:confirm sign-up button, create
+#+CINDEX:sign-up button, confirm, create
+[03:43] We'll also add a placeholder ~attributes~.  Finally, we'll create a
+sign-up button that will call ~this.signup~ when clicked.  To create the
+=confirm sign-up= form, we can just copy and paste the sign-up form to get
+started.
 
-   #+CINDEX:@code{setState}, call
-   #+CINDEX:call @code{setState}
-   #+CINDEX:sign-up, successful, set @code{step}
-   #+CINDEX:@code{styles} variable
-   #+CINDEX:variable @code{styles}
-   #+CINDEX:input components
-   #+CINDEX:components, input
-   [04:52] Finally, in sign up we'll call ~this.setState~, setting the
-   ~step~ to one if the sign up is successful.  Next, we'll scroll to
-   the bottom of the component and we'll add a ~styles~ variable,
-   setting the styles for the input components.
+#+CINDEX:confirm sign-up button
+#+CINDEX:@code{confirmSignup}, call
+#+CINDEX:call @code{confirmSignup}
+[04:31] This form will only need two inputs, one for the username
+and one for the authentication code.  The button for this form will
+call ~this.confirmSignup~.
+
+#+CINDEX:@code{setState}, call
+#+CINDEX:call @code{setState}
+#+CINDEX:sign-up, successful, set @code{step}
+#+CINDEX:@code{styles} variable
+#+CINDEX:variable @code{styles}
+#+CINDEX:input components
+#+CINDEX:components, input
+[04:52] Finally, in sign up we'll call ~this.setState~, setting the
+~step~ to one if the sign up is successful.  Next, we'll scroll to
+the bottom of the component and we'll add a ~styles~ variable,
+setting the styles for the input components.
 
 ** Test Sign Up and Confirm Sign Up
 
@@ -4898,6 +5002,11 @@ Cognito.
 :END:
 #+TEXINFO:@listoffloats Figure
 
+* List of Code
+:PROPERTIES:
+:APPENDIX: t
+:END:
+#+TEXINFO: @listoffloats Listing
 * Index
   :PROPERTIES:
   :INDEX:    cp
@@ -4951,7 +5060,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.7 <2019-02-26 Tue 10:08>
+#+MACRO:VERSION Version 0.4.8 <2019-02-26 Tue 11:20>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
