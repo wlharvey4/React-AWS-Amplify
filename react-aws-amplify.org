@@ -605,121 +605,413 @@ $ cat package.json
 
 * Use the AWS Amplify ~withAuthenticator~ HOC to Implement a React User Authorization Flow
 
-  #+CINDEX:user authentication, enable
-  #+CINDEX:Amazon Cognito
-  #+CINDEX:@code{withAuthenticator} HOC
-  #+CINDEX:sign-up flow, create
-  #+CINDEX:sign-in flow, create
-  In this lesson we’ll enable *user authentication* ([[https://aws.amazon.com/cognito/][Amazon Cognito]]) in
-  the existing AWS Amplify project, then use the ~withAuthenticator~
-  /higher order component/ [fn:9] from AWS Amplify [fn:8] to quickly add a
-  preconfigured sign up and sign in flow.
+#+CINDEX:user authentication flow
+#+CINDEX:user authentication, enable
+#+CINDEX:Amazon Cognito
+#+CINDEX:@code{withAuthenticator} HOC
+#+CINDEX:sign-up flow, create
+#+CINDEX:sign-in flow, create
+In this lesson we’ll enable *user authentication* ([[https://aws.amazon.com/cognito/][Amazon Cognito]]) in
+the existing AWS Amplify project, then use the ~withAuthenticator~
+/higher order component/ [fn:9] from AWS Amplify [fn:8] to quickly add a
+preconfigured sign up and sign in flow.
 
-** Add Authentication
+- enable Amazon Cognito User Authentication in our project
+- add ~withAuthenticator~ HOC for sign-up and sign-in flows
 
-   #+CINDEX:authentication, add service
-   #+CINDEX:add new service, using Amplify
-   #+CINDEX:Amplify add new service using
-   #+CINDEX:@command{amplify add}
-   #+CINDEX:service, @code{auth}
-   #+CINDEX:@code{auth} service
-    [00:02] The first service that we're going to add is *authentication*.  To
-    add a new service using Amplify, we can run {{{command(amplify add)}}} with
-    the name of the service.  The service name that we're going to be adding is
-    ~auth~, so we can run {{{command(amplify add auth)}}}.  See [[https://aws-amplify.github.io/docs/js/authentication][Docs
-    Authentication]].
+** Add Authentication Service
 
-    #+CINDEX:default authentication and security configuration
-    #+CINDEX:configuration, default authentication and security
-    #+CINDEX:authentication
-    #+CINDEX:security
-    #+CINDEX:@command{amplify push}
-    #+CINDEX:push configuration into account
-    #+CINDEX:provision new resources
-    #+CINDEX:resources, provision new
-    #+CINDEX:resources, create
-    [00:16] Here, we'll be asked if we would like to use the default
-    authentication and security configuration.  We'll choose =yes=.  Now the
-    new configuration has been created in our project.  We'll run
-    {{{command(amplify push)}}} to push the new configuration into our account
-    and create and provision the new resources.
+#+CINDEX:authentication, add service
+#+CINDEX:add new service, using Amplify
+#+CINDEX:Amplify add new service using
+#+CINDEX:@command{amplify add}
+#+CINDEX:service, @code{auth}
+#+CINDEX:@code{auth} service
+[00:02] The first /service/ that we're going to add is *authentication*.
 
-    #+CINDEX:create new authentication service
-    #+CINDEX:authentication service, create new
-    [00:36] Next, we'll be prompted and asked if we would like to
-    continue. If you look at the operation, you can see that it is set
-    to =create=.  This means it will create a new authentication service
-    in our account.  This may take a couple of minutes to complete.
+To add a new /service/ using Amplify, we can run {{{command(amplify add)}}}
+with the name of the service.  The service name that we're going to be adding
+is ~auth~, so we can run {{{command(amplify add auth)}}}.  See [[https://aws-amplify.github.io/docs/js/authentication][Docs
+Authentication]].
+: amplify add auth
 
-    #+CINDEX:@file{AWS-exports.js}
-    [00:52] Now that the authentication service has been created, we should be
-    able to look in our source directory and see a new file that was created
-    for us called {{{file(AWS-exports.js)}}}.  This file is created and updated
-    by the CLI, so there's no reason for us to change it.
+#+CINDEX:default authentication and security configuration
+#+CINDEX:configuration, default authentication and security
+#+CINDEX:authentication
+#+CINDEX:security
+#+CINDEX:@command{amplify push}
+#+CINDEX:push configuration into account
+#+CINDEX:provision new resources
+#+CINDEX:resources, provision new
+#+CINDEX:resources, create
+[00:16] Here, we'll be asked if we would like to use the /default
+authentication and security configuration/.  We'll choose =yes=.  Now the new
+configuration has been created in our project.  [[*amplify add auth]]
+
+We'll run {{{command(amplify push)}}} to push the new configuration into our
+account and create and provision the new resources. [[*amplify push]]
+: amplify push
+
+#+CINDEX:create new authentication service
+#+CINDEX:authentication service, create new
+[00:36] Next, we'll be prompted and asked if we would like to continue. If you
+look at the /operation/, you can see that it is set to =create=.  This means it
+will create a /new authentication service/ in our account.  This may take a
+couple of minutes to complete.
+
+#+CINDEX:@file{AWS-exports.js}
+[00:52] Now that the authentication service has been created, we should be able
+to look in our {{{file(src)}}} directory ([[*src directory]]) and see a new file
+that was created for us called {{{file(aws-exports.js)}}}.  This file is
+created and updated by the CLI, so there's no reason for us to change it.
+
+*** amplify add auth
+
+#+BEGIN_EXAMPLE
+$ amplify add auth
+Using service: Cognito, provided by: awscloudformation
+ The current configured provider is Amazon Cognito.
+ Do you want to use the default authentication and security configuration? Yes, use the default configuration.
+Successfully added resource cognito04303ec1 locally
+
+Some next steps:
+"amplify push" will build all your local backend resources and provision it in the cloud
+"amplify publish" will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud
+#+END_EXAMPLE
+
+*** amplify push
+
+#+BEGIN_EXAMPLE
+$ amplify push
+
+Current Environment: ampenv
+
+| Category | Resource name   | Operation | Provider plugin   |
+| -------- | --------------- | --------- | ----------------- |
+| Auth     | cognito04303ec1 | Create    | awscloudformation |
+? Are you sure you want to continue? Yes
+⠦ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS authcognito04303ec1           AWS::CloudFormation::Stack Mon Feb 25 2019 12:08:45 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS authcognito04303ec1           AWS::CloudFormation::Stack Mon Feb 25 2019 12:08:45 GMT-0800 (Pacific Standard Time)
+UPDATE_IN_PROGRESS my-amplify-app-20190225111546 AWS::CloudFormation::Stack Mon Feb 25 2019 12:08:40 GMT-0800 (Pacific Standard Time) User Initiated
+⠇ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS my-amplify-app-20190225111546-authcognito04303ec1-68587KB5KYOE AWS::CloudFormation::Stack Mon Feb 25 2019 12:08:45 GMT-0800 (Pacific Standard Time) User Initiated
+⠦ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS SNSRole AWS::IAM::Role Mon Feb 25 2019 12:08:53 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS SNSRole AWS::IAM::Role Mon Feb 25 2019 12:08:52 GMT-0800 (Pacific Standard Time)
+⠼ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_COMPLETE SNSRole AWS::IAM::Role Mon Feb 25 2019 12:09:11 GMT-0800 (Pacific Standard Time)
+⠹ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_COMPLETE    UserPoolClientWeb AWS::Cognito::UserPoolClient Mon Feb 25 2019 12:09:28 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS UserPoolClientWeb AWS::Cognito::UserPoolClient Mon Feb 25 2019 12:09:28 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_COMPLETE    UserPoolClient    AWS::Cognito::UserPoolClient Mon Feb 25 2019 12:09:27 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS UserPoolClient    AWS::Cognito::UserPoolClient Mon Feb 25 2019 12:09:27 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPoolClientWeb AWS::Cognito::UserPoolClient Mon Feb 25 2019 12:09:25 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS UserPoolClient    AWS::Cognito::UserPoolClient Mon Feb 25 2019 12:09:25 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE    UserPool          AWS::Cognito::UserPool       Mon Feb 25 2019 12:09:20 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS UserPool          AWS::Cognito::UserPool       Mon Feb 25 2019 12:09:20 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPool          AWS::Cognito::UserPool       Mon Feb 25 2019 12:09:17 GMT-0800 (Pacific Standard Time)
+⠋ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS UserPoolClientRole AWS::IAM::Role Mon Feb 25 2019 12:09:33 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPoolClientRole AWS::IAM::Role Mon Feb 25 2019 12:09:32 GMT-0800 (Pacific Standard Time)
+⠏ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_COMPLETE    UserPoolClientLambda AWS::Lambda::Function Mon Feb 25 2019 12:09:56 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS UserPoolClientLambda AWS::Lambda::Function Mon Feb 25 2019 12:09:55 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPoolClientLambda AWS::Lambda::Function Mon Feb 25 2019 12:09:55 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE    UserPoolClientRole   AWS::IAM::Role        Mon Feb 25 2019 12:09:51 GMT-0800 (Pacific Standard Time)
+⠦ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS UserPoolClientLambdaPolicy AWS::IAM::Policy Mon Feb 25 2019 12:10:08 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPoolClientLambdaPolicy AWS::IAM::Policy Mon Feb 25 2019 12:10:07 GMT-0800 (Pacific Standard Time)
+⠴ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS UserPoolClientLogPolicy    AWS::IAM::Policy Mon Feb 25 2019 12:10:22 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPoolClientLogPolicy    AWS::IAM::Policy Mon Feb 25 2019 12:10:21 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE    UserPoolClientLambdaPolicy AWS::IAM::Policy Mon Feb 25 2019 12:10:16 GMT-0800 (Pacific Standard Time)
+⠹ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS UserPoolClientInputs    Custom::LambdaCallout Mon Feb 25 2019 12:10:38 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS UserPoolClientInputs    Custom::LambdaCallout Mon Feb 25 2019 12:10:35 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE    UserPoolClientLogPolicy AWS::IAM::Policy      Mon Feb 25 2019 12:10:31 GMT-0800 (Pacific Standard Time)
+⠙ Updating resources in the cloud. This may take a few minutes...
+
+CREATE_IN_PROGRESS IdentityPoolRoleMap  AWS::Cognito::IdentityPoolRoleAttachment Mon Feb 25 2019 12:10:51 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE    IdentityPool         AWS::Cognito::IdentityPool               Mon Feb 25 2019 12:10:47 GMT-0800 (Pacific Standard Time)
+CREATE_IN_PROGRESS IdentityPool         AWS::Cognito::IdentityPool               Mon Feb 25 2019 12:10:46 GMT-0800 (Pacific Standard Time) Resource creation Initiated
+CREATE_IN_PROGRESS IdentityPool         AWS::Cognito::IdentityPool               Mon Feb 25 2019 12:10:44 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE    UserPoolClientInputs Custom::LambdaCallout                    Mon Feb 25 2019 12:10:39 GMT-0800 (Pacific Standard Time)
+⠧ Updating resources in the cloud. This may take a few minutes...
+
+UPDATE_COMPLETE                     my-amplify-app-20190225111546 AWS::CloudFormation::Stack Mon Feb 25 2019 12:11:06 GMT-0800 (Pacific Standard Time)
+UPDATE_COMPLETE_CLEANUP_IN_PROGRESS my-amplify-app-20190225111546 AWS::CloudFormation::Stack Mon Feb 25 2019 12:11:05 GMT-0800 (Pacific Standard Time)
+CREATE_COMPLETE                     authcognito04303ec1           AWS::CloudFormation::Stack Mon Feb 25 2019 12:11:01 GMT-0800 (Pacific Standard Time)
+✔ All resources are updated in the cloud
+#+END_EXAMPLE
+
+*** src directory and aws-exports.js
+
+#+BEGIN_EXAMPLE
+$ tree src
+src
+├── App.css
+├── App.js
+├── App.test.js
+├── aws-exports.js
+├── index.css
+├── index.js
+├── logo.svg
+└── serviceWorker.js
+
+0 directories, 8 files
+
+$ cat src/aws-exports.js
+// WARNING: DO NOT EDIT. This file is automatically generated by AWS Amplify. It will be overwritten.
+
+const awsmobile = {
+    "aws_project_region": "us-west-2",
+    "aws_cognito_identity_pool_id": "us-west-2:fa1cd560-580d-4fc9-bfcb-2c10e19b3cc4",
+    "aws_cognito_region": "us-west-2",
+    "aws_user_pools_id": "us-west-2_QweWlfgNU",
+    "aws_user_pools_web_client_id": "5k79dgm1rvlt773bk9qp4jq99r"
+};
+
+
+export default awsmobile;
+#+END_EXAMPLE
 
 ** Configure React App with AWS Resources
 
-    #+CINDEX:React application, configure with AWS resource
-    #+CINDEX:AWS resources, configure React app
-    #+CINDEX:@file{source/index.js}
-    #+CINDEX:@file{index.js}
-    #+CINDEX:Amplify, import from AWS Amplify library
-    #+CINDEX:library, AWS Amplify, import
-    #+CINDEX:import AWS Amplify library
-    #+CINDEX:@code{amplify.configure}
-    [01:07] We will, though, be using it in the next step to configure
-    our React application with the AWS resources.  To configure our
-    React app with the AWS resources, we can open up
-    ~source/index.js~.  Here, we'll import Amplify from the AWS
-    Amplify library.  The configuration from AWS exports, and we'll
-    call ~amplify.configure~, passing in the config.
+#+CINDEX:React application, configure with AWS resource
+#+CINDEX:AWS resources, configure React app
+#+CINDEX:@file{source/index.js}
+#+CINDEX:@file{index.js}
+#+CINDEX:Amplify, import from AWS Amplify library
+#+CINDEX:library, AWS Amplify, import
+#+CINDEX:import AWS Amplify library
+#+CINDEX:@code{amplify.configure}
+[01:07] We will, though, be using it in the next step to configure
+our React application with the AWS resources.
+
+To configure our React app with the AWS resources, we can open up
+{{{file(src/index.js)}}}.
+
+Here, we'll
+
+- ~import Amplify~ from the AWS Amplify library, ~aws-amplify~
+- ~import config~, the configuration, from AWS exports, ~./aws-exports~
+- and we'll call ~Amplify.configure(config)~, passing in the ~config~.
+
+*** index.js before
+
+#+BEGIN_EXAMPLE
+$ cat src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+#+END_EXAMPLE
+
+*** index.js after
+#+BEGIN_EXAMPLE
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+>>import Amplify from 'aws-amplify'
+>>import config from './aws-exports'
+>>Amplify.configure(config)
+
+ReactDOM.render(<App />, document.getElementByID('root'))
+>>registerServiceWorker();
+#+END_EXAMPLE
+
+*** new index.js
+
+#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
+Amplify.configure(config)
+
+ReactDOM.render(<App />, document.getElementByID('root'))
+registerServiceWorker();
+#+END_SRC
 
 ** Install Higher Order Component
 
-    #+CINDEX:@code{withAuthenticator} higher order component
-    #+CINDEX:higher order component, @code{withAuthenticator}
-    #+CINDEX:HOC @code{withAuthenticator}
-    #+CINDEX:@file{source/app.js}
-    #+CINDEX:import @file{withAuthenticator} HOC
-    #+CINDEX:wrap app component with HOC @file{withAuthenticator}
-    [01:47] Next, we'll open ~source/app.js~.  Here we'll first import
-    the ~withAuthenticator~ higher order component from the AWS
-    Amplify React library.  Instead of exporting the app component as
-    a default export, we'll instead wrap the app component with the
-    ~withAuthenticator~ higher order component.
+#+CINDEX:@code{withAuthenticator} higher order component
+#+CINDEX:higher order component, @code{withAuthenticator}
+#+CINDEX:HOC @code{withAuthenticator}
+#+CINDEX:@file{source/app.js}
+#+CINDEX:import @file{withAuthenticator} HOC
+#+CINDEX:wrap App component with HOC @file{withAuthenticator}
+[01:47] Next, we'll open {{{file(src/App.js)}}}.
+
+Here we'll first:
+
+- import the ~withAuthenticator~ higher order component from thex AWS Amplify
+  React library, {{{file(aws-amplify-react)}}},
+  : import { withAuthenticator } from 'aws-amplify-react'
+
+- Instead of exporting the App component as a default export, we'll instead
+  wrap the app component with the ~withAuthenticator~ higher order component:
+  : export default withAuthenticator(App);
+
+*** App.js before
+
+#+BEGIN_EXAMPLE
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
+  }
+}
+
+export default App;
+#+END_EXAMPLE
+
+*** App.js changes
+
+#+BEGIN_EXAMPLE
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+>>import { withAuthenticator } from 'aws-amplify-react'
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
+  }
+}
+
+>>export default withAuthenticator(App);
+#+END_EXAMPLE
+
+*** new App.js
+
+#+BEGIN_SRC js :eval no-export :tangle my-amplify-app/src/App.js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+import { withAuthenticator } from 'aws-amplify-react'
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+      </div>
+    );
+  }
+}
+
+export default withAuthenticator(App);
+#+END_SRC
 
 ** Test Application
 
-   #+CINDEX:test application
-   #+CINDEX:@command{run npm start}
-   #+CINDEX:application, run
-   #+CINDEX:user authentication flow, app protected by
-   #+CINDEX:new account, create
-   [02:24] Now we're ready to test it out.  To run the app,
-   : run npm start
-   Our app should now be protected by user authentication flow.  The
-   first thing we'll do is click =create account= and create a new
-   account.
+#+CINDEX:test application
+#+CINDEX:@command{run npm start}
+#+CINDEX:application, run
+#+CINDEX:user authentication flow, app protected by
+#+CINDEX:new account, create
+[02:24] Now we're ready to test it out.  To run the app, run:
+: npm start
 
-   #+CINDEX:authentication code, in email
-   #+CINDEX:confirm new account
-   #+CINDEX:new account, confirm
-   #+CINDEX:account, sign in
-   #+CINDEX:sign in, account
-   [02:57] After the account has been created, you should receive an
-   authentication code in your email.  To confirm the sign up, paste in
-   the authentication code from your email.  After you've confirmed
-   your account, sign into your account.
+#+BEGIN_SRC sh
+npm start
+#+END_SRC
 
-   #+CINDEX:sign in
-   #+CINDEX:redirected to main app
-   #+CINDEX:main app, redirected to
-   #+CINDEX:user session, in local storage
-   #+CINDEX:local storage, user session
-   [03:16] After we've signed in, we should be redirected to the main
-   app. You'll notice that if you refresh the page, the user remains
-   signed in. This is because the user session is stored in local
-   storage.
+Our app should now be protected by user authentication flow.  The
+first thing we'll do is click =create account= and create a new
+account.
+
+#+CINDEX:authentication code, in email
+#+CINDEX:confirm new account
+#+CINDEX:new account, confirm
+#+CINDEX:account, sign in
+#+CINDEX:sign in, account
+[02:57] After the account has been created, you should receive an
+authentication code in your email.  To confirm the sign up, paste in
+the authentication code from your email.  After you've confirmed
+your account, sign into your account.
+
+#+CINDEX:sign in
+#+CINDEX:redirected to main app
+#+CINDEX:main app, redirected to
+#+CINDEX:user session, in local storage
+#+CINDEX:local storage, user session
+[03:16] After we've signed in, we should be redirected to the main
+app. You'll notice that if you refresh the page, the user remains
+signed in. This is because the user session is stored in local
+storage.
 
 ** Create Sign-Out
 
@@ -4616,7 +4908,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.2 <2019-02-25 Mon 11:49>
+#+MACRO:VERSION Version 0.4.3 <2019-02-25 Mon 16:59>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
