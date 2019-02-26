@@ -921,7 +921,7 @@ Here we'll first:
 
 {{{subheading(New ~App.js~)}}}
 
-#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/App.js
+#+BEGIN_SRC js -n :eval no-export :tangle no
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -961,16 +961,16 @@ export default withAuthenticator(App); /* MODIFIED */
 #+CINDEX:application, run
 #+CINDEX:user authentication flow, app protected by
 #+CINDEX:new account, create
-[02:24] Now we're ready to test it out.  To run the app, run:
-: npm start
+[02:24] Now we're ready to test it out.  To start the app, run:
+: yarn start
 
-#+BEGIN_SRC sh :dir my-amplify-app :result output
-npm start
-#+END_SRC
-
-Our app should now be protected by user authentication flow.  The
-first thing we'll do is click =create account= and create a new
+Our app should now be protected by Cognito's user authentication flow.  The
+first thing we'll do is click {{{key(create account)}}} to create a new
 account.
+
+#+NAME:img:cognito-sign-in
+#+CAPTION:Cognito Sign In Modal
+[[file:img/cognito-sign-in-50.png]]
 
 #+CINDEX:authentication code, in email
 #+CINDEX:confirm new account
@@ -999,22 +999,73 @@ storage.
 #+CINDEX:@file{withAuthenticator}
 #+CINDEX:@code{include-greetings} key
 #+CINDEX:key, @code{include-greetings}
-[03:28] Next, let's add a sign out button.  To do so we'll go back
-into ~App.js~ and pass in a second argument to ~withAuthenticator~.
-Here, we'll pass in an object with an ~include-greetings~ key set
-to true.
+[03:28] Next, let's add a sign out button.  To do so we'll go back into
+{{{file(App.js)}}} and pass in a second argument to ~withAuthenticator~.  Here,
+we'll pass in an object with an ~includeGreetings~ key set to ~true~.
+: export default withAuthenticator(App, { includeGreetings: true});
+
+#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/App.js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+import { withAuthenticator } from 'aws-amplify-react';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
+  }
+}
+
+export default withAuthenticator(App, { includeGreetings: true }); /* MODIFIED */
+#+END_SRC
 
 #+CINDEX:sign-out button
+[03:58] Now when we refresh, we should see a {{{key(SIGN OUT)}}} button at the
+top right corner of the page.
+
+#+NAME:img:cognito-sign-out
+#+CAPTION:Cognito Sign Out Button
+[[file:img/cognito-sign-out.png]]
+
+** View Amplify Services in CLI
+
 #+CINDEX:Amplify services, view enabled
 #+CINDEX:enabled Amplify services, view
 #+CINDEX:@command{amplify status}
 #+CINDEX:resource name
-[03:58] Now when we refresh, we should see a sign out button at the
-top right corner of the page.  To view enabled Amplify services at
-any time, we can run ~Amplify status~.  Here, we're given the
-resource name for the authentication that we just created.
+To view enabled Amplify services at any time, we can run {{{command(amplify
+status)}}}.  Here, we're given the resource name for the authentication that we
+just created.
 
-** Cognito Authentication Service
+#+BEGIN_EXAMPLE
+$ amplify status
+
+Current Environment: ampenv
+
+| Category | Resource name   | Operation | Provider plugin   |
+| -------- | --------------- | --------- | ----------------- |
+| Auth     | cognito04303ec1 | No Change | awscloudformation |
+#+END_EXAMPLE
+
+** View Cognito Authentication Service in Console
 
 #+CINDEX:Cognito authentication service, view
 #+CINDEX:AWS account, Cognito authentication service
@@ -1023,10 +1074,10 @@ resource name for the authentication that we just created.
 #+CINDEX:dashboard, Cognito
 #+CINDEX:@command{manage user pools}
 #+CINDEX:user pool
-[04:16] To view the Cognito authentication service in your AWS
-account, open the AWS console and search for Cognito.  In the
-Cognito dashboard, click on =manage user pools= and then click on
-the user pool for the application that we just created.
+[04:16] To view the Cognito authentication service in your AWS account, open
+the AWS console and search for Cognito.  In the Cognito dashboard, click on
+{{{key(manage user pools)}}} and then click on the user pool for the
+application that we just created.
 
 #+CINDEX:users, view
 #+CINDEX:signed-up users, view
@@ -4900,7 +4951,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.6 <2019-02-26 Tue 09:12>
+#+MACRO:VERSION Version 0.4.7 <2019-02-26 Tue 10:08>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
