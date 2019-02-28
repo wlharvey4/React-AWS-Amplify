@@ -876,6 +876,7 @@ const awsmobile = {
 
 {{{heading(Original ~App.js~)}}}
 
+#+CINDEX:original @file{App.js}
 #+BEGIN_SRC js -n :eval no-export
 import React, { Component } from 'react';
 import logo from './logo.svg';
@@ -1103,18 +1104,72 @@ file:img/cognito-users-50.png
 #+CINDEX:create custom user sign-in, sign-up flow
 #+CINDEX:sign-in flow, create
 #+CINDEX:sign-up flow, create
-In this lesson we’ll look at how we can use the ~Auth~ class [to] directly
-create a custom user sign-in and sign-up flow.
+In this lesson we’ll look at how we can use the ~Auth~ class from the AWS
+Amplify JavaScript library [to] directly create a custom user sign-up and
+sign-in flow.[fn::Instead of using AWS's custom forms and methods, as was done
+in the previous segment.]
 
 {{{heading(Steps for Custom Sign-In Flow)}}}
 
 In {{{file(App.js)}}}:
-- Import Auth from the AWS Amplify library
+- Import ~Auth~ from the AWS Amplify library
+- add state variables
+  - username
+  - password
+  - email
+  - phone_number
+  - authenticationCode
 - add ~onChange~ handler
 - add ~signUp~ and ~confirmSignUp~ class methods
 - add two forms for signing up and confirming
 - add sign-up button
 - add styles
+
+{{{heading(Original ~App.js~)}}}
+
+Here is the origin {{{file(App.js)}}}, with new code added using =noweb=
+references in double angle brackets =<<...>>=.
+
+#+CINDEX:original @file{App.js}
+#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/App-custom.js :noweb tangle
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+<<import-auth>>
+
+class App extends Component {
+  <<state>>
+  <<onChange-handler>>
+  <<signUp>>
+  <<confirmSignUp>>
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+        <<two-forms>>
+      </div>
+    );
+  }
+}
+
+<<styles>>
+
+export default App;
+#+END_SRC
 
 ** Import Authentication Functionality For Sign-Up
 
@@ -1128,20 +1183,27 @@ In {{{file(App.js)}}}:
 #+CINDEX:user information, add
 [00:02] Starting in {{{file(App.js)}}}, the first thing we'll do is import
 ~Auth~ from the AWS Amplify library.
-: import { Auth } from 'aws-ampliify';
+
+#+NAME: import-auth
+#+CAPTION:Import ~Auth~ Class from the AWS Amplify Library
+#+BEGIN_SRC js -n :eval never
+import { Auth } from 'aws-amplify';
+#+END_SRC
+
+** Add State Members
 
 Next, we'll create some initial state.  We'll need to keep up with the
 - username,
 - password,
 - email,
-- phone number, and
-- authentication code
+- phone_number, and
+- authenticationCode
 - <<step-attribute>>step ([[step][step]])
 
 for the user that is being signed up.
 
-#+NAME:code:state
-#+CAPTION:State Attributes
+#+NAME:state
+#+CAPTION:Class State Members
 #+BEGIN_SRC js -n :eval never
 state = {
   username: '',
@@ -1152,7 +1214,7 @@ state = {
 }
 #+END_SRC
 
-** Code Authentication for Sign-Up Functionality
+** On-Change Handler for Sign-Up Functionality
 
 #+CINDEX:@code{onChange} handler
 #+CINDEX:handler, @code{onChange}
@@ -1164,8 +1226,8 @@ state = {
 input.  This function will call ~this.setState~, setting the
 ~event.target.name~ and the ~event.target.value~.
 
-#+NAME:code:onChange
-#+CAPTION:State onChange Handler
+#+NAME:onChange-handler
+#+CAPTION:State ~onChange~ Handler
 #+BEGIN_SRC js -n :eval never
 onChange = e => {
   this.setState({
@@ -1174,8 +1236,14 @@ onChange = e => {
 }
 #+END_SRC
 
+** Sign Up and Confirmation Class Methods
+
 #+CINDEX:sign-up, create class method
 #+CINDEX:confirm sign-up, create class method
+[00:49] We'll next create ~signUp~ and ~confirmSignUp~ class methods.
+
+*** Sign-Up Class Method
+
 #+CINDEX:class method, sign-up
 #+CINDEX:async, sign-up method
 #+CINDEX:@code{try-catch} block
@@ -1184,27 +1252,22 @@ onChange = e => {
 #+CINDEX:call @code{auth.signUp}
 #+CINDEX:attributes object
 #+CINDEX:successful sign-up
-[00:49] We'll next create ~signUp~ and ~confirmSignUp~ class methods.
-
-*** Sign Up Class Method
 =signUp= will be /async/, so we'll create a ~try-catch~ block.
 
-We'll first destructure the
+We'll first destructure from the state the:
 - username,
 - password,
 - email, and
-- phone number
+- phone_number
 
 
-from the state.
-
-We'll then call ~auth.signUp~, passing in the =username= and =password= as well
+We'll then call ~Auth.signUp~, passing in the =username= and =password= as well
 as an ~attributes~ object containing the =email= and the =phone_number=.
 
 If the sign up is successful, we'll console log ``Successfully signed up.''
 
-#+NAME:code:signUp
-#+CAPTION:signUp Class Method
+#+NAME:signUp
+#+CAPTION:~signUp~ Class Method
 #+BEGIN_SRC js -n :eval never
 signUp = async () => {
     const {
@@ -1226,30 +1289,31 @@ signUp = async () => {
             }
         )}
         console.log("Successfully signed up!");
+        <<toggle-step>>
     } catch (err) {
         console.log("Error signing up: ", err);
     }
 }
 #+END_SRC
 
-*** Confirm Sign Up Class Method
+*** Confirm-Sign-Up Class Method
 
 #+CINDEX:@code{confirm sign up}
 #+CINDEX:multi-factor authentication
 #+CINDEX:authentication, multi-factor
 #+CINDEX:destructure user info
 #+CINDEX:@code{try-catch} block
-#+CINDEX:@code{auth.confirmSignup}, call
-#+CINDEX:call @code{auth.confirmSignup}
+#+CINDEX:@code{Auth.confirmSignup}, call
+#+CINDEX:call @code{Auth.confirmSignup}
 #+CINDEX:user, successful sign-up
 [01:57] ~confirmSignUp~ will handle the /multi-factor authentication/, so we'll
 destructure both the username and the authentication code from the state.  Here
-we'll also set up a =try-catch= block.  We'll call ~auth.confirmSignUp~,
+we'll also set up a =try-catch= block.  We'll call ~Auth.confirmSignUp~,
 passing in the =username= and the =authenticationCode=.  If this is successful,
 we'll console log ``User successfully confirmed signed up.''
 
-#+NAME:code:confirmSignUp
-#+CAPTION:confirmSignUp Class Method
+#+NAME:confirmSignUp
+#+CAPTION:~confirmSignUp~ Class Method
 #+BEGIN_SRC js -n :eval never
 confirmSignUp = async () => {
     const {
@@ -1265,41 +1329,100 @@ confirmSignUp = async () => {
     }
 }
 #+END_SRC
-** Two Sign-up Forms
 
-1. Sign-up form
-2. Confirnm sign-up form
+** Two Forms---Sign-Up and Confirm-Sign-Up
 
 #+CINDEX:forms, for signing up
+#+CINDEX:@code{signUp} form
+#+CINDEX:@code{confirmSignUp} form
+[02:41] This component will contain two forms, one for signing up and one for
+confirming the sign up.
+
+1. ~signUp~ form
+2. ~confirnmSignUp~ form
+
+
+*** Sign-Up Form
+
+{{{subheading(step Variable)}}}
+
 #+CINDEX:variable @code{step}
 #+CINDEX:@code{step} variable
 #+CINDEX:toggle forms
-[02:41] This component will contain two forms, one for signing up and one for
-confirming the sign up.  <<step>>We'll create a variable called ~step~ that
-we'll use to toggle between these two forms ([[step-attribute][step-attribute]]).
-
 #+CINDEX:@code{render} method
 #+CINDEX:@code{state.step}
 #+CINDEX:form, sign-up, show
 #+CINDEX:sign-up form, show
+<<step>>We'll create a variable called ~step~ that we'll use to toggle between
+these two forms ([[step-attribute][step-attribute]]).  [03:04] In our ~render~ method we'll check
+to see if ~this.state.step~ is equal to zero.  If it is, we'll show the
+=signUp= form.
+
+{{{subheading(signUp Inputs)}}}
+
 #+CINDEX:@code{onChange} method, sign-up form
 #+CINDEX:properties, name and style
-[03:04] In our ~render~ method we'll check to see if ~this.state.step~ is equal
-to zero.  If it is, we'll show the =signUp= form.
-
 The =signUp= form will contain four inputs, each with an ~onChange~ method, a
 =name= property, and a =style= property.
 
 #+CINDEX:placeholder @code{attributes}
 #+CINDEX:@code{attributes} placeholder
+[03:43] We'll also add a =placeholder= attribute.
+
+{{{subheading(Sign Up Button)}}}
+
 #+CINDEX:sign-up button, create
 #+CINDEX:button, create sign-up
+Finally, we'll create a sign-up button that will call ~this.signup~ when
+clicked.
+
+#+NAME: signUp-form
+#+CAPTION:Sign-Up Form
+#+BEGIN_SRC js -n :eval never
+{
+    this.state.step === 0 && (   /* STEP STATE VARIABLE */
+      <div>
+            /* FOUR INPUTS */
+            <input
+        onChange={this.onChange}
+        name='username'
+        style={styles.input}
+        placeholder='username'
+            />
+            <input
+        onChange={this.onChange}
+        name='password'
+        style={styles.input}
+        placeholder='password'
+            />
+            <input
+        onChange={this.onChange}
+        name='email'
+        style={styles.input}
+        placeholder='password'
+            />
+            <input
+        onChange={this.onChange}
+        name='phone_number'
+        style={styles.input}
+        placeholder='password'
+            />
+            /* BUTTON CALLING SIGNUP */
+            <button onClick={this.signUp}>
+            Sign Up
+        </button>
+      </div>
+    )
+}
+#+END_SRC
+
+*** Confirm-Sign-Up Form
+
 #+CINDEX:confirm sign-up button, create
 #+CINDEX:sign-up button, confirm, create
-[03:43] We'll also add a placeholder ~attributes~.  Finally, we'll create a
-sign-up button that will call ~this.signup~ when clicked.  To create the
-=confirm sign-up= form, we can just copy and paste the sign-up form to get
-started.
+To create the =confirmSignUp= form, we can just copy and paste the sign-up form
+to get started, then make our changes to confirm ~username~ and
+~authenticationCode~.
 
 #+CINDEX:confirm sign-up button
 #+CINDEX:@code{confirmSignup}, call
@@ -1308,53 +1431,102 @@ started.
 and one for the authentication code.  The button for this form will
 call ~this.confirmSignup~.
 
+#+NAME:confirmSignUp-form
+#+CAPTION:Confirm Sign-Up Form
+#+BEGIN_SRC js -n :eval -never
+{
+    this.state.step === 1 && (
+        <div>
+            <input
+                placeholder='username'
+                onChange={this.onChange}
+                name='username'
+                style={styles.input}
+            />
+            <input
+                placeholder='authentication code'
+                onChange={this.onChange}
+                name='authentication code'
+                style={styles.input}
+            />
+            <button onClick={this.confirmSignUp}>
+                Confirm Sign Up
+            </button>
+        </div>
+    )
+}
+#+END_SRC
+
+*** Toggle Step and Add Styles
+
+{{{subheading(Toggle step State Member)}}}
+
 #+CINDEX:@code{setState}, call
 #+CINDEX:call @code{setState}
 #+CINDEX:sign-up, successful, set @code{step}
+[04:52] Going back to the =signUp= method, we'll call ~this.setState~, setting
+the ~step~ to one if the sign up is successful.
+
+#+NAME:toggle-step
+#+CAPTION:Toggle the ~step~ State Member
+#+BEGIN_SRC js -n :eval never
+this.setState({ step: 1 });
+#+END_SRC
+
+{{{subheading(Styles Variable)}}}
+
 #+CINDEX:@code{styles} variable
 #+CINDEX:variable @code{styles}
 #+CINDEX:input components
 #+CINDEX:components, input
-[04:52] Finally, in sign up we'll call ~this.setState~, setting the
-~step~ to one if the sign up is successful.  Next, we'll scroll to
-the bottom of the component and we'll add a ~styles~ variable,
-setting the styles for the input components.
+Next, we'll scroll to the bottom of the component and we'll add a ~styles~
+variable, setting the styles for the input components.
 
-** Test Sign Up and Confirm Sign Up
+#+NAME:styles
+#+CAPTION:Styles Variable
+#+BEGIN_SRC js -n :eval never
+const styles = {
+    input: {
+        height: 35, margin: 5
+  }
+}
+#+END_SRC
 
-   #+CINDEX:@command{npm start}, run
-   #+CINDEX:run @command{npm start}
-   #+CINDEX:new user sign-up
-   #+CINDEX:sign-up, new user
-   #+CINDEX:form, @samp{confirm sign up}
-   #+CINDEX:@samp{confirm sign up} form
-   [05:21] To test this out, let's run {{{command(npm start)}}}.  When we sign
-   up a new user, we should see ``Successfully signed up'' logged out to the
-   console.  We should also see the =confirm sign up= form appear on our
-   screen.
+** Test Sign-Up and Confirm-Sign-Up
 
-   #+CINDEX:confirm sign-up
-   #+CINDEX:sign-up, confirm
-   [05:52] To confirm sign up, use the username you just created as well as the
-   authentication code you received in your email and click =confirm sign up=.
-   If the sign up is successful, you should see ``User successfully signed up''
-   logged out to the console.
+#+CINDEX:@command{npm start}, run
+#+CINDEX:run @command{npm start}
+#+CINDEX:new user sign-up
+#+CINDEX:sign-up, new user
+#+CINDEX:form, @samp{confirm sign up}
+#+CINDEX:@samp{confirm sign up} form
+[05:21] To test this out, let's run {{{command(npm start)}}}.  When we sign
+up a new user, we should see ``Successfully signed up'' logged out to the
+console.  We should also see the =confirm sign up= form appear on our
+screen.
 
-** Make Sure New User Exists in AWS Dashboard
+#+CINDEX:confirm sign-up
+#+CINDEX:sign-up, confirm
+[05:52] To confirm sign up, use the username you just created as well as the
+authentication code you received in your email and click =confirm sign up=.
+If the sign up is successful, you should see ``User successfully signed up''
+logged out to the console.
 
-   #+CINDEX:user exists, confirm
-   #+CINDEX:dashboard, AWS
-   #+CINDEX:AWS dashboard
-   #+CINDEX:Cognito console
-   #+CINDEX:console, Cognito
-   #+CINDEX:new user, look at in console
-   #+CINDEX:user pools, manage
-   #+CINDEX:manage user pools
-   [06:06] To make sure that this user exists, let's jump into the AWS
-   dashboard and go to the Cognito console to look at the new user.  In the
-   Cognito dashboard we'll click on =manage user pools= and then we'll click on
-   the name of the user pool for our app.  When we click on users and groups,
-   we should now see the new user appear.
+*** Make Sure New User Exists in AWS Dashboard
+
+#+CINDEX:user exists, confirm
+#+CINDEX:dashboard, AWS
+#+CINDEX:AWS dashboard
+#+CINDEX:Cognito console
+#+CINDEX:console, Cognito
+#+CINDEX:new user, look at in console
+#+CINDEX:user pools, manage
+#+CINDEX:manage user pools
+[06:06] To make sure that this user exists, let's jump into the AWS dashboard
+and go to the Cognito console to look at the new user.  In the Cognito
+dashboard we'll click on =Manage User Pools= and then we'll click on the name
+of the user pool for our app.  When we click on =Users and Groups=, we should
+now see the new user appear.
 
 * Create & Interact with an AWS AppSync GraphQL API with AWS Amplify
 
@@ -5060,7 +5232,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.8 <2019-02-26 Tue 11:20>
+#+MACRO:VERSION Version 0.4.9 <2019-02-28 Thu 10:31>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
