@@ -5279,6 +5279,121 @@ particularly benefit from being built with AWS AppSync.
      and virtual reality (AR and VR) where the data is combined or incorporated
      into other information and needs to be updated in real time during a
      procedure or interactive session like a lesson.
+
+** Features
+
+- GraphQL ::
+
+             Simplified Data Access and Querying
+
+             AWS AppSync uses GraphQL, a data language that enables client apps
+             to fetch, change and subscribe to data from servers. In a GraphQL
+             query, the client specifies how the data is to be structured when
+             it is returned by the server. This makes it possible for the
+             client to query only for the data it needs, in the format that it
+             needs it in. GraphQL also includes a feature called
+             “introspection” which lets new developers on a project discover
+             the data available without requiring knowledge of the backend.
+
+- Real-time data access and updates ::
+
+     Immediate updates across clients and devices
+
+     AWS AppSync lets you specify which portions of your data should be
+     available in a real-time manner using GraphQL Subscriptions. GraphQL
+     Subscriptions are simple statements in the application code that tell the
+     service what data should be updated in real-time.
+
+- Offline data synchronization ::
+
+     Interact with and update your data, even when offline
+
+     AWS AppSync supports an offline programming model where application data
+     is not only available offline, but users can add and update data as
+     well. When the device is offline, the application UI will be automatically
+     updated with the offline data. AppSync lets you define how data is cached
+     offline as well as how AppSync should manage the cache updates under
+     different network conditions.
+
+- Data querying, filtering, and search in apps ::
+
+     Preconfigured access to AWS data sources
+
+     AWS AppSync gives client applications the ability to specify data
+     requirements with GraphQL so that only the needed data is fetched,
+     allowing for both server and client filtering. Since AWS AppSync supports
+     AWS Lambda, Amazon DynamoDB and Amazon Elasticsearch, the GraphQL
+     operations can be simple lookups, complex queries & mappings, full text
+     searches, fuzzy/keyword searches or geo lookups.
+
+- Enterprise security and fine-grained access control ::
+
+     Control your data
+
+     AWS AppSync allows several levels of data access and authorization
+     depending on the needs of an application. Simple access can be protected
+     by a key and more restrictive permission can be done with AWS Identity and
+     Access Management using Roles. Additionally, AWS AppSync integrates with
+     Amazon Cognito User Pools for email and password functionality, social
+     providers (Facebook, Google+, and Login with Amazon), and enterprise
+     federation with SAML. Customers can use the Group functionality for
+     logical organization of users and roles as well as OAuth features for
+     application access.
+
+** About
+
+- What is AWS AppSync
+
+  AWS AppSync is a new service that enables developers to manage and
+  synchronize mobile app data in real time across devices and users, but still
+  allows the data to be accessed and altered when the mobile device is in an
+  offline state.
+
+  The service further allows developers to optimize the user experience by
+  selecting which data is automatically synchronized to each user's device when
+  changes are made, minimizing storage and bandwidth requirements, with a query
+  language called GraphQL.
+
+  Using these capabilities, developers can, in minutes, build real time
+  collaborative experiences spanning browsers, mobile apps, Alexa skills, and
+  IoT devices that remain usable when network connectivity is lost.
+
+- What Types of Apps Can Be Built
+
+  AWS AppSync can be used to build mobile apps that would benefit from being
+  able to synchronize user and app data across devices, continue functioning
+  when disconnected, and offer real-time collaboration experiences. There are
+  applications across all verticals. Examples include:
+
+  - Gaming apps with real-time scoreboards
+
+  - News feeds and financial data
+
+  - Customer service dashboards
+
+  - Shared wallet, travel or itinerary tracking with offline usage
+
+  - Social Media with content feeds and search/discovery/messaging
+
+  - Dating apps with likes, messaging and geo/proximity awareness
+
+  - Field service apps that need to allow for querying and CRUD operations,
+    even when disconnected
+
+  - Document collaboration
+
+  - 3D collaboration such as shared whiteboards
+
+  - AR/VR with multiple actors (doctors in surgery with observers, teachers and
+    students)
+
+  - Multi-device (e.g., Alexa, mobile, web, IoT) and multi-modal applications
+    (e.g., task list) that need to work offline yet reflect the same eventually
+    consistent state
+
+  - Chat apps, including presence indicators and conversation history
+
+
 * List of Figures
 :PROPERTIES:
 :APPENDIX: t
@@ -5343,7 +5458,7 @@ particularly benefit from being built with AWS AppSync.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.5.3 <2019-03-01 Fri 06:58>
+#+MACRO:VERSION Version 0.5.4 <2019-03-01 Fri 07:07>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
