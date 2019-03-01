@@ -3588,7 +3588,7 @@ practices and shows additional details about how to work with the features
 discussed here.
 
 [[https://youtu.be/_wiGpBQGCjU]]
-* AWS Amplify Framework
+* Amplify Framework
 :PROPERTIES:
 :APPENDIX: t
 :END:
@@ -3686,6 +3686,7 @@ scalable mobile and web apps.''
 
 - [[https://aws-amplify.github.io/docs/][GET STARTED]]
 
+
 #+CINDEX:Amplify Framework
 #+CINDEX:development, mobile and web
 #+CINDEX:CLI, Amplify
@@ -3693,17 +3694,17 @@ scalable mobile and web apps.''
 The Amplify Framework provides a command-line interface (CLI) and library for
 simplifying mobile and web development.[fn:11]
 
-#+CINDEX:AWS account
-#+CINDEX:sign up, AWS account
-#+CINDEX:account, AWS
+   #+CINDEX:AWS account
+   #+CINDEX:sign up, AWS account
+   #+CINDEX:account, AWS
 1. Sign up for an AWS account.
 
    #+CINDEX:Free Tier
    There are no upfront charges or any term commitments to create an AWS
    account and signing up gives you immediate access to the AWS Free Tier.
 
-#+CINDEX:Amplify CLI
-#+CINDEX:CLI, Amplify
+   #+CINDEX:Amplify CLI
+   #+CINDEX:CLI, Amplify
 2. Install the CLI
 
    #+CINDEX:Amplify Command Line Interface (CLI)
@@ -3720,8 +3721,8 @@ simplifying mobile and web development.[fn:11]
      $ amplify configure
      #+END_EXAMPLE
 
-#+CINDEX:app, build
-#+CINDEX:build app
+   #+CINDEX:app, build
+   #+CINDEX:build app
 3. Build Your App
 
    #+CINDEX:iOS app
@@ -3736,10 +3737,10 @@ simplifying mobile and web development.[fn:11]
    #+CINDEX:React Native app
    - [[https://aws-amplify.github.io/docs/js/start?ref=amplify-rn-btn&platform=react-native][React Native]]
 
-#+CINDEX:application services
-3. Setup application services
+   #+CINDEX:application services
+4. Setup application services
 
-4. Integrate with your app
+5. Integrate with your app
 
 {{{heading(Deploy With the Amplify Console)}}}
 
@@ -5211,7 +5212,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.5.1 <2019-02-28 Thu 20:32>
+#+MACRO:VERSION Version 0.5.2 <2019-02-28 Thu 23:00>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
