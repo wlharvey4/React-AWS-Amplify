@@ -803,14 +803,19 @@ export default awsmobile;
 To configure our React app with the AWS Amplify resources, we edit
 {{{file(src/index.js)}}}.
 
-{{{heading(Original ~index.js)}}}
+{{{heading(index.js)}}}
 
-#+BEGIN_SRC js -n :eval no-export
+#+NAME:index.js
+#+CAPTION:~index.js~ with AWS Amplify and Configuration Imports
+#+BEGIN_SRC js -n :eval never :tangle my-amplify-app/src/index.js :noweb tangle
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+/* --------------------------------- */
+<<aws-amplify and configure imports>>
+/* --------------------------------- */
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -820,7 +825,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();
 #+END_SRC
 
-{{{heading(Changes to ~index.js~)}}}
+{{{heading(Imports into and Configuration of ~index.js~)}}}
 
 Here, we'll
 
@@ -828,23 +833,12 @@ Here, we'll
 - ~import config~ from the AWS exports file, [[#aws-exports][~./aws-exports.js~]], below
 - and then we'll call ~Amplify.configure(config)~, passing in the ~config~.
 
-#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-
-import Amplify from 'aws-amplify';   /* NEW */
-import config from './aws-exports';  /* NEW */
-Amplify.configure(config);           /* NEW */
-
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+#+NAME:aws-amplify and configure imports
+#+CAPTION:Amplify Imports and Configuration
+#+BEGIN_SRC js -n :eval never
+import Amplify from 'aws-amplify';
+import config from './aws-exports';
+Amplify.configure(config);
 #+END_SRC
 
 *** Config from ~aws-exports.js~
@@ -876,11 +870,16 @@ const awsmobile = {
 
 {{{heading(Original ~App.js~)}}}
 
+#+NAME:App-hoc
+#+CAPTION:Original App.js Wrapped in @code{withAuthenticator} HOC
 #+CINDEX:original @file{App.js}
-#+BEGIN_SRC js -n :eval no-export
+#+BEGIN_SRC js -n :eval never :tangle my-amplify-app/src/App-hoc.js :noweb tangle
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+/* --------------------------------- */
+<<import_withAuthenticator>>
+/* --------------------------------- */
 
 class App extends Component {
   render() {
@@ -905,7 +904,10 @@ class App extends Component {
   }
 }
 
-export default App;
+// export default App;
+/* --------------------------------- */
+<<export_withAuthenticator>>
+/* --------------------------------- */
 #+END_SRC
 
 {{{subheading(Changes to ~App.js~)}}}
@@ -914,46 +916,24 @@ Here we'll first:
 
 - import the ~withAuthenticator~ higher order component from the AWS Amplify
   React library, {{{file(aws-amplify-react)}}},
-  : import { withAuthenticator } from 'aws-amplify-react'
+
+#+NAME:import_withAuthenticator
+#+BEGIN_SRC js -n
+import { withAuthenticator } from 'aws-amplify-react'
+#+END_SRC
 
 - Instead of exporting the App component as a default export, we'll instead
-  wrap the app component with the ~withAuthenticator~ higher order component:
+  wrap the app component with the ~withAuthenticator~ higher order
+  component:[fn:withAuth] (but see [[*Create Sign-Out]])
   : export default withAuthenticator(App);
 
-{{{subheading(New ~App.js~)}}}
-
-#+BEGIN_SRC js -n :eval no-export :tangle no
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-import { withAuthenticator } from 'aws-amplify-react'; /* NEW */
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
-
-export default withAuthenticator(App); /* MODIFIED */
+#+BEGIN_COMMENT
+#+NAME:export_withAuthenticator
+#+CAPTION:Export @code{withAuthenticator} Wrapping App.js
+#+BEGIN_SRC js -n :eval never
+export default withAuthenticator(App);
 #+END_SRC
+#+END_COMMENT
 
 ** Test the Application for User Authentication
 
@@ -964,6 +944,8 @@ export default withAuthenticator(App); /* MODIFIED */
 #+CINDEX:new account, create
 [02:24] Now we're ready to test it out.  To start the app, run:
 : yarn start
+
+[[shell:(cd my-amplify-app/src && ln -vsf App-hoc.js App.js)]]
 
 Our app should now be protected by Cognito's user authentication flow.  The
 first thing we'll do is click {{{key(create account)}}} to create a new
@@ -1000,42 +982,15 @@ storage.
 #+CINDEX:@file{withAuthenticator}
 #+CINDEX:@code{include-greetings} key
 #+CINDEX:key, @code{include-greetings}
-[03:28] Next, let's add a sign out button.  To do so we'll go back into
-{{{file(App.js)}}} and pass in a second argument to ~withAuthenticator~.  Here,
-we'll pass in an object with an ~includeGreetings~ key set to ~true~.
-: export default withAuthenticator(App, { includeGreetings: true});
+[03:28] Next, let's add a {{{key(SIGN OUT)}}} button.  To do so we'll go back
+into {{{file(App.js)}}} and pass in a second argument to ~withAuthenticator~.
+Here, we'll pass in an object with an ~includeGreetings~ key set to
+~true~.[fn:withAuth:You must comment out the other ~withAuthenticator~ code
+prior to using this code by uncommenting it.]
 
-#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/App.js
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-import { withAuthenticator } from 'aws-amplify-react';
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
-
-export default withAuthenticator(App, { includeGreetings: true }); /* MODIFIED */
+#+NAME:export_withAuthenticator
+#+BEGIN_SRC js -n :eval never
+export default withAuthenticator(App, { includeGreetings: true });
 #+END_SRC
 
 #+CINDEX:sign-out button
@@ -1131,17 +1086,19 @@ Here is the origin {{{file(App.js)}}}, with new code added using =noweb=
 references in double angle brackets =<<...>>=.
 
 #+CINDEX:original @file{App.js}
-#+BEGIN_SRC js -n :eval no-export :tangle my-amplify-app/src/App-custom.js :noweb tangle
+#+BEGIN_SRC js -n -r :eval never :tangle my-amplify-app/src/App-custom.js :noweb tangle
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-<<import-auth>>
+<<authImport>> (ref:auth)
 
 class App extends Component {
-  <<state>>
-  <<onChange-handler>>
-  <<signUp>>
-  <<confirmSignUp>>
+/* --------------------------------- */
+  <<state>> (ref:state)
+  <<onChange-handler>> (ref:onChange)
+  <<signUp>> (ref:signUp)
+  <<confirmSignUp>> (ref:confirm)
+/* --------------------------------- */
 
   render() {
     return (
@@ -1160,13 +1117,15 @@ class App extends Component {
             Learn React
           </a>
         </header>
-        <<two-forms>>
+          <<two-forms>>
       </div>
     );
   }
 }
 
-<<styles>>
+/* --------------------- */
+  <<styles>> (ref:styles)
+/* --------------------- */
 
 export default App;
 #+END_SRC
@@ -1181,10 +1140,10 @@ export default App;
 #+CINDEX:state, create initial
 #+CINDEX:user, signup
 #+CINDEX:user information, add
-[00:02] Starting in {{{file(App.js)}}}, the first thing we'll do is import
-~Auth~ from the AWS Amplify library.
+[00:02] Starting in {{{file(App.js)}}}, the first thing we'll do is [[(auth)][import
+~Auth~]], (line [[(auth)]]), from the AWS Amplify library.
 
-#+NAME: import-auth
+#+NAME: authImport
 #+CAPTION:Import ~Auth~ Class from the AWS Amplify Library
 #+BEGIN_SRC js -n :eval never
 import { Auth } from 'aws-amplify';
@@ -1210,7 +1169,8 @@ state = {
   password: '',
   email: '',
   phone_number: '',
-  authenticationCode: ''
+  authenticationCode: '',
+  step: 0
 }
 #+END_SRC
 
@@ -1268,15 +1228,13 @@ If the sign up is successful, we'll console log ``Successfully signed up.''
 
 #+NAME:signUp
 #+CAPTION:~signUp~ Class Method
-#+BEGIN_SRC js -n :eval never
+#+BEGIN_SRC js -n :eval never :noweb yes
 signUp = async () => {
     const {
         username,
         password,
-        attributes: {
-            email,
-            phone_number
-        }
+        email,
+        phone_number
     } = this.state;
 
     try {
@@ -1287,7 +1245,7 @@ signUp = async () => {
                 email,
                 phone_number
             }
-        )}
+        })
         console.log("Successfully signed up!");
         <<toggle-step>>
     } catch (err) {
@@ -1341,6 +1299,11 @@ confirming the sign up.
 1. ~signUp~ form
 2. ~confirnmSignUp~ form
 
+#+NAME:two-forms
+#+BEGIN_SRC js -n :eval never :noweb no-export
+<<signUp-form>>
+<<confirmSignUp-form>>
+#+END_SRC
 
 *** Sign-Up Form
 
@@ -1376,42 +1339,40 @@ The =signUp= form will contain four inputs, each with an ~onChange~ method, a
 Finally, we'll create a sign-up button that will call ~this.signup~ when
 clicked.
 
-#+NAME: signUp-form
+#+NAME:signUp-form
 #+CAPTION:Sign-Up Form
 #+BEGIN_SRC js -n :eval never
 {
-    this.state.step === 0 && (   /* STEP STATE VARIABLE */
-      <div>
-            /* FOUR INPUTS */
+    this.state.step === 0 && (
+        <div>
             <input
-        onChange={this.onChange}
-        name='username'
-        style={styles.input}
-        placeholder='username'
+                onChange={this.onChange}
+                name='username'
+                style={styles.input}
+                placeholder='username'
             />
             <input
-        onChange={this.onChange}
-        name='password'
-        style={styles.input}
-        placeholder='password'
+                onChange={this.onChange}
+                name='password'
+                style={styles.input}
+                placeholder='password'
             />
             <input
-        onChange={this.onChange}
-        name='email'
-        style={styles.input}
-        placeholder='password'
+                onChange={this.onChange}
+                name='email'
+                style={styles.input}
+                placeholder='email'
             />
             <input
-        onChange={this.onChange}
-        name='phone_number'
-        style={styles.input}
-        placeholder='password'
+                onChange={this.onChange}
+                name='phone_number'
+                style={styles.input}
+                placeholder='phone number'
             />
-            /* BUTTON CALLING SIGNUP */
             <button onClick={this.signUp}>
-            Sign Up
-        </button>
-      </div>
+                Sign Up
+            </button>
+        </div>
     )
 }
 #+END_SRC
@@ -1446,7 +1407,7 @@ call ~this.confirmSignup~.
             <input
                 placeholder='authentication code'
                 onChange={this.onChange}
-                name='authentication code'
+                name='authenticationCode'
                 style={styles.input}
             />
             <button onClick={this.confirmSignUp}>
@@ -1505,12 +1466,27 @@ up a new user, we should see ``Successfully signed up'' logged out to the
 console.  We should also see the =confirm sign up= form appear on our
 screen.
 
+#+BEGIN_SRC sh :exports none
+cd my-amplify-app/src
+ln -vsf App-custom.js App.js
+#+END_SRC
+
+#+RESULTS:
+: App.js -> App-custom.js
+
 #+CINDEX:confirm sign-up
 #+CINDEX:sign-up, confirm
 [05:52] To confirm sign up, use the username you just created as well as the
 authentication code you received in your email and click =confirm sign up=.
 If the sign up is successful, you should see ``User successfully signed up''
 logged out to the console.
+
+{{{heading(Confirmation of Successful Sign-Up of New User)}}}
+
+#+BEGIN_EXAMPLE
+Successfully signed up!
+User successfully confirmed sign up!
+#+END_EXAMPLE
 
 *** Make Sure New User Exists in AWS Dashboard
 
@@ -1527,6 +1503,8 @@ and go to the Cognito console to look at the new user.  In the Cognito
 dashboard we'll click on =Manage User Pools= and then we'll click on the name
 of the user pool for our app.  When we click on =Users and Groups=, we should
 now see the new user appear.
+
+[[~/Dev/Programming/WebDev/React/React-AWS-Amplify/img/cognito-manual-user-sign-up-30.png]]
 
 * Create & Interact with an AWS AppSync GraphQL API with AWS Amplify
 
@@ -5232,7 +5210,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.4.9 <2019-02-28 Thu 10:31>
+#+MACRO:VERSION Version 0.5.0 <2019-02-28 Thu 20:12>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
