@@ -4548,7 +4548,7 @@ AWS customers receive 1,000 build minutes per month for the build and deploy
 feature, and 15 GB served per month and 5 GB data storage per month for the
 hosting feature.
 
-* Amazon Cognito
+* Cognito
 :PROPERTIES:
 :APPENDIX: t
 :END:
@@ -5148,6 +5148,137 @@ Cognito.
 - [[https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-cleanup-tutorial.html][Tutorial: Cleaning Up Your AWS Resources]]
 - [[https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-add-apps.html][Tutorial: Adding a Web or Mobile App to a User Pool]]
 
+* AppSync
+
+{{{heading(Store and sync data across mobile and web apps in real-time)}}}
+
+{{{subheading(AWS AppSync is a serverless back-end for mobile, web, and
+enterprise applications.)}}}
+
+#+CINDEX:data, store and sync
+#+CINDEX:data, mobile and web apps
+#+CINDEX:serverless back-end for applications
+#+CINDEX:application data management tasks
+AWS AppSync makes it easy to build data driven mobile and web applications by
+handling securely all the application data management tasks like
+- online and offline data access,
+- data synchronization, and
+- data manipulation across multiple data sources.
+
+
+#+CINDEX:GraphQL
+#+CINDEX:data requirements
+AWS AppSync uses GraphQL, an API query language designed to build client
+applications by providing an intuitive and flexible syntax for describing their
+data requirement.
+
+{{{subheading(Benefits)}}}
+
+#+ATTR_TEXINFO: :indic b
+- Start effortlessly; scale with your business ::
+
+     #+CINDEX:AppSync management console
+     #+CINDEX:DynamoDB, AppSync
+     #+CINDEX:Elasticsearch, AppSync
+     #+CINDEX:Lambda, AppSync
+     Get started in minutes with the intuitive AWS AppSync management console,
+     or use AWS Amplify CLI to automatically generate your API and client-side
+     code. AWS AppSync integrates with Amazon DynamoDB, Amazon Elasticsearch,
+     and Amazon Lambda, enabling you to create sophisticated applications, with
+     virtually unlimited throughput and storage, that scale according to your
+     business needs.
+
+- Real-time subscriptions and offline access ::
+
+     #+CINDEX:subscriptions, real-time
+     AWS AppSync enables real-time subscriptions across millions of devices, as
+     well as offline access to app data. When an offline device reconnects, AWS
+     AppSync syncs only the updates that occurred when the device was
+     disconnected, and not the entire database. AWS AppSync offers
+     user-customizable server-side conflict resolution that does the heavy
+     lifting of managing data conflicts so you don’t have to.
+
+- Unify and secure access to your distributed data ::
+
+     #+CINDEX:queries
+     #+CINDEX:aggregation
+     Perform complex queries and aggregation across your on-premise or cloud
+     data sources using GraphQL. AWS AppSync makes it easy to secure your app
+     data using powerful fine-grained access controls.
+
+
+{{{subheading(How It Works)}}}
+
+  #+CINDEX:schema, AppSync
+- Create schema ::
+
+                   #+CINDEX:GraphQL API using console editor
+                   Developers use the console editor to define and deploy a
+                   GraphQL API so the application can query and change data and
+                   update in real time.
+
+- AppSync ::
+
+             #+CINDEX:resources, automatic provisioning, AppSync
+             Automatically provisions data sources and compute resources, or
+             uses existing resources, and connects them to your GraphQL API.
+
+- Offline ::
+
+             #+CINDEX:offline use, AppSync
+             Client applications make GraphQL API calls to fetch data, make
+             changes, or subscribe to changes in real time from all users and
+             devices.  Offline users can continue to access and change app data
+             and get updates when they are connected.
+
+
+#+CINDEX:video, @cite{re:Invent}
+#+CINDEX:AppSync console
+#+CINDEX:console, AppSync
+AWS AppSync is generally available. If you would like try building data driven
+mobile and web applications, watch the [[https://img.youtube.com/vi/FtkVlIal_m0/0.jpg][re:Invent session video]] to learn more
+and [[http://console.aws.amazon.com/appsync/home][open the AWS AppSync console]] to get started.
+
+
+{{{subheading(Use Cases)}}}
+
+#+CINDEX:use cases, AppSync
+#+CINDEX:AppSync use cases
+#+CINDEX:real-time data updates
+#+CINDEX:offline capabilities
+AWS AppSync is applicable to all types of mobile and web applications across
+industries, verticals, and categories where the apps require real-time data
+updates and offline capabilities. Here are some examples of apps that can
+particularly benefit from being built with AWS AppSync.
+
+#+ATTR_TEXINFO: :indic b
+- Collaboration applications ::
+
+     #+CINDEX:collaboration, AppSync
+     AWS AppSync makes it easy to build apps that let multiple users share and
+     collaborate on content. AWS AppSync automatically updates data for
+     different types of content including documents, images, text messages, and
+     shared whiteboards.
+
+- Social media, chat, dating apps ::
+
+     #+CINDEX:social media apps, AppSync
+     #+CINDEX:messaging, AppSync
+     AWS AppSync is perfect for building social media, chat, and dating
+     apps. AWS AppSync can help by managing the messaging among multiple users
+     with a variety of data types and sources. With AWS AppSync, users can
+     interact with their apps even when they are offline and AWS AppSync will
+     update their messages when they reconnect.
+
+- AR and VR training applications ::
+
+     #+CINDEX:virtual reality apps, AppSync
+     AWS AppSync can help manage the data for training and teaching
+     applications, such as doctors in surgery with observers, or teachers
+     giving lessons to students. These types of apps need to support augmented
+     and virtual reality (AR and VR) where the data is combined or incorporated
+     into other information and needs to be updated in real time during a
+     procedure or interactive session like a lesson.
 * List of Figures
 :PROPERTIES:
 :APPENDIX: t
@@ -5212,7 +5343,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.5.2 <2019-02-28 Thu 23:00>
+#+MACRO:VERSION Version 0.5.3 <2019-03-01 Fri 06:58>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
