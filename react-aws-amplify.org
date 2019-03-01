@@ -1461,10 +1461,16 @@ const styles = {
 #+CINDEX:sign-up, new user
 #+CINDEX:form, @samp{confirm sign up}
 #+CINDEX:@samp{confirm sign up} form
-[05:21] To test this out, let's run {{{command(npm start)}}}.  When we sign
+[05:21] To test this out, let's run {{{command(yarn start)}}}.  When we sign
 up a new user, we should see ``Successfully signed up'' logged out to the
 console.  We should also see the =confirm sign up= form appear on our
 screen.
+
+[[file:img/cognito-manual-new-user-50.png]]
+
+: Successfully signed up!
+
+[[file:img/cognito-manual-user-confirm-50.png]]
 
 #+BEGIN_SRC sh :exports none
 cd my-amplify-app/src
@@ -1481,12 +1487,7 @@ authentication code you received in your email and click =confirm sign up=.
 If the sign up is successful, you should see ``User successfully signed up''
 logged out to the console.
 
-{{{heading(Confirmation of Successful Sign-Up of New User)}}}
-
-#+BEGIN_EXAMPLE
-Successfully signed up!
-User successfully confirmed sign up!
-#+END_EXAMPLE
+: User successfully confirmed sign up!
 
 *** Make Sure New User Exists in AWS Dashboard
 
@@ -5210,7 +5211,7 @@ Cognito.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.5.0 <2019-02-28 Thu 20:12>
+#+MACRO:VERSION Version 0.5.1 <2019-02-28 Thu 20:32>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
