@@ -1526,126 +1526,146 @@ now see the new user appear.
   the [[https://aws-amplify.github.io/docs/js/api][Amplify GraphQL API]] to query data from the new API and render it in our
   app.  We’ll also look at how to perform mutations from the client.
 
-** Create AWS AppSync API
-  #+CINDEX:AppSync API
-  #+CINDEX:@command{amplify add api}
-  #+CINDEX:GraphQL service
-  #+CINDEX:@code{amplifyTodoApp}
-  [00:01] To create an [[https://docs.aws.amazon.com/appsync/latest/devguide/using-your-api.html][AWS AppSync API]], we can run the command
-  {{{command(amplify add api)}}}. For the type of service, choose
-  GraphQL. Next, we're prompted to give the API a name. I'll give mine a name
-  of =amplifyTodoApp=.
+** Create AWS AppSync API using the CLI
 
-  #+CINDEX:authorization type
-  #+CINDEX:GraphQL schema
-  #+CINDEX:schema, GraphQL
-  #+CINDEX:guided schema creation
-  [00:18] For the authorization type, we'll choose =API key=.  When we're asked
-  if we have an annotated GraphQL schema, we'll choose =No=. If we'd like to
-  have a guided schema creation, we'll choose =Yes=.
+{{{subheading(Add Amplify Service API)}}}
 
-  #+CINDEX:edit schema
-  #+CINDEX:todo GraphQL schema
-  [00:32] For what best describes our project, we're going to choose a single
-  object with fields. Next, we're given an option to go ahead and edit the
-  schema. Choose =Yes=. We're given an example todo GraphQL schema. We'll take
-  the existing schema and add a new property of completed and then save the
-  file.
+#+CINDEX:AppSync API
+#+CINDEX:@command{amplify add api}
+#+CINDEX:GraphQL service
+#+CINDEX:@code{amplifyTodoApp}
+[00:01] To create an [[https://docs.aws.amazon.com/appsync/latest/devguide/using-your-api.html][AWS AppSync API]], we can run the command {{{command(amplify
+add api)}}}. For the type of service, choose GraphQL. Next, we're prompted to
+give the API a name. I'll give mine a name of =amplifyTodoApp=.
 
-  #+CINDEX:@command{amplify push}
-  [00:53] Once the file's been saved, jump back to the command line and press
-  {{{key(Enter)}}}.  Now the resources have been saved locally and we can run
-  {{{command{amplify push)}}} to create the resource in our account.
+#+CINDEX:authorization type
+#+CINDEX:GraphQL schema
+#+CINDEX:schema, GraphQL
+#+CINDEX:guided schema creation
+[00:18] For the authorization type, we'll choose =API key=.  When we're asked
+if we have an annotated GraphQL schema, we'll choose =No=. If we'd like to have
+a guided schema creation, we'll choose =Yes=.
 
-  #+CINDEX:AWS AppSync
-  [01:13] Once {{{command(amplify push)}}} has successfully completed, open the
-  AWS console. From the AWS console, search for =AWS AppSync= so we can go
-  ahead and take a look at the new API that we just created.
+{{{subheading(Edit the Scheme)}}}
 
-  #+CINDEX:dashboard, API
-  #+CINDEX:Schema, dashboard
-  [01:34] In the API dashboard, you can click on =Schema= to take a look at the
-  schema that's been auto-generated for us.
+#+CINDEX:edit schema
+#+CINDEX:todo GraphQL schema
+[00:32] For what best describes our project, we're going to choose a single
+object with fields. Next, we're given an option to go ahead and edit the
+schema. Choose =Yes=. We're given an example todo GraphQL schema. We'll take
+the existing schema and add a new property of completed and then save the file.
+
+{{{subheading(Push the API Resource)}}}
+
+#+CINDEX:@command{amplify push}
+[00:53] Once the file's been saved, jump back to the command line and press
+{{{key(Enter)}}}.  Now the resources have been saved locally and we can run
+{{{command(amplify push)}}} to create the resource in our account.
+
+{{{subheading(Use the Console to View the API)}}}
+
+#+CINDEX:AWS AppSync
+[01:13] Once {{{command(amplify push)}}} has successfully completed, open the
+AWS console. From the AWS console, search for =AWS AppSync= so we can go
+ahead and take a look at the new API that we just created.
+
+#+CINDEX:dashboard, API
+#+CINDEX:Schema, dashboard
+[01:34] In the API dashboard, you can click on =Schema= to take a look at the
+schema that's been auto-generated for us.
 
 ** Execute Queries and Mutations
 
-  #+CINDEX:Query, queries
-  #+CINDEX:mutations
-  #+CINDEX:documentation, API
-  #+CINDEX:API documentation
-  #+CINDEX:Docs link
-  [01:48] Next, click on =Query= so we can begin executing queries and
-  mutations against the API. The first thing we'd like to do is create a new
-  =todo=. We'll create a mutation called =create=. To view the API
-  documentation, you can click on the Docs link on the right side of the
-  screen.
+{{{subheading(Create a Mutation {{{samp(create)}}})}}}
 
-  #+CINDEX:mutations
-  #+CINDEX:@code{createTodo}
-  #+CINDEX:@code{updateTodo}
-  #+CINDEX:@code{deleteTodo}
-  [02:03] When we click on =Mutations=, we see that we have three different
-  types of mutations,
-  - ~createTodo~,
-  - ~updateTodo~, and
-  - ~deleteTodo~. 
+#+CINDEX:Query, queries
+#+CINDEX:mutations
+#+CINDEX:documentation, API
+#+CINDEX:API documentation
+#+CINDEX:Docs link
+[01:48] Next, click on =Query= so we can begin executing queries and
+mutations against the API. The first thing we'd like to do is create a new
+=todo=. We'll create a mutation called =create=. To view the API
+documentation, you can click on the Docs link on the right side of the
+screen.
+
+#+CINDEX:mutations
+#+CINDEX:@code{createTodo}
+#+CINDEX:@code{updateTodo}
+#+CINDEX:@code{deleteTodo}
+[02:03] When we click on =Mutations=, we see that we have three different
+types of mutations,
+- ~createTodo~,
+- ~updateTodo~, and
+- ~deleteTodo~. 
 
 
-  ~createTodo~ takes an input with a name, description and completed
-  properties.
+~createTodo~ takes an input with a =name=, =description= and =completed=
+properties.
 
-  #+CINDEX:mutation, execute
-  #+CINDEX:Play button
-  [02:34] To execute the mutation, we can click on the orange {{{key(Play)}}}
-  button.
+{{{subheading(Execute the Mutation)}}}
 
-  #+CINDEX:query
-  #+CINDEX:@code{listTodos} query
-  [02:49] Now that we've created a couple of items, let's perform a
-  query. We'll perform the ~listTodos~ query that returns an ~items~
-  array. We'll then return the ID, the name, the description, and the completed
-  values for each todo in the array.
+#+CINDEX:mutation, execute
+#+CINDEX:Play button
+[02:34] To execute the mutation, we can click on the orange {{{key(Play)}}}
+button.
 
-** Query for Data
+{{{subheading(Perform a Query)}}}
 
-  #+CINDEX:data query
-  #+CINDEX:query for data
-  #+CINDEX:@code{graphqlOperation}
-  #+CINDEX:Amplify
-  #+CINDEX:@code{listTodos} query
-  [03:27] Now that we've populated our API with a little bit of data, let's
-  query for the data from our React app. The first thing we'll do is that we'll
-  import API and ~graphqlOperation~ from AWS Amplify. Next, we'll define our
-  ~listTodos~ query to return the ID, the name, the description, and the
-  completed properties for every item in the todos array.
+#+CINDEX:query, perform
+#+CINDEX:@code{listTodos} query
+[02:49] Now that we've created a couple of items, let's perform a query. We'll
+perform the ~listTodos~ query that returns an ~items~ array. We'll then return
+the ID, the name, the description, and the completed values for each todo in
+the array.
 
-  #+CINDEX:initial state
-  #+CINDEX:@code{componentDidMount} life cycle method
-  #+CINDEX:life cycle method, @code{componentDidMount}
-  #+CINDEX:@code{api.graphql}
-  #+CINDEX:@code{listTodos}
-  #+CINDEX:@code{graphqlOperation}
-  [04:03] In the class, we'll create some initial state to hold the ~todos~
-  array and set it as an empty array. We'll create a ~componentDidMount~ life
-  cycle method where we'll call ~API.graphql~, passing in the ~listTodos~
-  ~graphqlOperation~.
+** Query for Data from our React App
 
-  #+CINDEX:@code{setState}, call
-  #+CINDEX:render method
-  #+CINDEX:map, over array
-  #+CINDEX:array, map over
-  [04:37] Once the data's returned from our API, we'll call
-  ~this.setState~, updating the ~todos~ array with the data returned
-  from the API. In the render method, we'll map over the ~todos~
-  array, showing the ~todo~ name and the ~todo~ description.
+#+CINDEX:data query
+#+CINDEX:query for data
+#+CINDEX:@code{graphqlOperation}
+#+CINDEX:Amplify
+#+CINDEX:@code{listTodos} query
+[03:27] Now that we've populated our API with a little bit of data, let's
+query for the data from our React app.
+
+1. The first thing we'll do is that we'll {{{command(import)}}} API and
+   ~graphqlOperation~ from AWS Amplify.
+
+2. Next, we'll define our ~listTodos~ query to return the =id=, the =name=, the
+   =description=, and the =completed= properties for every item in the =todos=
+   array.
+
+    #+CINDEX:initial state
+    #+CINDEX:@code{componentDidMount} life cycle method
+    #+CINDEX:life cycle method, @code{componentDidMount}
+    #+CINDEX:@code{api.graphql}
+    #+CINDEX:@code{listTodos}
+    #+CINDEX:@code{graphqlOperation}
+3. [04:03] In the class, we'll create some *initial state* to hold the =todos=
+   array and set it as an empty array.
+
+4. We'll create a ~componentDidMount~ life cycle method where we'll call
+   ~API.graphql~, passing in the ~listTodos~ ~graphqlOperation~.
+
+   #+CINDEX:@code{setState}, call
+   #+CINDEX:render method
+   #+CINDEX:map, over array
+   #+CINDEX:array, map over
+5. [04:37] Once the data's returned from our API, we'll call ~this.setState~,
+   updating the ~todos~ array with the data returned from the API.
+
+6. In the render method, we'll map over the ~todos~ array, showing the ~todo~
+   name and the ~todo~ description.
 
 ** Run the Application
-  #+CINDEX:app, run
-  #+CINDEX:run app
-  #+CINDEX:@command{npm start}
-  [05:14] Now we're ready to run the app. I'll go ahead and open the terminal
-  and run {{{command(npm start)}}}. If everything is working correctly, we
-  should see the todos on our screen.
+
+#+CINDEX:app, run
+#+CINDEX:run app
+#+CINDEX:@command{npm start}
+[05:14] Now we're ready to run the app. I'll go ahead and open the terminal and
+run {{{command(npm start)}}}. If everything is working correctly, we should see
+the =todos= on our screen.
 
 * Create & Interact with a Serverless REST API with AWS Lambda from React
 
@@ -5393,7 +5413,6 @@ particularly benefit from being built with AWS AppSync.
 
   - Chat apps, including presence indicators and conversation history
 
-
 * List of Figures
 :PROPERTIES:
 :APPENDIX: t
@@ -5458,7 +5477,7 @@ particularly benefit from being built with AWS AppSync.
   #+END_SRC
 
 * MACRO DEFINITIONS                                                :noexport:
-#+MACRO:VERSION Version 0.5.4 <2019-03-01 Fri 07:07>
+#+MACRO:VERSION Version 0.5.5 <2019-03-01 Fri 09:15>
 #+MACRO:OUTLINE Outline by WLHarvey4
 #+MACRO:heading @@texinfo:@heading @@$1
 #+MACRO:subheading @@texinfo:@subheading @@$1
@@ -5468,6 +5487,7 @@ particularly benefit from being built with AWS AppSync.
 #+MACRO:noindent @@texinfo:@noindent @@
 #+MACRO:key @@texinfo:@key{@@$1@@texinfo:}@@
 #+MACRO:pxref @@texinfo:@pxref{@@$1@@texinfo:}@@
+#+MACRO:samp @@texinfo:@samp{@@$1@@texinfo:}@@
 * EXPORT SETUP                                                     :noexport:
 #+TEXINFO_FILENAME:react-aws-amplify.info
 #+TEXINFO_CLASS: info
